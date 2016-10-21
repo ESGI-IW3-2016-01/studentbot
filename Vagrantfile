@@ -33,10 +33,13 @@ config.vm.provision "shell", inline: <<-SHELL
     mv composer.phar /usr/local/bin/composer
     echo "### COMPOSER INSTALLED ###"
 
+    # make-ssl-cert /usr/share/ssl-cert/ssleay.cnf /etc/ssl/private/symfony-app.pem
+
     # Virtual Host
     echo "### VIRTUAL HOSTING ###"
     sudo cp /vagrant/symfony-app.conf /etc/apache2/sites-available/
     ln -s /vagrant/web/ /var/www/symfony-app
+    a2enmod ssl
     a2ensite symfony-app.conf
     echo "127.0.0.1     studentbot.localhost.com" >> /etc/hosts
     echo "### VIRTUAL HOSTED ! ###"
@@ -56,8 +59,12 @@ config.vm.provision "shell", privileged: false, inline: <<-SHELL
     composer install -q -n --no-ansi -d /vagrant
     #echo "### COMPOSER UPDATED ###"
 
+    git config --global user.email "a.cusset@gmail.com"
+    git config --global user.name "Antoine Cusset"
+
     # Run Doctrine
     /vagrant/bin/console doctrine:schema:create
+    /vagrant/bin/console doctrine:fixtures:load -n
     /vagrant/bin/symfony_requirements
     SHELL
 end
