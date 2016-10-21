@@ -1,3 +1,4 @@
+# Put file at project root
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -20,7 +21,7 @@ config.vm.synced_folder "./", "/vagrant", id: "vagrant-root", :owner => "www-dat
 
 config.vm.provision "shell", inline: <<-SHELL
     apt-get -qq update
-    apt-get -q install -y apache2 php-xml git zip
+    apt-get -qq install -y apache2 php-xml git zip
     phpdismod xdebug
     echo "### DISABLING XDEBUG ###"
 
@@ -35,7 +36,7 @@ config.vm.provision "shell", inline: <<-SHELL
     # Virtual Host
     echo "### VIRTUAL HOSTING ###"
     sudo cp /vagrant/symfony-app.conf /etc/apache2/sites-available/
-    ln -s /vagrant/web/ /var/www/studentBot
+    ln -s /vagrant/web/ /var/www/symfony-app
     a2ensite symfony-app.conf
     echo "127.0.0.1     studentbot.localhost.com" >> /etc/hosts
     echo "### VIRTUAL HOSTED ! ###"
