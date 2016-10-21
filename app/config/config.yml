@@ -79,6 +79,7 @@ easy_admin:
         assets:
             css:
                 - 'http://fonts.googleapis.com/css?family=Syncopate'
+                - 'css/custom.css'
     entities:
         User:
           class: AppBundle\Entity\User
