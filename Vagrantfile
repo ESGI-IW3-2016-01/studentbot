@@ -19,9 +19,44 @@ Vagrant.configure("2") do |config|
 config.vm.synced_folder "./", "/vagrant", id: "vagrant-root", :owner => "www-data", :group => "www-data"
 
 config.vm.provision "shell", inline: <<-SHELL
-   apt-get update
-   apt-get install -y apache2
-   apt-get install php-xml
-   apt-get install git
-   SHELL
+    apt-get -qq update
+    apt-get -q install -y apache2 php-xml git zip
+    phpdismod xdebug
+    echo "### DISABLING XDEBUG ###"
+
+    # Composer installation
+    echo "### COMPOSER INSTALLATION ###"
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    php composer-setup.php
+    php -r "unlink('composer-setup.php');"
+    mv composer.phar /usr/local/bin/composer
+    echo "### COMPOSER INSTALLED ###"
+
+    # Virtual Host
+    echo "### VIRTUAL HOSTING ###"
+    sudo cp /vagrant/symfony-app.conf /etc/apache2/sites-available/
+    ln -s /vagrant/web/ /var/www/studentBot
+    a2ensite symfony-app.conf
+    echo "127.0.0.1     studentbot.localhost.com" >> /etc/hosts
+    echo "### VIRTUAL HOSTED ! ###"
+
+    # Restarts apache2
+    service apache2 restart
+
+    # New Database for Symfony App
+    mysql -u root --execute "CREATE DATABASE symfony_app;"
+    echo "### DATABASE CREATED ###"
+
+    echo "### SO MUCH WIN \m/ ###"
+    SHELL
+
+config.vm.provision "shell", privileged: false, inline: <<-SHELL
+    # Run Composer installation as vagrant user
+    composer install -q -n --no-ansi -d /vagrant
+    #echo "### COMPOSER UPDATED ###"
+
+    # Run Doctrine
+    /vagrant/bin/console doctrine:schema:create
+    /vagrant/bin/symfony_requirements
+    SHELL
 end
