@@ -73,5 +73,45 @@ fos_user:
     user_class: AppBundle\Entity\User
 
 easy_admin:
+    site_name: '<div class="home-logo">StudentBot</div>'
+    design:
+        form_theme: 'horizontal'
+        assets:
+            css:
+                - 'http://fonts.googleapis.com/css?family=Syncopate'
     entities:
-        - AppBundle\Entity\User
+        User:
+          class: AppBundle\Entity\User
+          label: 'User'
+          list:
+              fields:
+                  - Username
+                  - idFacebook
+                  - { property: 'email', type: 'email' }
+                  - locked
+              title: "Customers list"
+          form:
+              title: 'Edit User'
+              fields:
+                  - { type: 'group', css_class: 'col-sm-6' }
+                  - { type: 'section', label: 'User Profil', icon: 'user' }
+                  - { property: 'Username', type: 'text' }
+                  - { property: 'email', type: 'email' }
+                  - { type: 'group', css_class: 'col-sm-6'}
+                  - { type: 'section', label: 'Identity', icon: 'info' }
+                  - { property: 'Firstname', type: 'text' }
+                  - { property: 'Lastname', type: 'text' }
+              actions:
+                  delete:
+                      name: delete
+                      type: method
+                      label: action.delete
+                      css_class: 'btn btn-default action-delete'
+                      icon: trash-o
+                  list:
+                      name: list
+                      type: method
+                      label: action.list
+                      css_class: 'btn btn-secondary action-list'
+                      icon: caret-square-o-left
+

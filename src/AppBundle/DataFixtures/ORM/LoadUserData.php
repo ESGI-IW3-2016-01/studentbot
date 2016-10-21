@@ -11,11 +11,12 @@ class LoadUserData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $userAdmin = new User();
-        $userAdmin->setUsername('Ralph');
+        $userAdmin->setUsername('Jolan');
         $userAdmin->setPassword('test');
         $userAdmin->setFirstName('Jolan');
         $userAdmin->setLastName('Levy');
         $userAdmin->setEmail('jolan.levy@gmail.com');
+        $userAdmin->setRoles(['admin']);
         $manager->persist($userAdmin);
 
         $userAdmin = new User();
@@ -24,6 +25,7 @@ class LoadUserData implements FixtureInterface
         $userAdmin->setFirstName('Antoine');
         $userAdmin->setLastName('Cusset');
         $userAdmin->setEmail('a.cusset@gmail.com');
+        $userAdmin->setRoles(['admin']);
         $manager->persist($userAdmin);
 
         $userAdmin = new User();
@@ -32,6 +34,7 @@ class LoadUserData implements FixtureInterface
         $userAdmin->setFirstName('Alexandre');
         $userAdmin->setLastName('Morin');
         $userAdmin->setEmail('morinalexandrem@gmail.com');
+        $userAdmin->setRoles(['admin']);
         $manager->persist($userAdmin);
 
         $manager->flush();
