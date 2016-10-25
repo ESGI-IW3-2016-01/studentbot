@@ -1,23 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Antoine
- * Date: 25/10/2016
- * Time: 00:13
- */
 
 namespace AppBundle\Command;
 
-
-use Facebook\Exceptions\FacebookResponseException;
-use Facebook\Exceptions\FacebookSDKException;
-use Facebook\Facebook;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SubscribeCommand extends ContainerAwareCommand
 {
+
+    protected $graphVersion;
+    protected $accessToken;
+
     protected function configure()
     {
         $this
@@ -25,29 +20,29 @@ class SubscribeCommand extends ContainerAwareCommand
             ->setDescription('Send POST request to facebook API to enable webhook');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
 
-        $facebook = new Facebook([
-            'app_id' => $container->getParameter('facebook.app_id'), // Replace {app-id} with your app id
-            'app_secret' => $container->getParameter('facebook.app_secret'),
-            'default_graph_version' => $container->getParameter('facebook.graph_version')
-        ]);
+        $this->graphVersion = $container->getParameter('facebook.graph_version');
+        $this->accessToken  = $container->getParameter('facebook.page_access_token');
+    }
 
-        $helper = $facebook->getRedirectLoginHelper();
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $command = \sprintf("curl -X POST \"https://graph.facebook.com/%s/me/subscribed_apps?access_token=%s\"  2>/dev/null", $this->graphVersion, $this->accessToken);
+        exec($command, $commandOutput, $returnCode);
 
-        try {
-            $response = $facebook->sendRequest('POST', 'me/subscribed_apps?access_token=5AIW3ESGI');
-            var_dump($response);
-        } catch (FacebookResponseException $e) {
-            // When Graph returns an error
-            echo 'Graph returned an error: ' . $e->getMessage() . PHP_EOL;
-            exit;
-        } catch (FacebookSDKException $e) {
-            // When validation fails or other local issues
-            echo 'Facebook SDK returned an error: ' . $e->getMessage() . PHP_EOL;
-            exit;
+        $commandOutput = json_decode($commandOutput[0],true);
+
+        $io = new SymfonyStyle($input, $output);
+        $io->title('Sending request to Facebook...');
+
+        if(isset($commandOutput["error"]))
+        {
+            return $io->error(sprintf('Error : %s',$commandOutput["error"]["message"]));
         }
+
+        $io->success('Webhook subscribed to the page events');
     }
 }
