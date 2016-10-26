@@ -31,6 +31,7 @@ class DefaultController extends Controller
             return new Response($query->get('hub_challenge'));
         }
 
+        return new Response();
         //TODO : gérer les appels et réponses
 
     }
