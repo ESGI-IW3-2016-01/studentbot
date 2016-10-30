@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Service\MessageSender;
 
 class DefaultController extends Controller
 {
@@ -31,7 +32,11 @@ class DefaultController extends Controller
             return new Response($query->get('hub_challenge'));
         }
 
-        return new Response();
+        $container = $this->container;
+        $service = $container->get('app.message_sender');
+        $service->sendAction('typing_on',$query->get('messaging')['sender']['id']);
+
+        return new Response($query->has('messaging') ? $query->get('messaging') : 'hello');
         //TODO : gérer les appels et réponses
 
     }

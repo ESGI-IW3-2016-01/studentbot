@@ -15,20 +15,29 @@ use GuzzleHttp\Psr7\Request;
 class MessageSender
 {
 
-    public function sendAction(SenderAction $action, $recipient)
-    {
-        $container = $this->getContainer();
-        $uri = $container->getParameter('facebook.message_uri');
-        $token = $container->getParameter('facebook.page_access_token');
+    protected $token;
+    protected $graph;
 
-        $client = new Client(['base_uri' => 'https://graph.facebook.com/v2.8/me']);
+    /**
+     * MessageSender constructor.
+     */
+    public function __construct($token, $graph)
+    {
+        $this->token = $token;
+        $this->graph = $graph;
+    }
+
+    public function sendAction($action, $recipient)
+    {
+
+        $client = new Client(['base_uri' => 'https://graph.facebook.com/me']);
         $response = $client->request('POST', '/messages',
             [
                 'headers' =>
                     [
                         'content-type' => 'application/json'
                     ],
-                'query' => 'access_token=' . $token,
+                'query' => 'access_token=' . $this->token,
                 'json' => [
                     'recipient' => ['id' => $recipient],
                     'sender_action' => $action
