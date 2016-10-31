@@ -41,8 +41,7 @@ class DefaultController extends Controller
         error_log("[Message Received] Sender :" . $id . ", message : " . $message);
 
         $messageSenderService->sendAction('typing_on', $id);
-        sleep(2);
-        $messageSenderService->sendAction('typing_off', $id);
+        $messageSenderService->sendShortText('Echo : ' . $message, $id);
 
         return new Response();
     }
