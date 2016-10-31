@@ -31,7 +31,8 @@
         "stof/doctrine-extensions-bundle": "^1.2",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "javiereguiluz/easyadmin-bundle": "^1.15",
-        "facebook/graph-sdk": "5.4.*"
+        "facebook/graph-sdk": "5.4.*",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
