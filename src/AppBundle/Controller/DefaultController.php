@@ -35,7 +35,7 @@ class DefaultController extends Controller
         $id = $message->getSender();
         $text = $message->getText();
 
-        error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $id . ", message : " . $text);
+        error_log("[Message Received] sender id : " . $id . ", text : " . $text);
 
         $messageSenderService = $this->container->get('app.message_sender');
         $messageSenderService->sendTypingOn($id);
