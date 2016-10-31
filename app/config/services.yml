@@ -9,4 +9,4 @@ services:
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
     app.message_sender:
         class: AppBundle\Service\MessageSender
-        arguments: [%facebook.page_access_token%, %facebook.graph_version%]]
+        arguments: [%facebook.page_access_token%, %facebook.graph_version%]
