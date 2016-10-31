@@ -38,7 +38,7 @@ class MessageSender
      * @param string $recipient
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function sendAction($action, $recipient)
+    private function sendAction($action, $recipient)
     {
         $body = ['recipient' => ['id' => $recipient], "sender_action" => $action];
         $uri = $this->graph . '/me/messages';
@@ -57,6 +57,16 @@ class MessageSender
     public function sendMarkSeen($recipient)
     {
         $this->sendAction("mark_seen", $recipient);
+    }
+
+    public function sendTypingOn($recipient)
+    {
+        $this->sendAction("typing_on", $recipient);
+    }
+
+    public function sendTypingOff($recipient)
+    {
+        $this->sendAction("typing_off", $recipient);
     }
 
     public function sendShortText($text,$recipient)

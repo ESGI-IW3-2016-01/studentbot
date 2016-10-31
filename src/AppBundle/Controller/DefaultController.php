@@ -2,11 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use Message;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use AppBundle\Service\MessageSender;
 
 class DefaultController extends Controller
 {
@@ -26,23 +26,41 @@ class DefaultController extends Controller
      */
     public function webhookAction(Request $request)
     {
-        $query = $request->query;
-
-        if ($query->has('hub_challenge')) {
-            return new Response($query->get('hub_challenge'));
+        if ($request->query->has('hub_challenge')) {
+            return new Response($request->query->get('hub_challenge'));
         }
 
-        $body = json_decode($request->getContent(), true);
+        $message = $this->createMessageFromBody($request->getContent());
+
+        $id = $message->getSender();
+        $text = $message->getText();
+
+        error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $id . ", message : " . $text);
+
         $messageSenderService = $this->container->get('app.message_sender');
-
-        $id = $body['entry'][0]['messaging'][0]['sender']['id'];
-        $message = $body['entry'][0]['messaging'][0]['message']['text'];
-
-        error_log("[Message Received] Sender :" . $id . ", message : " . $message);
-
-        $messageSenderService->sendAction('typing_on', $id);
-        $messageSenderService->sendShortText('Echo : ' . $message, $id);
+        $messageSenderService->sendTypingOn($id);
+        $messageSenderService->sendShortText('echo : ' . $message, $id);
 
         return new Response();
+    }
+
+    /**
+     * @param $body
+     * @return Message
+     */
+    private function createMessageFromBody($body)
+    {
+        $body = json_decode($body, true);
+        $message = $body['entry'][0];
+
+        return new Message(
+            $message['id'],
+            $message['messaging'][0]['sender']['id'],
+            $message['messaging'][0]['recipient']['id'],
+            $message['messaging'][0]['message']['text'],
+            $message['time'],
+            $message['messaging'][0]['message']['mid'],
+            $message['messaging'][0]['message']['seq']
+        );
     }
 }
