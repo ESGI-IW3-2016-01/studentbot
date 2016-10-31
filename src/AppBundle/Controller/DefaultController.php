@@ -2,11 +2,11 @@
 
 namespace AppBundle\Controller;
 
-use Message;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Facebook\Message;
 
 class DefaultController extends Controller
 {
@@ -39,7 +39,7 @@ class DefaultController extends Controller
 
         $messageSenderService = $this->container->get('app.message_sender');
         $messageSenderService->sendTypingOn($id);
-        $messageSenderService->sendShortText('echo : ' . $message, $id);
+        $messageSenderService->sendShortText('echo : ' . $text, $id);
 
         return new Response();
     }

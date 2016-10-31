@@ -1,5 +1,9 @@
 <?php
 
+namespace AppBundle\Entity\Facebook;
+use DateTime;
+use Symfony\Component\Validator\Constraints\Date;
+
 /**
  * Created by PhpStorm.
  * User: Antoine
@@ -46,10 +50,12 @@ class Message
         Attachment $attachment = null,
         $quickReply = null)
     {
+        $this->date = new DateTime();
+
         $this->id = $id;
         $this->sender = $sender;
         $this->receiver = $receiver;
-        $this->$date = new DateTime($date);
+        $this->date->setTimestamp($date);
         $this->mid = $mid;
         $this->seq = $seq;
         $this->text = $text;
