@@ -45,11 +45,8 @@ class MessageSender
         $uri = $this->graph . '/me/messages';
         try {
             $response = $this->client->post($uri, ['json' => $body, 'query' => ['access_token' => $this->token]]);
-
             error_log('[Guzzle Response] ' . $response->getStatusCode() . ' : ' . $response->getBody());
-
             return $response;
-
         } catch (\Exception $e) {
             error_log($e->getMessage());
         }
