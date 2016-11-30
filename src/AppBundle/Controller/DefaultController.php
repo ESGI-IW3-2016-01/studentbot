@@ -35,6 +35,7 @@ class DefaultController extends Controller
         $id = $message->getSender();
         $text = $message->getText();
 
+        // error_log("[Request Received][" . $request->getContent());
         error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $id . ", message : " . $text);
 
         $messageSenderService = $this->container->get('app.message_sender');
