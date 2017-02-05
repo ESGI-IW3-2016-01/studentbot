@@ -32,12 +32,12 @@ class DefaultController extends Controller
             return new Response($request->query->get('hub_challenge'));
         }
 
+        $message = $this->createMessageRecievedFromBody($request->getContent());
+        error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $message->getSender() . ", message : " . $message->getText());
+
         /** @var MessageSender $messageSenderService */
         $messageSenderService = $this->container->get('app.message_sender');
         $messageSenderService->sendTypingOn($message->getSender());
-
-        $message = $this->createMessageRecievedFromBody($request->getContent());
-        error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $message->getSender() . ", message : " . $message->getText());
 
         if ($message->hasPayload()) {
             switch ($message->getPayload()) {
@@ -65,18 +65,29 @@ class DefaultController extends Controller
         $body = json_decode($body, true);
         $message = $body['entry'][0];
 
-        $message = new Message(
-            $message['id'],
-            $message['messaging'][0]['sender']['id'],
-            $message['messaging'][0]['recipient']['id'],
-            $message['messaging'][0]['message']['text'],
-            $message['time'],
-            $message['messaging'][0]['message']['mid'],
-            $message['messaging'][0]['message']['seq']
-        );
-
         if (isset($message['messaging'][0]['postback']['payload'])) {
-            $message->setPayload($message['messaging'][0]['postback']['payload']);
+            $messageObject = new Message(
+                $message['id'],
+                $message['messaging'][0]['sender']['id'],
+                $message['messaging'][0]['recipient']['id'],
+                null,
+                $message['time'],
+                null,
+                null
+            );
+            $messageObject->setPayload($message['messaging'][0]['postback']['payload']);
+        } else {
+            $messageObject = new Message(
+                $message['id'],
+                $message['messaging'][0]['sender']['id'],
+                $message['messaging'][0]['recipient']['id'],
+                $message['messaging'][0]['message']['text'],
+                $message['time'],
+                $message['messaging'][0]['message']['mid'],
+                $message['messaging'][0]['message']['seq']
+            );
         }
+
+        return $messageObject;
     }
 }
