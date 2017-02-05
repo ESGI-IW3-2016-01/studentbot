@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Facebook\SendMessage;
+use AppBundle\Service\MessageSender;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,17 +33,13 @@ class DefaultController extends Controller
         }
 
         $message = $this->createMessageRecievedFromBody($request->getContent());
-
-        $id = $message->getSender();
-        $text = $message->getText();
-
-        // error_log("[Request Received][" . $request->getContent());
         error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $id . ", message : " . $text);
-        //error_log("[Message Received] sender id : " . $id . ", text : " . $text);
+        $responseMessage = new SendMessage($message->getSender(),$message->getText());
 
+        /** @var MessageSender $messageSenderService */
         $messageSenderService = $this->container->get('app.message_sender');
         $messageSenderService->sendTypingOn($id);
-        $messageSenderService->sendShortText('echo : ' . $text, $id);
+        $messageSenderService->sendMessage($responseMessage);
 
         return new Response();
     }
