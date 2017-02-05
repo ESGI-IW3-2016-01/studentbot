@@ -33,12 +33,12 @@ class DefaultController extends Controller
         }
 
         $message = $this->createMessageRecievedFromBody($request->getContent());
-        error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $id . ", message : " . $text);
+        error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $message->getSender() . ", message : " . $message->getText());
         $responseMessage = new SendMessage($message->getSender(),$message->getText());
 
         /** @var MessageSender $messageSenderService */
         $messageSenderService = $this->container->get('app.message_sender');
-        $messageSenderService->sendTypingOn($id);
+        $messageSenderService->sendTypingOn($message->getSender());
         $messageSenderService->sendMessage($responseMessage);
 
         return new Response();
