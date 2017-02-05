@@ -3,7 +3,7 @@
 namespace AppBundle\Entity\Facebook;
 
 use DateTime;
-use Symfony\Component\Validator\Constraints\Date;
+use SenderAction;
 
 /**
  * Created by PhpStorm.
@@ -11,18 +11,12 @@ use Symfony\Component\Validator\Constraints\Date;
  * Date: 26/10/2016
  * Time: 22:38
  */
-class Message
+class SendMessage
 {
-    private $id;
-
-    private $mid;
-    private $seq;
     private $text;
-
-    private $sender;
-    private $receiver;
-    /** @var DateTime date */
-    private $date;
+    private $recipient;
+    /** @var  SenderAction\ senderAction */
+    private $senderAction;
 
     /** @var Attachment */
     private $attachment;
