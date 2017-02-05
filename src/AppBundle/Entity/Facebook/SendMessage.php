@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Facebook;
 
 use DateTime;
 use AppBundle\Entity\Facebook\Enum\SenderAction;
+use AppBundle\Entity\Facebook\Attachment;
 
 
 class SendMessage

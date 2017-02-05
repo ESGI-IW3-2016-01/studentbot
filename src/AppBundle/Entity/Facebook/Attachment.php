@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Antoine
- * Date: 26/10/2016
- * Time: 22:44
- */
+namespace AppBundle\Entity\Facebook;
 
 class Attachment
 {

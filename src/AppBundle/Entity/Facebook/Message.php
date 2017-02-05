@@ -4,13 +4,8 @@ namespace AppBundle\Entity\Facebook;
 
 use DateTime;
 use Symfony\Component\Validator\Constraints\Date;
+use AppBundle\Entity\Facebook\Attachment;
 
-/**
- * Created by PhpStorm.
- * User: Antoine
- * Date: 26/10/2016
- * Time: 22:38
- */
 class Message
 {
     private $id;
