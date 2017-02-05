@@ -25,6 +25,8 @@ class Message
     // Custom Data
     private $quickReply;
 
+    private $payload;
+
     /**
      * Message constructor.
      * @param $id

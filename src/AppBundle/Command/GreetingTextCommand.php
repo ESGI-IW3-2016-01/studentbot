@@ -31,10 +31,10 @@ class GreetingTextCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('bot:settings:greeting')
-            ->addOption("delete", 'd', 'Delete the active greeting text')
-            ->addOption("list", 'l', 'Display active greeting text')
-            ->setDescription('Enable greeting text');
+            ->setName("bot:settings:greeting")
+            ->addOption("delete", "d", InputOption::VALUE_NONE, "Delete the active greeting text")
+            ->addOption("list", "l", InputOption::VALUE_NONE, "Display active greeting text")
+            ->setDescription("Enable greeting text");
     }
 
     /**
@@ -68,7 +68,7 @@ class GreetingTextCommand extends ContainerAwareCommand
                 "setting_type" => "greeting"
             ];
             $message = 'Greeting text disabled';
-            $httpVerb = 'DELETE';
+            $http = 'DELETE';
         } else {
             $io->title('Activating greeting text...');
             $em = $this->getContainer()->get('Doctrine')->getManager();
@@ -83,11 +83,11 @@ class GreetingTextCommand extends ContainerAwareCommand
                 ]
             ];
             $message = 'Greeting text enabled';
-            $httpVerb = 'POST';
+            $http = 'POST';
         }
 
         try {
-            $response = $this->client->request($httpVerb, $uri, ['query' => ['access_token' => $this->accessToken], 'json' => $body]);
+            $response = $this->client->request($http, $uri, ['query' => ['access_token' => $this->accessToken], 'json' => $body]);
         } catch (\Exception $e) {
             error_log($e->getMessage());
             return $io->error(sprintf('Error : %s', $e->getMessage()));
