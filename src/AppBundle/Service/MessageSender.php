@@ -10,8 +10,7 @@ namespace AppBundle\Service;
  */
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
-use AppBundle\Entity\Facebook\Message;
+use AppBundle\Entity\Facebook\SendMessage;
 
 class MessageSender
 {
