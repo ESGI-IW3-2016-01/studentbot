@@ -191,4 +191,25 @@ class Message
     {
         $this->date = $date;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @param mixed $payload
+     */
+    public function setPayload($payload)
+    {
+        $this->payload = $payload;
+    }
+
+    public function hasPayload()
+    {
+        return isset($this->payload) && !empty($this->payload);
+    }
 }

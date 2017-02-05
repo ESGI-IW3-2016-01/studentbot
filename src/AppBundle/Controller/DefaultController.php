@@ -32,14 +32,26 @@ class DefaultController extends Controller
             return new Response($request->query->get('hub_challenge'));
         }
 
-        $message = $this->createMessageRecievedFromBody($request->getContent());
-        error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $message->getSender() . ", message : " . $message->getText());
-        $responseMessage = new SendMessage($message->getSender(),$message->getText());
-
         /** @var MessageSender $messageSenderService */
         $messageSenderService = $this->container->get('app.message_sender');
         $messageSenderService->sendTypingOn($message->getSender());
-        $messageSenderService->sendMessage($responseMessage);
+
+        $message = $this->createMessageRecievedFromBody($request->getContent());
+        error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $message->getSender() . ", message : " . $message->getText());
+
+        if ($message->hasPayload()) {
+            switch ($message->getPayload()) {
+                case "BUTTON_HELP":
+                    $messageSenderService->sendShortText("Tu as besoin d'aide ?",$message->getSender());
+                    break;
+                case "BUTTON_RESET":
+                    $messageSenderService->sendShortText("Tu veux tout reset ?",$message->getSender());
+                    break;
+            }
+        } else {
+            $responseMessage = new SendMessage($message->getSender(), $message->getText());
+            $messageSenderService->sendMessage($responseMessage);
+        }
 
         return new Response();
     }
@@ -53,7 +65,7 @@ class DefaultController extends Controller
         $body = json_decode($body, true);
         $message = $body['entry'][0];
 
-        return new Message(
+        $message = new Message(
             $message['id'],
             $message['messaging'][0]['sender']['id'],
             $message['messaging'][0]['recipient']['id'],
@@ -62,5 +74,9 @@ class DefaultController extends Controller
             $message['messaging'][0]['message']['mid'],
             $message['messaging'][0]['message']['seq']
         );
+
+        if (isset($message['messaging'][0]['postback']['payload'])) {
+            $message->setPayload($message['messaging'][0]['postback']['payload']);
+        }
     }
 }
