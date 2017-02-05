@@ -30,14 +30,14 @@ class DefaultController extends Controller
             return new Response($request->query->get('hub_challenge'));
         }
 
-        $message = $this->createMessageFromBody($request->getContent());
+        $message = $this->createMessageRecievedFromBody($request->getContent());
 
         $id = $message->getSender();
         $text = $message->getText();
 
         // error_log("[Request Received][" . $request->getContent());
         error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $id . ", message : " . $text);
-        error_log("[Message Received] sender id : " . $id . ", text : " . $text);
+        //error_log("[Message Received] sender id : " . $id . ", text : " . $text);
 
         $messageSenderService = $this->container->get('app.message_sender');
         $messageSenderService->sendTypingOn($id);
@@ -50,7 +50,7 @@ class DefaultController extends Controller
      * @param $body
      * @return Message
      */
-    private function createMessageFromBody($body)
+    private function createMessageRecievedFromBody($body)
     {
         $body = json_decode($body, true);
         $message = $body['entry'][0];

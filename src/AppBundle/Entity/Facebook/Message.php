@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity\Facebook;
+
 use DateTime;
 use Symfony\Component\Validator\Constraints\Date;
 
@@ -20,8 +21,10 @@ class Message
 
     private $sender;
     private $receiver;
+    /** @var DateTime date */
     private $date;
 
+    /** @var Attachment */
     private $attachment;
 
     // Custom Data
@@ -51,7 +54,6 @@ class Message
         $quickReply = null)
     {
         $this->date = new DateTime();
-
         $this->id = $id;
         $this->sender = $sender;
         $this->receiver = $receiver;
