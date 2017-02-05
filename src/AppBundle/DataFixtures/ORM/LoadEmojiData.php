@@ -4,7 +4,7 @@ namespace AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\Emoji;
+use AppBundle\Entity\Facebook\Emoji;
 
 class LoadEmojiData implements FixtureInterface
 {
