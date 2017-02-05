@@ -8,20 +8,17 @@ Vagrant.configure("2") do |config|
   config.vm.box = "michaelward82/trusty64-php7"
 
   config.vm.network "forwarded_port", guest: 80, host: 8080
-
   config.vm.network "private_network", ip: "192.168.33.10"
-  config.vm.network "public_network"
 
-  config.vm.provider "virtualbox" do |vb|
-      vb.gui = false
-      vb.memory = "2048"
-  end
+# Désactivation du partage par défaut
+config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", :owner=> 'vagrant', :group=>'www-data', :mount_options => ['dmode=775', 'fmode=775']
 
-config.vm.synced_folder "./", "/vagrant", id: "vagrant-root", :owner => "www-data", :group => "www-data"
+ # Partage du dossier courant dans la home de l'utilisateur vagrant
+ #config.vm.synced_folder ".", "/home/vagrant/symfony-app", type: "nfs"
 
 config.vm.provision "shell", inline: <<-SHELL
     apt-get -qq update
-    apt-get -qq install -y apache2 php-xml git zip
+    apt-get -qq install -y apache2 php7.0-xml git zip
     phpdismod xdebug
     echo "### DISABLING XDEBUG ###"
 
@@ -33,13 +30,10 @@ config.vm.provision "shell", inline: <<-SHELL
     mv composer.phar /usr/local/bin/composer
     echo "### COMPOSER INSTALLED ###"
 
-    # make-ssl-cert /usr/share/ssl-cert/ssleay.cnf /etc/ssl/private/symfony-app.pem
-
     # Virtual Host
     echo "### VIRTUAL HOSTING ###"
     sudo cp /vagrant/symfony-app.conf /etc/apache2/sites-available/
     ln -s /vagrant/web/ /var/www/symfony-app
-    a2enmod ssl
     a2ensite symfony-app.conf
     echo "127.0.0.1     studentbot.localhost.com" >> /etc/hosts
     echo "### VIRTUAL HOSTED ! ###"
@@ -67,4 +61,10 @@ config.vm.provision "shell", privileged: false, inline: <<-SHELL
     /vagrant/bin/console doctrine:fixtures:load -n
     /vagrant/bin/symfony_requirements
     SHELL
+
+  config.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.customize ["modifyvm", :id, "--name", "Symfony Chatbot", "--memory", "2048", "--cpus", "4"]
+  end
+
 end
