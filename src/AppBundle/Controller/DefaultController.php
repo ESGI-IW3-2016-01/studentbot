@@ -9,6 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Facebook\Message;
+use AppBundle\Service\Basket;
+use AppBundle\Service\Football;
+use AppBundle\Service\Weather;
 
 class DefaultController extends Controller
 {
@@ -49,8 +52,12 @@ class DefaultController extends Controller
                     break;
             }
         } else {
-            $responseMessage = new SendMessage($message->getSender(), $message->getText());
-            $messageSenderService->sendMessage($responseMessage);
+            $res = $this->choiceAPI($message->getText());
+            foreach ($res as $resMessage) {
+                $responseMessage = new SendMessage($message->getSender(), $resMessage);
+                $messageSenderService->sendMessage($responseMessage);
+            }
+            
         }
 
         return new Response();
@@ -89,5 +96,42 @@ class DefaultController extends Controller
         }
 
         return $messageObject;
+    }
+    
+    private function choiceAPI($chaine) 
+    {
+        switch ($chaine){
+            case "\xE2\x9A\xBD" :
+                $res =$this->football();
+                break;
+            default :
+                $res = $chaine;
+        }
+        
+        return $res;
+    }
+    
+    private function football() {
+        $football = new Football();
+        $json_data = $football->getResultFootball();
+        
+        $data = json_decode($json_data);
+        
+        $res = [];
+        foreach ($data->results as $result) {
+            $home_team = $result->sport_event->competitors[0]->name;
+            $away_team = $result->sport_event->competitors[1]->name;
+            $home_score = $result->sport_event_status->home_score;
+            $away_score = $result->sport_event_status->away_score;
+            $tournament = $result->sport_event->tournament->name;
+
+            if (!array_key_exists($tournament, $res)) {
+                $res[$tournament] = [];
+            }
+
+            $res[$tournament][] = $home_team." ".$home_score. " - ".$away_score." ".$away_team."<br />";
+        }
+        
+        return $res;
     }
 }
