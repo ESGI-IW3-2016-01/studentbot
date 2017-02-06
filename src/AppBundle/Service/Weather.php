@@ -2,6 +2,8 @@
 
 namespace AppBundle\Service;
 
+use GuzzleHttp\Client;
+
 class Weather
 {
     private $lang;
