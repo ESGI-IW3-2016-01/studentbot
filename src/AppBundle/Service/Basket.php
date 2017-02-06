@@ -9,7 +9,8 @@ class Basket
     private $basket_key;
     public function __construct()
     {
-        $this->basket_key = $this->container->getParameter('basket_key');
+        $container = $this->getContainer();
+        $this->basket_key = $container->getParameter('basket_key');
         $this->client = new Client(['base_uri' => 'http://api.sportradar.us/nba-t3/']);
     }
     

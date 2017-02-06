@@ -9,7 +9,8 @@ class Football
     private $football_key;
     public function __construct()
     {
-        $this->football_key = $this->container->getParameter('football_key');
+        $container = $this->getContainer();
+        $this->football_key = $container->getParameter('football_key');
         $this->client = new Client(['base_uri' => 'https://api.sportradar.us/soccer-t3/eu/fr/']);
     }
     
