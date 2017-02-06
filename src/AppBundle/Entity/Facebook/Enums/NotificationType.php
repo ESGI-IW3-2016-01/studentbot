@@ -12,5 +12,4 @@ abstract class NotificationType
         self::typingOn,
         self::typingOff
     ];
-
 }
