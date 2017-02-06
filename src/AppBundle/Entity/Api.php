@@ -36,7 +36,7 @@ class Api
      * @var boolean
      * @ORM\Column(type="boolean")
      */
-    private $isEnabled = false;
+    private $enabled = false;
 
     /**
      * @var string
@@ -91,17 +91,17 @@ class Api
     /**
      * @return bool
      */
-    public function isIsEnabled()
+    public function isEnabled()
     {
-        return $this->isEnabled;
+        return $this->enabled;
     }
 
     /**
-     * @param bool $isEnabled
+     * @param bool $enabled
      */
-    public function setIsEnabled($isEnabled)
+    public function setEnabled($enabled)
     {
-        $this->isEnabled = $isEnabled;
+        $this->enabled = $enabled;
     }
 
     /**
@@ -150,5 +150,10 @@ class Api
     public function setToken($token)
     {
         $this->token = $token;
+    }
+
+    public function __toString() {
+        $status = $this->isEnabled() == 1 ? 'enabled' : 'disabled';
+        return $this->id . ' ' . $this->name . " API ($status)";
     }
 }
