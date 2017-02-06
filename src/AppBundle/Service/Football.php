@@ -4,7 +4,7 @@ namespace AppBundle\Service;
 
 use GuzzleHttp\Client;
 
-class Football
+class Football extends ContainerAwareCommand
 {   
     private $football_key;
     public function __construct()
