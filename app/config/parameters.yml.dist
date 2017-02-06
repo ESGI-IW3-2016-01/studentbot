@@ -24,3 +24,7 @@ parameters:
     facebook.token: ~
     facebook.page_access_token: ~
     facebook.message_uri: https://graph.facebook.com/v2.6/me/messages
+
+    football_key : ~
+    basket_key : ~
+    weather_key : ~
