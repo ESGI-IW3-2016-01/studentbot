@@ -53,8 +53,11 @@ class DefaultController extends Controller
             }
         } else {
             $res = $this->choiceAPI($message->getText());
-            $responseMessage = new SendMessage($message->getSender(), $res);
-            $messageSenderService->sendMessage($responseMessage);
+            foreach ($res as $resMessage) {
+                $responseMessage = new SendMessage($message->getSender(), $resMessage);
+                $messageSenderService->sendMessage($responseMessage);
+            }
+            
         }
 
         return new Response();
