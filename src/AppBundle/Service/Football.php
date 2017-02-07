@@ -22,7 +22,7 @@ class Football extends ContainerAwareCommand
         try {
             $response = $this->client->get($uri);
             error_log('[Guzzle Response] ' . $response->getStatusCode() . ' : ' . $response->getBody());
-            return $response;
+            return $response->getBody();
         } catch (\Exception $e) {
             error_log($e->getMessage());
         }
