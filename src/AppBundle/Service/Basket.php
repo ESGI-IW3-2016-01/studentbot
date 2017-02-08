@@ -7,12 +7,10 @@ use GuzzleHttp\Client;
 class Basket
 {
     private $basket_key;
-    private $manager;
 
-    public function __construct(EntityManager $manager, $basketKey)
+    public function __construct($basketKey)
     {
         $this->basket_key = $basketKey;
-        $this->manager = $manager;
         $this->client = new Client(['base_uri' => 'http://api.sportradar.us/nba-t3/']);
     }
     

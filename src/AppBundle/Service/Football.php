@@ -11,12 +11,10 @@ use GuzzleHttp\Client;
 class Football
 {
     private $football_key;
-    private $manager;
 
-    public function __construct(EntityManager $manager, $footballKey)
+    public function __construct($footballKey)
     {
         $this->football_key = $footballKey;
-        $this->manager = $manager;
         $this->client = new Client(['base_uri' => 'https://api.sportradar.us/soccer-t3/eu/fr/']);
     }
 
@@ -29,18 +27,6 @@ class Football
         try {
             $response = $this->client->get($uri);
             error_log('[Guzzle Response] ' . $response->getStatusCode() . ' : ' . $response->getBody());
-            // TODO Faire un event
-
-            $apilog = new ApiLog();
-            $apilog->setCode($response->getStatusCode());
-            $apilog->setDate(new Datetime());
-            $apilog->setFacebookId(null);
-            $apilog->setApi('football');
-            $apilog->setAction(null);
-
-            $this->manager->persist($apilog);
-            $this->manager->flush();
-
             return $response->getBody();
         } catch (\Exception $e) {
             error_log($e->getMessage());

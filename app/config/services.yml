@@ -12,7 +12,7 @@ services:
         arguments: [%facebook.page_access_token%, %facebook.graph_version%]
     app.football_api_service:
         class: AppBundle\Service\Football
-        arguments: [ doctrine.orm.entity_manager, %football_key%]
+        arguments: [%football_key%]
     app.basket_api_service:
         class: AppBundle\Service\Basket
-        arguments: [ doctrine.orm.entity_manager, %basket_key%]
+        arguments: [%basket_key%]
