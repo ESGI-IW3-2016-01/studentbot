@@ -43,6 +43,14 @@ class Emoji
     protected $description;
     
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
      * Get unicode
      * @return string $unicode
      */

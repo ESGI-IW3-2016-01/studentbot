@@ -75,9 +75,6 @@ fos_user:
 easy_admin:
     site_name: '<div class="home-logo">StudentBot</div>'
     design:
-        menu:
-            - User
-            - { label: 'API', url: '' }
         form_theme: 'horizontal'
         assets:
             css:
@@ -90,6 +87,9 @@ easy_admin:
         ApiLog:
             class: AppBundle\Entity\ApiLog
             label: 'ApiLog'
+        Emoji:
+            class: AppBundle\Entity\Facebook\Emoji
+            label: 'Emoji'
         User:
           class: AppBundle\Entity\User
           label: 'User'
