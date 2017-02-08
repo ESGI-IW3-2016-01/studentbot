@@ -2,16 +2,17 @@
 
 namespace AppBundle\Service;
 
-use AppBundle\Entity\ApiLog;
 use GuzzleHttp\Client;
 
 class Basket
-{   
+{
     private $basket_key;
-    public function __construct()
+    private $manager;
+
+    public function __construct(EntityManager $manager, $basketKey)
     {
-        $container = $this->getContainer();
-        $this->basket_key = $container->getParameter('basket_key');
+        $this->basket_key = $basketKey;
+        $this->manager = $manager;
         $this->client = new Client(['base_uri' => 'http://api.sportradar.us/nba-t3/']);
     }
     
@@ -24,10 +25,6 @@ class Basket
         try {
             $response = $this->client->get($uri);
             error_log('[Guzzle Response] ' . $response->getStatusCode() . ' : ' . $response->getBody());
-            $apilog = new ApiLog();
-            $apilog->setCode($response->getStatusCode());
-            $apilog->setDate(new Datetime());
-            $apilog->setFacebookId(null);
             return $response->getBody();
         } catch (\Exception $e) {
             error_log($e->getMessage());
