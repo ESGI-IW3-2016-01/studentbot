@@ -4,19 +4,19 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Facebook\SendMessage;
 use AppBundle\Service\MessageSender;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Facebook\Message;
 use AppBundle\Service\Basket;
 use AppBundle\Service\Football;
-use AppBundle\Service\Weather;
 
 class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     * @param Request $request
+     * @return Response
      */
     public function indexAction(Request $request)
     {
@@ -119,7 +119,7 @@ class DefaultController extends Controller
                 $res = $this->basket();
                 break;
             default :
-                $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95"; 
+                $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
                 break;
         }
         
@@ -235,15 +235,15 @@ class DefaultController extends Controller
         
         return $flag;
     }
-    
+
     private function weather($city) {
         $weather = $this->container->get('app.weather_api_service');
         $json_data = $weather->getWeatherByCity($city);
-        
+
         $data = json_decode($json_data);
-        
+
         $res = "Météo ". $data->name . " : " . $data->weather[0]->description . " | Température " . round($data->main->temp) . "°C";
-        
+
         return $res;
     }
 }

@@ -2,19 +2,20 @@
 
 namespace AppBundle\Service;
 
-use AppBundle\Entity\ApiLog;
-use AppBundle\Repository\ApiLogRepository;
-use DateTime;
-use Doctrine\ORM\EntityManager;
+use AppBundle\Event\ApiEvent;
 use GuzzleHttp\Client;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Football
 {
     private $football_key;
+    private $dispatcher;
+    const NAME = "football";
 
-    public function __construct($footballKey)
+    public function __construct($footballKey, EventDispatcherInterface $dispatcher)
     {
         $this->football_key = $footballKey;
+        $this->dispatcher = $dispatcher;
         $this->client = new Client(['base_uri' => 'https://api.sportradar.us/soccer-t3/eu/fr/']);
     }
 
@@ -26,7 +27,8 @@ class Football
          
         try {
             $response = $this->client->get($uri);
-            error_log('[Guzzle Response] ' . $response->getStatusCode() . ' : ' . $response->getBody());
+            error_log('[Guzzle Response Football] ' . $response->getStatusCode() . ' : ' . $response->getBody());
+            $this->dispatcher->dispatch(ApiEvent::NAME, new ApiEvent(self::NAME, $response->getStatusCode()));
             return $response->getBody();
         } catch (\Exception $e) {
             error_log($e->getMessage());

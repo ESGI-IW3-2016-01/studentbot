@@ -45,19 +45,24 @@ class ApiLog
     /**
      * @var string
      *
-     * @ORM\Column(name="facebook_id", type="string", length=255)
-     */
-    private $facebookId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="code", type="integer", length=255)
+     * @ORM\Column(name="code", type="integer")
      */
     private $code;
 
     /**
-     * @return mixed
+     * ApiLog constructor.
+     * @param Api $api
+     * @param int $code
+     */
+    public function __construct($api, $code)
+    {
+        $this->api = $api;
+        $this->date = new DateTime();
+        $this->code = $code;
+    }
+
+    /**
+     * @return integer
      */
     public function getId()
     {
@@ -65,7 +70,7 @@ class ApiLog
     }
 
     /**
-     * @return mixed
+     * @return Api
      */
     public function getApi()
     {
@@ -73,7 +78,7 @@ class ApiLog
     }
 
     /**
-     * @param mixed $api
+     * @param Api $api
      */
     public function setApi($api)
     {
@@ -97,23 +102,7 @@ class ApiLog
     }
 
     /**
-     * @return string
-     */
-    public function getFacebookId()
-    {
-        return $this->facebookId;
-    }
-
-    /**
-     * @param string $facebookId
-     */
-    public function setFacebookId($facebookId)
-    {
-        $this->facebookId = $facebookId;
-    }
-
-    /**
-     * @return string
+     * @return int
      */
     public function getCode()
     {
@@ -121,7 +110,7 @@ class ApiLog
     }
 
     /**
-     * @param string $code
+     * @param int $code
      */
     public function setCode($code)
     {
