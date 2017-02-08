@@ -122,7 +122,8 @@ class DefaultController extends Controller
     }
     
     private function basket() {
-        $basket = new Basket();
+        /** @var Basket $basket */
+        $basket = $this->container->get('app.basket_api_service');
         $json_data = $basket->getResultNBA();
         
         $data = json_decode($json_data);
@@ -167,7 +168,8 @@ class DefaultController extends Controller
     }
     
     private function football() {
-        $football = new Football();
+        /** @var Football $football */
+        $football = $this->container->get('app.football_api_service');
         $json_data = $football->getResultFootball();
         
         $data = json_decode($json_data);

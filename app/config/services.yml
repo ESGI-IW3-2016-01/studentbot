@@ -13,6 +13,6 @@ services:
     app.football_api_service:
         class: AppBundle\Service\Football
         arguments: [ doctrine.orm.entity_manager, %football_key%]
-    app.football_api_service:
+    app.basket_api_service:
         class: AppBundle\Service\Basket
         arguments: [ doctrine.orm.entity_manager, %basket_key%]
