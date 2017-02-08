@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Event\ApiEvent;
 use GuzzleHttp\Client;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
