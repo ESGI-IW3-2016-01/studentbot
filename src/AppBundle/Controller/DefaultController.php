@@ -119,12 +119,8 @@ class DefaultController extends Controller
                 $res = $this->basket();
                 break;
             default :
-                if (strstr($chaine, "\x")) {
-                    $res = "Désolé, je ne comprend pas encore cet emojii... \xF0\x9F\x98\x95"; 
-                } else {
-                   $res = $chaine; 
-                }
-                
+                $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95"; 
+                break;
         }
         
         return $res;
