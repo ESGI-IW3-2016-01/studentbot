@@ -17,7 +17,7 @@ class Basket
     public function getResultNBA() 
     {
         $date = date("Y/m/d");
-        
+        //$date = date ("Y/m/d", mktime (0,0,0,date('m'),date('d')-1,date('Y')));
         $uri = "games/" . $date . "/schedule.json?api_key=" . $this->basket_key;
             
         try {
