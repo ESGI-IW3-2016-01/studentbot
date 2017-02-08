@@ -4,6 +4,11 @@ parameters:
 #    parameter_name: value
 
 services:
+    app.api_events_listener:
+        class: AppBundle\Service\EventListener\ApiEventListener
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: 'kernel.event_listener', event: 'api.called', method: 'onApiCalled' }
     app.message_sender:
         class: AppBundle\Service\MessageSender
         arguments: [%facebook.page_access_token%, %facebook.graph_version%]
@@ -12,14 +17,10 @@ services:
         arguments: [%football_key%, '@event_dispatcher']
     app.basket_api_service:
         class: AppBundle\Service\Basket
-        arguments: [%basket_key%]
-    app.api_events_listener:
-        class: AppBundle\Service\EventListener\ApiEventListener
-        arguments: ['@doctrine.orm.entity_manager']
-        tags:
-            - { name: 'kernel.event_listener', event: 'api.called', method: 'onApiCalled' }
+        arguments: [%basket_key%, '@event_dispatcher']
     app.weather_api_service:
         class: AppBundle\Service\Weather
-        arguments: [%weather_key%,"fr", "metric"]
+        arguments: [%weather_key%,"fr", "metric", '@event_dispatcher']
     app.yesorno_api_service:
         class: AppBundle\Service\YesOrNo
+        arguments: ['@event_dispatcher']
