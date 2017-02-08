@@ -13,17 +13,16 @@ class SendMessage
     private $recipient;
     /** @var SenderAction senderAction */
     private $senderAction;
-    /** @var Attachment */
     private $attachment;
 
     /**
      * SendMessage constructor.
-     * @param $text
-     * @param $recipient
+     * @param string $text
+     * @param string $recipient
      * @param SenderAction $senderAction
-     * @param Attachment $attachment
+     * @param string $attachment
      */
-    public function __construct($recipient, $text = null, SenderAction $senderAction = null, Attachment $attachment = null)
+    public function __construct($recipient, $text = null, SenderAction $senderAction = null, $attachment = null)
     {
         $this->recipient = $recipient;
         $this->text = $text;
@@ -80,7 +79,7 @@ class SendMessage
     }
 
     /**
-     * @return Attachment
+     * @return string
      */
     public function getAttachment()
     {
@@ -88,7 +87,7 @@ class SendMessage
     }
 
     /**
-     * @param Attachment $attachment
+     * @param string $attachment
      */
     public function setAttachment($attachment)
     {

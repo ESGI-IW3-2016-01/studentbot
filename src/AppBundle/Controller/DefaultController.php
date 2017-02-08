@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Facebook\Attachment;
 use AppBundle\Entity\Facebook\SendMessage;
 use AppBundle\Service\MessageSender;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
 {
+    private $image;
+
     /**
      * @Route("/", name="homepage")
      * @param Request $request
@@ -46,28 +49,26 @@ class DefaultController extends Controller
         if ($message->hasPayload()) {
             switch ($message->getPayload()) {
                 case "BUTTON_HELP":
-                    $messageSenderService->sendShortText("Tu as besoin d'aide ?",$message->getSender());
+                    $messageSenderService->sendShortText("Tu as besoin d'aide ?", $message->getSender());
                     break;
                 case "BUTTON_RESET":
-                    $messageSenderService->sendShortText("Tu veux tout reset ?",$message->getSender());
+                    $messageSenderService->sendShortText("Tu veux tout reset ?", $message->getSender());
                     break;
             }
         } else {
             $res = $this->choiceAPI($message->getText());
-            
-            if (is_array($res)) {
-                foreach ($res as $resMessage) {
+            if (!is_array($res)) {
+                $res = [$res];
+            }
+            foreach ($res as $resMessage) {
+                if ($this->image) {
+                    $responseMessage = new SendMessage($message->getSender(), null, null, $resMessage);
+                } else {
                     $responseMessage = new SendMessage($message->getSender(), $resMessage);
-                    $messageSenderService->sendMessage($responseMessage);
                 }
-            }else {
-                $responseMessage = new SendMessage($message->getSender(), $res);
                 $messageSenderService->sendMessage($responseMessage);
             }
-            
-            
         }
-
         return new Response();
     }
 
@@ -105,18 +106,19 @@ class DefaultController extends Controller
 
         return $messageObject;
     }
-    
-    private function choiceAPI($chaine) 
+
+    private function choiceAPI($chaine)
     {
+        $this->image = false;
         $chaine = strtolower($chaine);
-        switch ($chaine){
+        switch ($chaine) {
             case "résultat football" :
-            case strcmp("\xe2\x9a\xbd",$chaine) == 0 :
-                $res =$this->football();
+            case strcmp("\xe2\x9a\xbd", $chaine) == 0 :
+                $res = $this->football();
                 break;
             case "résultat basket" :
             case "résultat nba" :
-            case strcmp("\xf0\x9f\x8f\x80",$chaine) == 0 :
+            case strcmp("\xf0\x9f\x8f\x80", $chaine) == 0 :
                 $res = $this->basket();
                 break;
             case count(explode("météo", $chaine)) != 1 :
@@ -127,43 +129,46 @@ class DefaultController extends Controller
                 $json_data = $yesOrNo->yesOrNo();
                 $data = json_decode($json_data);
                 $res = $data->image;
+                $this->image = true;
                 break;
             default :
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
                 break;
         }
-        
+
         return $res;
     }
-    
-    private function basket() {
+
+    private function basket()
+    {
         /** @var Basket $basket */
         $basket = $this->container->get('app.basket_api_service');
         $json_data = $basket->getResultNBA();
-        
+
         $data = json_decode($json_data);
-        
+
         $res = [];
-         foreach ($data->games as $games) {
+        foreach ($data->games as $games) {
             $home_team = $games->home->name;
             $away_team = $games->away->name;
             $status = $status = $this->getStatusNBA($games->status);
-            
-            
+
+
             if ($games->status == "closed") {
                 $home_points = $games->home_points;
                 $away_points = $games->away_points;
-                
-                $res[] = $status. " - ". $away_team." ".$away_points. " - ".$home_points. " " .$home_team; 
+
+                $res[] = $status . " - " . $away_team . " " . $away_points . " - " . $home_points . " " . $home_team;
             } else {
-                $res[] = $status. " - ". $away_team. " vs " .$home_team; 
+                $res[] = $status . " - " . $away_team . " vs " . $home_team;
             }
         }
-        
+
         return $res;
     }
-    
-    private function getStatusNBA($status) {
+
+    private function getStatusNBA($status)
+    {
         switch ($status) {
             case 'closed':
                 $res = "Closed \xf0\x9f\x94\x92";
@@ -178,17 +183,18 @@ class DefaultController extends Controller
                 $res = $status;
                 break;
         }
-        
+
         return $res;
     }
-    
-    private function football() {
+
+    private function football()
+    {
         /** @var Football $football */
         $football = $this->container->get('app.football_api_service');
         $json_data = $football->getResultFootball();
-        
+
         $data = json_decode($json_data);
-        
+
         $res = [];
         foreach ($data->results as $result) {
             $home_team = $result->sport_event->competitors[0]->name;
@@ -198,15 +204,16 @@ class DefaultController extends Controller
             $tournament = $result->sport_event->tournament->name;
 
             $flag = $this->getTournamentFlag($tournament);
-            
-            $str = $tournament. " " . $flag . " - " . $home_team." ".$home_score. " - ".$away_score." ".$away_team;
+
+            $str = $tournament . " " . $flag . " - " . $home_team . " " . $home_score . " - " . $away_score . " " . $away_team;
             $res[] = $str;
         }
-        
+
         return $res;
     }
-    
-    private function getTournamentFlag($codeFlag) {
+
+    private function getTournamentFlag($codeFlag)
+    {
         switch ($codeFlag) {
             case 'LaLiga Santander':
                 $flag = "\xF0\x9F\x87\xAA\xF0\x9F\x87\xB8";
@@ -242,17 +249,18 @@ class DefaultController extends Controller
                 $flag = " ";
                 break;
         }
-        
+
         return $flag;
     }
 
-    private function weather($city) {
+    private function weather($city)
+    {
         $weather = $this->container->get('app.weather_api_service');
         $json_data = $weather->getWeatherByCity($city);
 
         $data = json_decode($json_data);
 
-        $res = "Météo ". $data->name . " : " . $data->weather[0]->description . " | Température " . round($data->main->temp) . "°C";
+        $res = "Météo " . $data->name . " : " . $data->weather[0]->description . " | Température " . round($data->main->temp) . "°C";
 
         return $res;
     }
