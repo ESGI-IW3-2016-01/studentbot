@@ -8,13 +8,13 @@ class YesOrNo
 {
     public function __construct()
     {
-        $this->client = new Client(['base_uri' => 'http://yesno.wtf/api/']);
+        $this->client = new Client(['base_uri' => 'http://yesno.wtf/']);
     }
     
     public function yesOrNo() 
     { 
         try {
-            $response = $this->client->get();
+            $response = $this->client->get("api/");
             error_log('[Guzzle Response] ' . $response->getStatusCode() . ' : ' . $response->getBody());
             return $response->getBody();
         } catch (\Exception $e) {
