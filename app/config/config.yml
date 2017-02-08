@@ -75,6 +75,9 @@ fos_user:
 easy_admin:
     site_name: '<div class="home-logo">StudentBot</div>'
     design:
+        menu:
+            - User
+            - { label: 'API', url: '' }
         form_theme: 'horizontal'
         assets:
             css:
@@ -89,6 +92,7 @@ easy_admin:
                   - Username
                   - idFacebook
                   - { property: 'email', type: 'email' }
+                  - last_login
                   - locked
               title: "Customers list"
           form:
@@ -98,6 +102,7 @@ easy_admin:
                   - { type: 'section', label: 'User Profil', icon: 'user' }
                   - { property: 'Username', type: 'text' }
                   - { property: 'email', type: 'email' }
+                  - { property: 'password', type: 'password' }
                   - { type: 'group', css_class: 'col-sm-6'}
                   - { type: 'section', label: 'Identity', icon: 'info' }
                   - { property: 'Firstname', type: 'text' }

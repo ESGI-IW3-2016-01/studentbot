@@ -3,45 +3,21 @@
 {% block body %}
     <div id="wrapper">
         <div id="container">
-            <div id="welcome">
-                <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
+            <div class="home-logo">StudentBot</div>
+            <div style="text-align:center">
+                <img src="https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/15178125_1880759412153595_3682887542296239417_n.png?oh=5361f890d1c71d45b057ee206169537c&oe=5906DF6F"
+                    style="height:450px;margin:65px;">
+                <a href="https://www.facebook.com/StudentBot-1860943057468564/?fref=ts" target="_blank">
+                    <button class="facebook_button">Suivez nous sur Facebook</button>
+                </a>
+                <div class="fb-send-to-messenger"
+                  messenger_app_id="199254233818913" 
+                  page_id="1860943057468564"
+                  data-ref="send this info to the app"
+                  color="blue"
+                  size="xlarge" >
+                </div>
             </div>
-
-            <div id="status">
-                <p>
-                    <svg id="icon-status" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z" fill="#759E1A"/></svg>
-
-                    Your application is now ready. You can start working on it at:
-                    <code>{{ base_dir }}/</code>
-                </p>
-            </div>
-
-            <div id="next">
-                <h2>What's next?</h2>
-                <p>
-                    <svg id="icon-book" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="-12.5 9 64 64" enable-background="new -12.5 9 64 64" xml:space="preserve">
-                        <path fill="#AAA" d="M6.8,40.8c2.4,0.8,4.5-0.7,4.9-2.5c0.2-1.2-0.3-2.1-1.3-3.2l-0.8-0.8c-0.4-0.5-0.6-1.3-0.2-1.9
-                            c0.4-0.5,0.9-0.8,1.8-0.5c1.3,0.4,1.9,1.3,2.9,2.2c-0.4,1.4-0.7,2.9-0.9,4.2l-0.2,1c-0.7,4-1.3,6.2-2.7,7.5
-                            c-0.3,0.3-0.7,0.5-1.3,0.6c-0.3,0-0.4-0.3-0.4-0.3c0-0.3,0.2-0.3,0.3-0.4c0.2-0.1,0.5-0.3,0.4-0.8c0-0.7-0.6-1.3-1.3-1.3
-                            c-0.6,0-1.4,0.6-1.4,1.7s1,1.9,2.4,1.8c0.8,0,2.5-0.3,4.2-2.5c2-2.5,2.5-5.4,2.9-7.4l0.5-2.8c0.3,0,0.5,0.1,0.8,0.1
-                            c2.4,0.1,3.7-1.3,3.7-2.3c0-0.6-0.3-1.2-0.9-1.2c-0.4,0-0.8,0.3-1,0.8c-0.1,0.6,0.8,1.1,0.1,1.5c-0.5,0.3-1.4,0.6-2.7,0.4l0.3-1.3
-                            c0.5-2.6,1-5.7,3.2-5.8c0.2,0,0.8,0,0.8,0.4c0,0.2,0,0.2-0.2,0.5c-0.2,0.3-0.3,0.4-0.2,0.7c0,0.7,0.5,1.1,1.2,1.1
-                            c0.9,0,1.2-1,1.2-1.4c0-1.2-1.2-1.8-2.6-1.8c-1.5,0.1-2.8,0.9-3.7,2.1c-1.1,1.3-1.8,2.9-2.3,4.5c-0.9-0.8-1.6-1.8-3.1-2.3
-                            c-1.1-0.7-2.3-0.5-3.4,0.3c-0.5,0.4-0.8,1-1,1.6c-0.4,1.5,0.4,2.9,0.8,3.4l0.9,1c0.2,0.2,0.6,0.8,0.4,1.5c-0.3,0.8-1.2,1.3-2.1,1
-                            c-0.4-0.2-1-0.5-0.9-0.9c0.1-0.2,0.2-0.3,0.3-0.5s0.1-0.3,0.1-0.3c0.2-0.6-0.1-1.4-0.7-1.6c-0.6-0.2-1.2,0-1.3,0.8
-                            C4.3,38.4,4.7,40,6.8,40.8z M46.1,20.9c0-4.2-3.2-7.5-7.1-7.5h-3.8C34.8,10.8,32.7,9,30.2,9L-2.3,9.1c-2.8,0.1-4.9,2.4-4.9,5.4
-                            L-7,58.6c0,4.8,8.1,13.9,11.6,14.1l34.7-0.1c3.9,0,7-3.4,7-7.6L46.1,20.9z M-0.3,36.4c0-8.6,6.5-15.6,14.5-15.6
-                            c8,0,14.5,7,14.5,15.6S22.1,52,14.2,52C6.1,52-0.3,45-0.3,36.4z M42.1,65.1c0,1.8-1.5,3.1-3.1,3.1H4.6c-0.7,0-3-1.8-4.5-4.4h30.4
-                            c2.8,0,5-2.4,5-5.4V17.9h3.7c1.6,0,2.9,1.4,2.9,3.1V65.1L42.1,65.1z"/>
-                    </svg>
-
-                    Read the documentation to learn
-                    <a href="http://symfony.com/doc/{{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION')[:3] }}/book/page_creation.html">
-                        How to create your first page in Symfony
-                    </a>
-                </p>
-            </div>
-
         </div>
     </div>
 {% endblock %}
@@ -57,11 +33,52 @@
     a:hover { text-decoration: none; }
     code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
     #wrapper { background: #FFF; margin: 1em auto; max-width: 800px; width: 95%; }
-    #container { padding: 2em; }
+    #container { padding: 2em; background-color: #205081;}
     #welcome, #status { margin-bottom: 2em; }
     #welcome h1 span { display: block; font-size: 75%; }
     #icon-status, #icon-book { float: left; height: 64px; margin-right: 1em; margin-top: -4px; width: 64px; }
     #icon-book { display: none; }
+    .home-logo{
+        padding: 12px 22px;
+        text-align: center;
+        border: none;
+        font: normal normal bold 2.5em/normal "Syncopate", Helvetica, sans-serif;
+        color: white;
+        text-shadow: 0 0 0 #16385b , 1px 1px 0 #16385b , 2px 2px 0 #16385b , 3px 3px 0 #16385b , 4px 4px 0 #16385b , 5px 5px 0 #16385b , 6px 6px 0 #16385b , 7px 7px 0 #16385b , 8px 8px 0 #16385b , 9px 9px 0 #16385b , 10px 10px 0 #16385b , 11px 11px 0 #16385b , 12px 12px 0 #16385b , 13px 13px 0 #16385b , 14px 14px 0 #16385b , 15px 15px 0 #16385b , 16px 16px 0 #16385b , 17px 17px 0 #16385b , 18px 18px 0 #16385b , 19px 19px 0 #16385b , 20px 20px 0 #16385b , 21px 21px 0 #16385b ;
+        }
+    .facebook_button {
+        display: inline-block;
+        
+        background: #627aac url(facebook_small.png) left no-repeat;
+        
+        border-top: 1px solid #29447e;
+        border-right: 1px solid #29447e;
+        border-bottom: 1px solid #1a356e;
+        border-left: none;
+        
+        /*height: 22px;*/
+        
+        padding-right: 20px;
+        padding-left: 20px;
+        
+        font-weight: bold;
+        font-size: 11px;
+        color: white;
+        text-decoration: none;
+        font-family: Helvetica, "lucida grande", tahoma, verdana, arial, sans-serif;
+        line-height: 22px;
+        
+        cursor: pointer;
+        
+    }
+
+    @font-face {
+      font-family: 'Syncopate';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Syncopate'), local('Syncopate-Regular'), url(https://fonts.gstatic.com/s/syncopate/v7/pDM9CVwNx1ufBHCEatJA3FtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+    }
 
     @media (min-width: 768px) {
         #wrapper { width: 80%; margin: 2em auto; }
@@ -73,4 +90,31 @@
         .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
     }
 </style>
+<script>
+
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: "199254233818913",
+        xfbml: true,
+        version: "v2.6"
+      });
+      
+      FB.Event.subscribe('send_to_messenger', function(response) {
+        if ( response.event == 'clicked' ) {
+              // callback for events triggered by the plugin
+                window.top.location = 'https://www.messenger.com/t/page_id';
+        };
+          });
+    
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) { return; }
+           js = d.createElement(s); js.id = id;
+           js.src = "//connect.facebook.net/en_US/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+    };
+
+  </script>
 {% endblock %}
