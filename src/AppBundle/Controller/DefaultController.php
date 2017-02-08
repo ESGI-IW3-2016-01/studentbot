@@ -107,15 +107,24 @@ class DefaultController extends Controller
     
     private function choiceAPI($chaine) 
     {
+        $chaine = strtolower($chaine);
         switch ($chaine){
-            case "\xE2\x9A\xBD" :
+            case "résultat football" :
+            case "\xe2\x9a\xbd" :
                 $res =$this->football();
                 break;
-            case "\xF0\x9F\x8F\x80" :
+            case "résultat basket" :
+            case "résultat nba" :
+            case "\xf0\x9f\x8f\x80" :
                 $res = $this->basket();
                 break;
             default :
-                $res = $chaine;
+                if (strstr($chaine, "\x")) {
+                    $res = "Désolé, je ne comprend pas encore cet emojii... \xF0\x9F\x98\x95"; 
+                } else {
+                   $res = $chaine; 
+                }
+                
         }
         
         return $res;
@@ -229,5 +238,16 @@ class DefaultController extends Controller
         }
         
         return $flag;
+    }
+    
+    private function weather($city) {
+        $weather = $this->container->get('app.weather_api_service');
+        $json_data = $weather->getWeatherByCity($city);
+        
+        $data = json_decode($json_data);
+        
+        $res = "Météo ". $data->name . " : " . $data->weather[0]->description . " | Température " . round($data->main->temp) . "°C";
+        
+        return $res;
     }
 }
