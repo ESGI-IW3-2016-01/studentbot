@@ -110,12 +110,12 @@ class DefaultController extends Controller
         $chaine = strtolower($chaine);
         switch ($chaine){
             case "résultat football" :
-            case "\xe2\x9a\xbd" :
+            case strcmp("\xe2\x9a\xbd",$chaine) == 0 :
                 $res =$this->football();
                 break;
             case "résultat basket" :
             case "résultat nba" :
-            case "\xf0\x9f\x8f\x80" :
+            case strcmp("\xf0\x9f\x8f\x80",$chaine) == 0 :
                 $res = $this->basket();
                 break;
             default :
