@@ -4,7 +4,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Event\ApiEvent;
 use GuzzleHttp\Client;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Weather
 {
@@ -14,7 +14,7 @@ class Weather
     private $dispatcher;
     const NAME = "weather";
 
-    public function __construct($weatherKey, $lang = "fr", $units = "metric", EventDispatcher $dispatcher)
+    public function __construct($weatherKey, $lang = "fr", $units = "metric", EventDispatcherInterface $dispatcher)
     {
         $this->lang = $lang;
         $this->units = $units;
