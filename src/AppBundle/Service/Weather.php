@@ -9,12 +9,11 @@ class Weather
     private $lang;
     private $unity;
     private $weather_key;
-    public function __construct($lang = "fr", $units = "metric")
+    public function __construct($weatherKey, $lang = "fr", $units = "metric")
     {
         $this->lang = $lang;
         $this->units = $units;
-        $container = $this->getContainer();
-        $this->weather_key = $container->getParameter('weather_key');
+        $this->weather_key = $weatherKey;
         $this->client = new Client(['base_uri' => 'http://api.openweathermap.org/data/2.5/weather']);
     }
     

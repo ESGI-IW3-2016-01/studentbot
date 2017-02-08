@@ -20,6 +20,6 @@ services:
             - { name: 'kernel.event_listener', event: 'api.called', method: 'onApiCalled' }
     app.weather_api_service:
         class: AppBundle\Service\Weather
-        arguments: [%weather_key%]
+        arguments: [%weather_key%,"fr", "metric"]
     app.yesorno_api_service:
         class: AppBundle\Service\YesOrNo
