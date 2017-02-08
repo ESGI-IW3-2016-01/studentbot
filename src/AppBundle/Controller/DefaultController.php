@@ -124,7 +124,7 @@ class DefaultController extends Controller
                 break;
             case "yes or no ?" :
                 $yesOrNo = new \AppBundle\Service\YesOrNo();
-                $json_data = $yesOrNo->yesOrNo()->image;
+                $json_data = $yesOrNo->yesOrNo();
                 $data = json_decode($json_data);
                 $res = $data->image;
                 break;
