@@ -4,9 +4,6 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
     app.message_sender:
         class: AppBundle\Service\MessageSender
         arguments: [%facebook.page_access_token%, %facebook.graph_version%]
@@ -16,3 +13,7 @@ services:
     app.basket_api_service:
         class: AppBundle\Service\Basket
         arguments: [%basket_key%]
+    app.api_events_listener:
+        class: AppBundle\Service\EventListener\ApiEventListener
+        tags:
+            - { name: 'kernel.event_listener', event: 'api.called', method: 'onApiCalled' }
