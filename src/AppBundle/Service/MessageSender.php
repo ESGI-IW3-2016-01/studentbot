@@ -88,7 +88,20 @@ class MessageSender
      */
     public function sendMessage(SendMessage $message)
     {
-        $body = ['recipient' => ['id' => $message->getRecipient()], "message" => ["text" => $message->getText()]];
+
+        $body = [
+            'recipient' => [
+                'id' => $message->getRecipient()
+            ]
+        ];
+
+        if ($message->getText() != null) {
+            $body['message'] = ['text' => $message->getText()];
+        }
+        if ($message->getAttachment() != null) {
+            $body['message'] = ['attachment' => ['type' => 'image', 'payload' => ['url' => $message->getAttachment()]]];
+        }
+
         $uri = $this->graph . '/me/messages';
         try {
             $response = $this->client->post($uri, ['json' => $body, 'query' => ['access_token' => $this->token]]);
