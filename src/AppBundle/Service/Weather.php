@@ -9,7 +9,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Weather
 {
     private $lang;
-    private $unity;
+    private $units;
     private $weather_key;
     private $dispatcher;
     const NAME = "weather";
@@ -25,7 +25,7 @@ class Weather
     
     public function getWeatherByCity($city)
     {
-        $uri = "?q=" . $city . "&lang=" . $this->lang . "&units=" . $this->unity . "&APPID=" . $this->weather_key;
+        $uri = "?q=" . $city . "&lang=" . $this->lang . "&units=" . $this->units . "&APPID=" . $this->weather_key;
         
         try {
             $response = $this->client->get($uri);
@@ -39,7 +39,7 @@ class Weather
     
     public function getWeatherByGeographicCoordinates($lat, $lon)
     {
-        $uri = "?lat=" . $lat . "&lon=" . $lon . "&lang=" . $this->lang . "&units=" . $this->unity. "&APPID=" . $this->weather_key;
+        $uri = "?lat=" . $lat . "&lon=" . $lon . "&lang=" . $this->lang . "&units=" . $this->units. "&APPID=" . $this->weather_key;
         
         try {
             $response = $this->client->get($uri);
