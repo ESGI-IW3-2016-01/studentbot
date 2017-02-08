@@ -10,3 +10,6 @@ services:
     app.message_sender:
         class: AppBundle\Service\MessageSender
         arguments: [%facebook.page_access_token%, %facebook.graph_version%]
+    app.football_api_service:
+        class: AppBundle\Service\Football
+        arguments: [ @doctrine.orm.entity_manager, %football_key%]
