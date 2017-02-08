@@ -11,6 +11,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
+use DateTime;
 
 /**
  * Class ApiLog
@@ -35,7 +36,7 @@ class ApiLog
     private $api;
 
     /**
-     * @var string
+     * @var DateTime
      *
      * @ORM\Column(name="date", type="datetime")
      */
@@ -80,7 +81,7 @@ class ApiLog
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
     public function getDate()
     {
@@ -88,7 +89,7 @@ class ApiLog
     }
 
     /**
-     * @param string $date
+     * @param DateTime $date
      */
     public function setDate($date)
     {
