@@ -60,6 +60,14 @@ class LoadApiData implements FixtureInterface, ContainerAwareInterface
         $api->setToken($weatherKey);
         $api->setBaseUrl('http://api.openweathermap.org/data/2.5/weather');
         $manager->persist($api);
+        
+        $api = new Api();
+        $api->setName("YESORNO");
+        $api->setEnabled(true);
+        $api->setDescription("Gif yes or no");
+        $api->setToken("");
+        $api->setBaseUrl('http://yesno.wtf/api/');
+        $manager->persist($api);
 
         $manager->flush();
     }
