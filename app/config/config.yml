@@ -81,6 +81,12 @@ easy_admin:
                 - 'https://fonts.googleapis.com/css?family=Syncopate'
                 - 'css/custom.css'
     entities:
+        Api:
+            class: AppBundle\Entity\Api
+            label: 'API'
+        ApiLog:
+            class: AppBundle\Entity\ApiLog
+            label: 'ApiLog'
         User:
           class: AppBundle\Entity\User
           label: 'User'
@@ -89,6 +95,7 @@ easy_admin:
                   - Username
                   - idFacebook
                   - { property: 'email', type: 'email' }
+                  - last_login
                   - locked
               title: "Customers list"
           form:
@@ -98,6 +105,7 @@ easy_admin:
                   - { type: 'section', label: 'User Profil', icon: 'user' }
                   - { property: 'Username', type: 'text' }
                   - { property: 'email', type: 'email' }
+                  - { property: 'password', type: 'password' }
                   - { type: 'group', css_class: 'col-sm-6'}
                   - { type: 'section', label: 'Identity', icon: 'info' }
                   - { property: 'Firstname', type: 'text' }
@@ -115,4 +123,3 @@ easy_admin:
                       label: action.list
                       css_class: 'btn btn-secondary action-list'
                       icon: caret-square-o-left
-

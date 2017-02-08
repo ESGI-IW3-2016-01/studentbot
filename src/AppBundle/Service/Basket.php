@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\ApiLog;
 use GuzzleHttp\Client;
 
 class Basket
@@ -17,12 +18,16 @@ class Basket
     public function getResultNBA() 
     {
         $date = date("Y/m/d");
-        //$date = date ("Y/m/d", mktime (0,0,0,date('m'),date('d')-1,date('Y')));
+        
         $uri = "games/" . $date . "/schedule.json?api_key=" . $this->basket_key;
             
         try {
             $response = $this->client->get($uri);
             error_log('[Guzzle Response] ' . $response->getStatusCode() . ' : ' . $response->getBody());
+            $apilog = new ApiLog();
+            $apilog->setCode($response->getStatusCode());
+            $apilog->setDate(new Datetime());
+            $apilog->setFacebookId(null);
             return $response->getBody();
         } catch (\Exception $e) {
             error_log($e->getMessage());

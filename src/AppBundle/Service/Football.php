@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service;
 
+use Doctrine\ORM\EntityManager;
 use GuzzleHttp\Client;
 
 class Football extends ContainerAwareCommand
@@ -22,6 +23,19 @@ class Football extends ContainerAwareCommand
         try {
             $response = $this->client->get($uri);
             error_log('[Guzzle Response] ' . $response->getStatusCode() . ' : ' . $response->getBody());
+            // TODO Faire un event
+            $apilog = new ApiLog();
+            $apilog->setCode($response->getStatusCode());
+            $apilog->setDate(new Datetime());
+            $apilog->setFacebookId(null);
+            $apilog->setApi('football');
+            $apilog->setAction(null);
+            /** @var EntityManager $em */
+            $em = $this->getContainer()->get('Doctrine')->getManager();
+            /** @var ApiRepository $repo */
+            $repo = $em->getRepository('AppBundle\Entity\ApiLog');
+            $em->persist($apilog);
+            $em->flush();
             return $response->getBody();
         } catch (\Exception $e) {
             error_log($e->getMessage());

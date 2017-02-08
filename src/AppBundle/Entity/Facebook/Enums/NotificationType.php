@@ -7,9 +7,9 @@ abstract class NotificationType
     const silentPush = "SILENT_PUSH";
     const noPush = "NO_PUSH";
 
-    const codes = [
-        self::markSeen,
-        self::typingOn,
-        self::typingOff
-    ];
+//    const codes = [
+//        self::markSeen,
+//        self::typingOn,
+//        self::typingOff
+//    ];
 }
