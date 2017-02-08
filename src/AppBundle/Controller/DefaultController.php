@@ -122,6 +122,9 @@ class DefaultController extends Controller
             case count(explode("météo", $chaine)) != 1 :
                 $res = $this->weather(explode("météo", $chaine)[1]);
                 break;
+            case "yes or no ?" :
+                $yesOrNo = new \AppBundle\Service\YesOrNo();
+                $res = $yesOrNo->yesOrNo()->image;
             default :
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
                 break;

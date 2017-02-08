@@ -18,3 +18,8 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
         tags:
             - { name: 'kernel.event_listener', event: 'api.called', method: 'onApiCalled' }
+    app.weather_api_service:
+        class: AppBundle\Service\Weather
+        arguments: [%weather_key%]
+    app.yesorno_api_service:
+        class: AppBundle\Service\YesOrNo
