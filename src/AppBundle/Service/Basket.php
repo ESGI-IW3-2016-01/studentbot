@@ -10,7 +10,7 @@ class Basket
 {
     private $basket_key;
     private $dispatcher;
-    const NAME = "basket";
+    const NAME = "basketball";
 
     public function __construct($basketKey, EventDispatcherInterface $dispatcher)
     {
