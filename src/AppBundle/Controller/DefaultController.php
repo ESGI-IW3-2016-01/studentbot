@@ -124,10 +124,9 @@ class DefaultController extends Controller
             case count(explode("météo", $chaine)) != 1 :
                 $res = $this->weather(explode("météo", $chaine)[1]);
                 break;
-            // case strpos($chaine, "\xf0\x9f\x8e\xbc") >= 0 :
-            //     error_log('iciiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii0');
-            //     $res = $this->youtube($chaine);
-            //     break;
+            case count(explode("\xf0\x9f\x8e\xbc", $chaine)) != 1 :
+                $res = $this->youtube($chaine);
+                break;
             case "yes or no ?" :
                 $yesOrNo = new \AppBundle\Service\YesOrNo();
                 $json_data = $yesOrNo->yesOrNo();
@@ -219,20 +218,19 @@ class DefaultController extends Controller
     private function youtube($chaine) {
         
         $tab = explode(" ", $chaine);
-        $recherhe = "https://www.youtube.com/results?search_query=";
-        
+        $recherche = "https://www.youtube.com/results?search_query=";
         foreach($tab as $word) {
             if ($word != "\xf0\x9f\x8e\xbc") {
-                $recherhe = $word . "+";
+                $recherche .= $word . "+";
             }
         }
-        
+
         $htmlPage = file_get_contents($recherche);
         
         $link = explode("/watch?v=", $htmlPage);
         $realLink = explode('" ', $link[1]);
         
-        $res = "https://www.youtube.com/watch?v=" . $realLink ;
+        $res = "https://www.youtube.com/watch?v=" . $realLink[0] ;
 
         return $res;
     }
