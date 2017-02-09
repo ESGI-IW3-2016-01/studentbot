@@ -121,8 +121,8 @@ class DefaultController extends Controller
             case strcmp("\xf0\x9f\x8f\x80", $chaine) == 0 :
                 $res = $this->basket();
                 break;
-            case count(explode("météo", $chaine)) != 1 :
-                $res = $this->weather(explode("météo", $chaine)[1]);
+            case count(explode("\xE2\x98\x80", $chaine)) != 1 :
+                $res = $this->weather(explode("\xE2\x98\x80", $chaine)[1]);
                 break;
             case count(explode("\xf0\x9f\x8e\xbc", $chaine)) != 1 :
                 $res = $this->youtube($chaine);
