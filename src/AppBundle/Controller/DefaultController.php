@@ -218,7 +218,7 @@ class DefaultController extends Controller
     private function youtube($chaine) {
         
         $tab = explode(" ", $chaine);
-        $recherche = "https://www.youtube.com/results?search_query=";
+        $recherche = "https://m.youtube.com/results?q=";
         foreach($tab as $word) {
             if ($word != "\xf0\x9f\x8e\xbc") {
                 $recherche .= $word . "+";
@@ -230,7 +230,7 @@ class DefaultController extends Controller
         $link = explode("/watch?v=", $htmlPage);
         $realLink = explode('" ', $link[1]);
         
-        $res = "https://www.youtube.com/watch?v=" . $realLink[0] ;
+        $res = "https://m.youtube.com/watch?v=" . $realLink[0] ;
 
         return $res;
     }
