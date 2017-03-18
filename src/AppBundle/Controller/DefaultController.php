@@ -19,6 +19,7 @@ class DefaultController extends Controller
     use TraitBasket;
     use TraitWeather;
     use TraitYoutube;
+    use TraitYesOrNo;
     
     private $image;
 
@@ -133,10 +134,7 @@ class DefaultController extends Controller
                 $res = $this->youtube($chaine);
                 break;
             case "yes or no ?" :
-                $yesOrNo = new \AppBundle\Service\YesOrNo();
-                $json_data = $yesOrNo->yesOrNo();
-                $data = json_decode($json_data);
-                $res = $data->image;
+                $res = $this->yesOrNo();
                 $this->image = true;
                 break;
             default :
