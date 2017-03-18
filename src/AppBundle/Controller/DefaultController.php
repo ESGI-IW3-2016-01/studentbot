@@ -15,6 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
 {
+    use TraitFootball;
+    use TraitBasket;
+    use TraitWeather;
+    use TraitYoutube;
+    
     private $image;
 
     /**
@@ -138,151 +143,6 @@ class DefaultController extends Controller
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
                 break;
         }
-
-        return $res;
-    }
-
-    private function basket()
-    {
-        /** @var Basket $basket */
-        $basket = $this->container->get('app.basket_api_service');
-        $json_data = $basket->getResultNBA();
-
-        $data = json_decode($json_data);
-
-        $res = [];
-        foreach ($data->games as $games) {
-            $home_team = $games->home->name;
-            $away_team = $games->away->name;
-            $status = $status = $this->getStatusNBA($games->status);
-
-
-            if ($games->status == "closed") {
-                $home_points = $games->home_points;
-                $away_points = $games->away_points;
-
-                $res[] = $status . " - " . $away_team . " " . $away_points . " - " . $home_points . " " . $home_team;
-            } else {
-                $res[] = $status . " - " . $away_team . " vs " . $home_team;
-            }
-        }
-
-        return $res;
-    }
-
-    private function getStatusNBA($status)
-    {
-        switch ($status) {
-            case 'closed':
-                $res = "Closed \xf0\x9f\x94\x92";
-                break;
-            case 'scheduled':
-                $res = "Scheduled \xf0\x9f\x93\x85";
-                break;
-            case 'in progress':
-                $res = "In progress \xe2\x8f\xb3";
-                break;
-            default:
-                $res = $status;
-                break;
-        }
-
-        return $res;
-    }
-
-    private function football()
-    {
-        /** @var Football $football */
-        $football = $this->container->get('app.football_api_service');
-        $json_data = $football->getResultFootball();
-
-        $data = json_decode($json_data);
-
-        $res = [];
-        foreach ($data->results as $result) {
-            $home_team = $result->sport_event->competitors[0]->name;
-            $away_team = $result->sport_event->competitors[1]->name;
-            $home_score = $result->sport_event_status->home_score;
-            $away_score = $result->sport_event_status->away_score;
-            $tournament = $result->sport_event->tournament->name;
-
-            $flag = $this->getTournamentFlag($tournament);
-
-            $str = $tournament . " " . $flag . " - " . $home_team . " " . $home_score . " - " . $away_score . " " . $away_team;
-            $res[] = $str;
-        }
-
-        return $res;
-    }
-    
-    private function youtube($chaine) {
-        
-        $tab = explode(" ", $chaine);
-        $recherche = "https://m.youtube.com/results?q=";
-        foreach($tab as $word) {
-            if ($word != "\xf0\x9f\x8e\xbc") {
-                $recherche .= $word . "+";
-            }
-        }
-
-        $htmlPage = file_get_contents($recherche);
-        
-        $link = explode("/watch?v=", $htmlPage);
-        $realLink = explode('" ', $link[1]);
-        
-        $res = "https://m.youtube.com/watch?v=" . $realLink[0] ;
-
-        return $res;
-    }
-    
-    private function getTournamentFlag($codeFlag) {
-        switch ($codeFlag) {
-            case 'LaLiga Santander':
-                $flag = "\xF0\x9F\x87\xAA\xF0\x9F\x87\xB8";
-                break;
-            case 'Eredivisie':
-                $flag = "\xf0\x9f\x87\xb3\xf0\x9f\x87\xb1";
-                break;
-            case 'Serie A':
-                $flag = "\xF0\x9F\x87\xAE\xF0\x9F\x87\xB9";
-                break;
-            case 'Super League':
-                $flag = "\xf0\x9f\x87\xac\xf0\x9f\x87\xb7";
-                break;
-            case 'Premier League':
-                $flag = "\xF0\x9F\x87\xAC\xF0\x9F\x87\xA7";
-                break;
-            case 'Division 1A':
-                $flag = "\xf0\x9f\x87\xa7\xf0\x9f\x87\xaa";
-                break;
-            case 'Serie B':
-                $flag = "\xF0\x9F\x87\xAE\xF0\x9F\x87\xB9";
-                break;
-            case 'Bundesliga':
-                $flag = "\xF0\x9F\x87\xA9\xF0\x9F\x87\xAA";
-                break;
-            case 'Primeira Liga':
-                $flag = "\xf0\x9f\x87\xb5\xf0\x9f\x87\xb9";
-                break;
-            case 'Ligue 1':
-                $flag = "\xF0\x9F\x87\xAB\xF0\x9F\x87\xB7";
-                break;
-            default:
-                $flag = " ";
-                break;
-        }
-
-        return $flag;
-    }
-
-    private function weather($city)
-    {
-        $weather = $this->container->get('app.weather_api_service');
-        $json_data = $weather->getWeatherByCity($city);
-
-        $data = json_decode($json_data);
-
-        $res = "Météo " . $data->name . " : " . $data->weather[0]->description . " | Température " . round($data->main->temp) . "°C";
 
         return $res;
     }
