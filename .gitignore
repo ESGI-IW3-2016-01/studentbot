@@ -16,3 +16,6 @@
 /web/bundles/
 /.idea/
 /.vagrant/
+docker/mariadb/db-datas/
+!docker/mariadb/db-datas/.gitkeep
+!docker/mariadb/.gitkeep

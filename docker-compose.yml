@@ -1,0 +1,55 @@
+version: '2'
+services:
+  php:
+    build: docker/php
+    # image: php:7.0-fpm-alpine
+    container_name: student_bot_php
+    volumes:
+      - .:/var/www/html
+    links:
+      - mariadb
+      - postgres
+      - mailcatcher
+    user: www-data
+  apache:
+    image: httpd:2.4-alpine
+    container_name: student_bot_apache
+    volumes:
+      - ./web:/var/www/html/web
+      - ./docker/apache2/httpd.conf:/usr/local/apache2/conf/httpd.conf
+    ports:
+      - "8000:80"
+    links:
+      - php
+  postgres:
+    image: postgres:9.6-alpine
+    container_name: student_bot_postgres
+    environment:
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_USER=studentbot
+      - POSTGRES_DB=studentbot
+    ports:
+      - "3307:5432"
+  mariadb:
+    image: mariadb:10.0.26
+    container_name: student_bot_mariadb
+    volumes_from:
+      - db-datas
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_DATABASE=studentbot
+      - MYSQL_USER=studentbot
+      - MYSQL_PASSWORD=docker
+    ports:
+      - "3306:3306"
+  db-datas:
+    image: mariadb:10.0.26
+    container_name: student_bot_db_datas
+    volumes:
+      - ./docker/mariadb/db-datas:/var/lib/mysql
+    entrypoint: /bin/bash
+  mailcatcher:
+    image: schickling/mailcatcher
+    container_name: student_bot_mailcatcher
+    ports:
+      - "8002:1080"

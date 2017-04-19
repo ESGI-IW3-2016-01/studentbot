@@ -41,6 +41,7 @@ twig:
 doctrine:
     dbal:
         driver:   pdo_mysql
+        url:      "%env(DATABASE_URL)%"
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"
@@ -71,6 +72,10 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: AppBundle\Entity\User
+    from_email:
+        address: contact@studentbot.com
+        sender_name: L'equipe Student Bot
+
 
 easy_admin:
     site_name: '<div class="home-logo">StudentBot</div>'
