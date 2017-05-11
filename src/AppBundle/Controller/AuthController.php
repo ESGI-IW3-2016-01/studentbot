@@ -14,7 +14,22 @@ class AuthController extends Controller
      */
     public function indexAction(Request $request)
     {
+        // session_destroy();
+
         // replace this example code with whatever you need
         return new Response('login page');
     }
+
+    /**
+     * @Route("/welcome", name="welcome")
+     */
+    public function welcomeAction(Request $request)
+    {
+        var_dump($this->getUser());
+        die();
+
+        // replace this example code with whatever you need
+        return new Response('welcome');
+    }
+
 }

@@ -1,0 +1,10 @@
+{% block information %}
+ {% for type, flash_messages in app.session.flashBag.all %}
+    {% for flash_message in flash_messages %}
+        <div class="alert alert-{{ type }} alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+{% endblock %}
