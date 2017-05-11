@@ -34,16 +34,16 @@ class MyOAuthProvider extends FOSUBUserProvider
                 break;
         }
         
-
-        $username = $user->getUsername();
-        $realUser = $this->loadUserByUsername($username); //user from bdd
-        if ($realUser) {
-            $this->session->getFlashBag()->add('info', 'Vous êtes bien authentifié');
-            return $realUser;
+        if ($user) {
+            $username = $user->getUsername();
+            $realUser = $this->loadUserByUsername($username); // connexion du user
+            if ($realUser) {
+                $this->session->getFlashBag()->add('info', 'Vous êtes bien authentifié');
+                return $realUser;
+            }
         }
-
         $this->session->getFlashBag()->add('error', 'Vous n\'avez pas le droit de vous connecter à ce site');
-
+        
         return null;
     }
 
