@@ -9,7 +9,7 @@ monolog:
             handler:      grouped
         grouped:
             type: group
-            members: [heroku, database]
+            members: [heroku]
         heroku: # Log les errors sur Heroku
             type:  stream
             path:  "php://stderr"
