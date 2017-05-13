@@ -48,7 +48,7 @@ class DefaultController extends Controller
 
         /** @var Logger $logger */
         $logger = $this->get('logger');
-        $logger->notice($request->getContent(), ['sender_faceboo_id' => null]);
+        $logger->warning($request->getContent(), ['sender_faceboo_id' => null]);
 
         $message = $this->createMessageRecievedFromBody($request->getContent());
 
