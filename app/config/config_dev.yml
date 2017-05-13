@@ -14,13 +14,22 @@ web_profiler:
 monolog:
     handlers:
         main:
+            type:         fingers_crossed
+            action_level: notice
+            handler:      grouped
+        grouped:
+            type: group
+            members: [file, database]
+        file:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
-            channels: [!event]
+            channels: [!doctrine]
+#        database:
+#            type: stream
+#            level: notice
         console:
             type:   console
-            channels: [!event, !doctrine]
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:

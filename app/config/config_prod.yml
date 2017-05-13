@@ -5,14 +5,18 @@ monolog:
     handlers:
         main:
             type:         fingers_crossed
-            action_level: error
-            handler:      nested
-        nested:
+            action_level: info
+            handler:      grouped
+        grouped:
+            type: group
+            members: [heroku, database]
+        heroku: # Log les errors sur Heroku
             type:  stream
             path:  "php://stderr"
-            level: debug
-        console:
-            type:  console
+            level: error
+#        database: # Log tous les messages reçus de facebook en base de donnée
+#            type: stream
+#            level: notice
 
 doctrine:
     dbal:

@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Facebook\Attachment;
 use AppBundle\Entity\Facebook\SendMessage;
 use AppBundle\Service\MessageSender;
+use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ class DefaultController extends Controller
     use TraitWeather;
     use TraitYoutube;
     use TraitYesOrNo;
-    
+
     private $image;
 
     /**
@@ -45,8 +46,11 @@ class DefaultController extends Controller
             return new Response($request->query->get('hub_challenge'));
         }
 
+        /** @var Logger $logger */
+        $logger = $this->get('logger');
+        $logger->notice($request->getContent(), ['sender_faceboo_id' => null]);
+
         $message = $this->createMessageRecievedFromBody($request->getContent());
-        error_log("[Message Received][" . $message->getDate()->format('d-m-Y H:i:s') . "] Sender : " . $message->getSender() . ", message : " . $message->getText());
 
         /** @var MessageSender $messageSenderService */
         $messageSenderService = $this->container->get('app.message_sender');
@@ -85,7 +89,7 @@ class DefaultController extends Controller
     private function createMessageRecievedFromBody($body)
     {
         $body = json_decode($body, true);
-        $message = $body['entry'][0];
+        $message = $body['entry'][0]; // TODO : not safe enought
 
         if (isset($message['messaging'][0]['postback']['payload'])) {
             $messageObject = new Message(

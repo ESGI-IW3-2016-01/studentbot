@@ -20,7 +20,7 @@ services:
         arguments: [%basket_key%, '@event_dispatcher']
     app.weather_api_service:
         class: AppBundle\Service\Weather
-        arguments: [%weather_key%,"fr", "metric", '@event_dispatcher']
+        arguments: [%weather_key%, "fr", "metric", '@event_dispatcher']
     app.yesorno_api_service:
         class: AppBundle\Service\YesOrNo
         arguments: ['@event_dispatcher']
