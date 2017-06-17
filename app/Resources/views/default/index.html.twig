@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
     <div id="wrapper">
         <div id="container">
@@ -20,9 +19,16 @@
             </div>
         </div>
     </div>
+    {% if app.user is empty %}
+        <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" class="btn btn-block btn-social btn-facebook" ><span class="fa fa-facebook"></span> Connexion facebook</a>
+    {% else %}
+        <a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a>
+    {% endif %}
+    
 {% endblock %}
 
 {% block stylesheets %}
+    {{parent()}}
 <style>
     body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
     h1, h2 { line-height: 1.2; margin: 0 0 .5em; }

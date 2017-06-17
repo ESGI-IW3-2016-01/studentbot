@@ -131,3 +131,23 @@ easy_admin:
                       label: action.list
                       css_class: 'btn btn-secondary action-list'
                       icon: caret-square-o-left
+
+hwi_oauth:
+    http_client:
+        timeout:       10000
+        verify_peer: false
+        max_redirects: 1000
+        ignore_errors: false
+    firewall_names: [main]
+    resource_owners:
+        facebook:
+            type:                facebook
+            client_id:           "%facebook.app_id%"
+            client_secret:       "%facebook.app_secret%"
+            scope:               "email"
+            infos_url:     "https://graph.facebook.com/me?fields=name,email,picture,birthday,gender,first_name,last_name"
+            paths:
+                email: email
+            options:
+                # display: popup
+                csrf: true
