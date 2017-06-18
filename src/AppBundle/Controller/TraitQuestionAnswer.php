@@ -6,12 +6,9 @@ trait TraitQuestionAnswer
     private function questionAnswer($question)
     {
 
-        $em = $this->getDoctrine()->getManager();
+        $questionAnswerService = $this->container->get('app.question_answer_service');
 
-        $questionAnswer = $em->getRepository('AppBundle:QuestionAnswer')
-                        ->findBy(
-                            array('question' => $question)
-                        );
+        $questionAnswer = $questionAnswerService->getAnswerByQuestion($question);
 
         if (!$questionAnswer) {
             return false;

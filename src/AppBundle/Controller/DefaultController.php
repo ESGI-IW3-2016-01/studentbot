@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
 {
+    use TraitQuestionAnswer;
     use TraitFootball;
     use TraitBasket;
     use TraitWeather;
@@ -67,7 +68,13 @@ class DefaultController extends Controller
                     break;
             }
         } else {
-            $res = $this->choiceAPI($message->getText());
+            $question = $message->getText();
+
+            $res = $this->questionAnswer($question);
+            if (!$res) {
+                $res = $this->choiceAPI($question);
+            }
+
             if (!is_array($res)) {
                 $res = [$res];
             }
