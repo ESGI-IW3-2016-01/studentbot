@@ -86,6 +86,9 @@ easy_admin:
                 - 'https://fonts.googleapis.com/css?family=Syncopate'
                 - 'css/custom.css'
     entities:
+        QuestionAnswer:
+            class: AppBundle\Entity\QuestionAnswer
+            label: 'Question / Answer'
         Api:
             class: AppBundle\Entity\Api
             label: 'API'
