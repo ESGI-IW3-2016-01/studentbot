@@ -100,7 +100,7 @@ easy_admin:
           label: 'User'
           list:
               fields:
-                  - idFacebook
+                  - facebookId
                   - firstName
                   - lastName
                   - username
