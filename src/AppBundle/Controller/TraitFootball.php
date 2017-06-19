@@ -11,6 +11,11 @@ trait TraitFootball
 
         $data = json_decode($jsonData);
 
+        if (!isset($data->results)) {
+            $res = "Aucun résultat pour cette date.";
+            return $res;
+        }
+
         $res = [];
         foreach ($data->results as $result) {
             $home_team = $result->sport_event->competitors[0]->name;

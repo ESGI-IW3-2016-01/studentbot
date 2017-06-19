@@ -98,39 +98,6 @@ easy_admin:
         User:
           class: AppBundle\Entity\User
           label: 'User'
-          list:
-              fields:
-                  - Username
-                  - idFacebook
-                  - { property: 'email', type: 'email' }
-                  - last_login
-                  - locked
-              title: "Customers list"
-          form:
-              title: 'Edit User'
-              fields:
-                  - { type: 'group', css_class: 'col-sm-6' }
-                  - { type: 'section', label: 'User Profil', icon: 'user' }
-                  - { property: 'Username', type: 'text' }
-                  - { property: 'email', type: 'email' }
-                  - { property: 'password', type: 'password' }
-                  - { type: 'group', css_class: 'col-sm-6'}
-                  - { type: 'section', label: 'Identity', icon: 'info' }
-                  - { property: 'Firstname', type: 'text' }
-                  - { property: 'Lastname', type: 'text' }
-              actions:
-                  delete:
-                      name: delete
-                      type: method
-                      label: action.delete
-                      css_class: 'btn btn-default action-delete'
-                      icon: trash-o
-                  list:
-                      name: list
-                      type: method
-                      label: action.list
-                      css_class: 'btn btn-secondary action-list'
-                      icon: caret-square-o-left
 
 hwi_oauth:
     http_client:
