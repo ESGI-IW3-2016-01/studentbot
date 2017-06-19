@@ -100,22 +100,20 @@ easy_admin:
           label: 'User'
           list:
               fields:
-                  - Username
                   - idFacebook
-                  - { property: 'email', type: 'email' }
-                  - last_login
-                  - locked
+                  - firstName
+                  - lastName
+                  - username
+                  - email
+                  - enabled
+                  - lastLogin
               title: "Customers list"
           form:
               title: 'Edit User'
               fields:
-                  - { type: 'group', css_class: 'col-sm-6' }
-                  - { type: 'section', label: 'User Profil', icon: 'user' }
                   - { property: 'Username', type: 'text' }
-                  - { property: 'email', type: 'email' }
-                  - { property: 'password', type: 'password' }
-                  - { type: 'group', css_class: 'col-sm-6'}
-                  - { type: 'section', label: 'Identity', icon: 'info' }
+                  - { property: 'Email', type: 'email' }
+                  - { property: 'Password', type: 'password' }
                   - { property: 'Firstname', type: 'text' }
                   - { property: 'Lastname', type: 'text' }
               actions:
