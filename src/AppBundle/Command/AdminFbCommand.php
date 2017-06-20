@@ -58,6 +58,12 @@ class AdminFbCommand extends ContainerAwareCommand
                     $em->flush();
                     $i++;
                 }
+                elseif ($existUser) {
+                    if ($existUser->hasRole('ROLE_SUPER_ADMIN') == false) {
+                        $existUser->setRoles(['ROLE_SUPER_ADMIN']);
+                        $em->flush();
+                    }
+                }
             }
         }
 
