@@ -52,6 +52,12 @@
                 <a href="#email-form">
                     <button class="hero-btn">Parlez-moi !</button>
                 </a>
+
+                 {% if app.user is empty %}
+                    <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" class="btn btn-block btn-social btn-facebook" ><span class="fa fa-facebook"></span> Connexion facebook</a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a>
+                {% endif %}
             </div><!--hero-left-->
 
             <div class="col-sm-6 col-sm-6 ipad">
