@@ -14,6 +14,6 @@ trait TraitQuestionAnswer
             return false;
         }
 
-        return $questionAnswer->answer;
+        return $questionAnswer->getAnswer();
     }
 }
