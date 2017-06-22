@@ -52,7 +52,8 @@
         "post-install-cmd": [
             "@symfony-scripts",
             "php bin/console doctrine:schema:update --dump-sql --force --env=prod",
-            "php bin/console facebook:page:subscribe --env=prod"
+            "php bin/console facebook:page:subscribe --env=prod",
+            "php bin/console facebook:get:admin --env=prod"
         ],
         "post-update-cmd": [
             "@symfony-scripts"
