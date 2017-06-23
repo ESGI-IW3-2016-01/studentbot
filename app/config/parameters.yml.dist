@@ -28,3 +28,4 @@ parameters:
     football_key : "%env(API_KEY_FOOTBALL)%"
     basket_key : "%env(API_KEY_BASKET)%"
     weather_key : "%env(API_KEY_WEATHER)%"
+    news_key : "%env(API_KEY_NEWS)%"
