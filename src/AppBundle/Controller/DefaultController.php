@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Facebook\Attachment;
 use AppBundle\Entity\Facebook\SendMessage;
 use AppBundle\Service\MessageSender;
+use AppBundle\Service\NewsService;
 use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,6 +42,8 @@ class DefaultController extends Controller
 
     /**
      * @Route("/webhook", name="webhook")
+     * @param Request $request
+     * @return Response
      */
     public function webhookAction(Request $request)
     {
