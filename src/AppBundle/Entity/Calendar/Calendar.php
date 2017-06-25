@@ -4,12 +4,13 @@ namespace AppBundle\Entity\Calendar;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime, DateTimeZone;
 
 /**
  * Planning
  *
  * @ORM\Table(name="calendar")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CalendarRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Calendar\CalendarRepository")
  */
 class Calendar
 {
@@ -28,11 +29,22 @@ class Calendar
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
+    /**
+     * @var DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Event", mappedBy="calendar")
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="calendar", cascade={"persist"})
      */
     private $events;
 
@@ -43,6 +55,8 @@ class Calendar
     public function __construct($name)
     {
         $this->name = $name;
+        $this->createdAt = new DateTime('now', New DateTimeZone('Europe/Paris'));
+        $this->updatedAt = $this->createdAt;
         $this->events = new ArrayCollection();
     }
 
@@ -112,6 +126,39 @@ class Calendar
     {
         return $this->events->removeElement($event);
     }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     */
+    public function setCreatedAt(DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTime $updatedAt
+     */
+    public function setUpdatedAt(DateTime $updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
 
 }
 

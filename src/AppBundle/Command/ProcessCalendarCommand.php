@@ -8,6 +8,7 @@
 namespace AppBundle\Command;
 
 
+use AppBundle\Entity\Calendar\Calendar;
 use AppBundle\Entity\Calendar\Event;
 use ICal\ICal;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -51,23 +52,34 @@ class ProcessCalendarCommand extends ContainerAwareCommand
     {
         /** @var SplFileInfo $file */
         foreach ($this->finder as $file) {
-            if (in_array($file->getExtension(), ProcessCalendarCommand::FIlE_EXTESIONS)) ;
-            $ical = new ICal($file->getRealPath());
-            foreach ($ical->events() as $event) {
-                $calendarEvent = new Event(
-                    $event->uid,
-                    $event->description,
-                    $event->summary,
-                    $event->created,
-                    $event->lastmodified,
-                    $event->dtstart,
-                    $event->dtend,
-                    $event->dtstamp
-                );
-//                dump($calendarEvent);
-//                $this->em->persist($calendarEvent);
+            if (in_array($file->getExtension(), ProcessCalendarCommand::FIlE_EXTESIONS)) {
+
+                $calendar = new Calendar($file->getFilename());
+                $ical = new ICal($file->getRealPath());
+
+                /** @var \Ical\Event $event */
+                foreach ($ical->events() as $event) {
+                    $calendarEvent = new Event(
+                        $event->uid,
+                        $event->description,
+                        $event->summary,
+                        $event->created,
+                        $event->lastmodified,
+                        $event->dtstart,
+                        $event->dtend,
+                        $event->dtstamp
+                    );
+
+                    $calendarEvent->setCalendar($calendar);
+                    $calendar->addEvent($calendarEvent);
+
+                }
+                $this->em->persist($calendar);
+                $this->em->flush();
+            } else {
+                // TODO Throw wrong format exception
+                return;
             }
-//            $this->em->flush();
         }
     }
 }

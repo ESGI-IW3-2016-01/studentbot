@@ -73,9 +73,12 @@ class Event
     private $timestamp;
 
     /**
-     * @var DateInterval
+     * @var Calendar
+     *
+     * @ORM\ManyToOne(targetEntity="Calendar", inversedBy="events")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $duration;
+    private $calendar;
 
     /**
      * Event constructor.
@@ -238,13 +241,53 @@ class Event
     }
 
     /**
+     * @return string
+     */
+    public function getStringDuration(): string
+    {
+        if ((int)$this->endAt->diff($this->startAt)->format('%d') >= 1) {
+            $format = '%dj';
+        } else {
+            $format = '%hh%I';
+        }
+        return $this->endAt->diff($this->startAt)->format($format);
+    }
+
+    /**
+     * @return DateInterval
+     */
+    public function getDuration(): DateInterval
+    {
+        return $this->endAt->diff($this->startAt);
+    }
+
+    /**
+     * @return Calendar
+     */
+    public function getCalendar(): Calendar
+    {
+        return $this->calendar;
+    }
+
+    /**
+     * @param Calendar $calendar
+     */
+    public function setCalendar(Calendar $calendar)
+    {
+        $this->calendar = $calendar;
+    }
+
+
+    /**
      * Trim and remove formatting in strings imported from calendar
      * @param $string
      * @return string
      */
     private function _formatString($string)
     {
-        return trim(str_replace(PHP_EOL, '', $string));
+        $string = str_replace('&amp;', '&', $string);
+        $string = str_replace(PHP_EOL, '', $string);
+        return trim($string);
     }
 
     /**
@@ -277,6 +320,6 @@ class Event
      */
     private function _parseSummary(string $string): string
     {
-        return $string;
+        return str_replace('&amp;', '&', $string);
     }
 }
