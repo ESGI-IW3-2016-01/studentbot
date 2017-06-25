@@ -7,6 +7,9 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    ical_upload_directory: '%kernel.root_dir%/../var/data/upload/calendars'
+    ical_success_directory: '%kernel.root_dir%/../var/data/upload/calendars/success'
+    ical_error_directory: '%kernel.root_dir%/../var/data/upload/calendars/error'
 
 framework:
     #esi:             ~
@@ -40,7 +43,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
+        driver:   pdo_pgsql
         url:      "%env(DATABASE_URL)%"
         host:     "%database_host%"
         port:     "%database_port%"
@@ -48,12 +51,6 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #     path:     "%database_path%"
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -85,6 +82,10 @@ easy_admin:
             css:
                 - 'https://fonts.googleapis.com/css?family=Syncopate'
                 - 'css/custom.css'
+    formats:
+            date:     'd/m/Y'
+            time:     'H:i'
+            datetime: 'd/m/Y H:i:s'
     entities:
         QuestionAnswer:
             class: AppBundle\Entity\QuestionAnswer
@@ -99,8 +100,16 @@ easy_admin:
             class: AppBundle\Entity\Facebook\Emoji
             label: 'Emoji'
         User:
-          class: AppBundle\Entity\User
-          label: 'User'
+            class: AppBundle\Entity\User
+            label: 'User'
+        Calendar:
+            class: AppBundle\Entity\Calendar\Calendar
+            lavel: 'Calendar'
+        Events:
+            class: AppBundle\Entity\Calendar\Event
+            lavel: 'Courses'
+            list:
+                fields: ['id', 'calendar', 'uid', 'startAt', 'endAt', {property: 'stringduration', label: 'Duration'}, 'summary']
 
 hwi_oauth:
     http_client:

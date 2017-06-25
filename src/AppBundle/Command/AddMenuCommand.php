@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: antoine
- * Date: 05/02/2017
- * Time: 16:19
- */
 
 namespace AppBundle\Command;
 
@@ -32,7 +26,7 @@ class AddMenuCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function initialize(InputInterface $input, OutputInterface $output)

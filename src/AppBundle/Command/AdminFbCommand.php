@@ -40,21 +40,30 @@ class AdminFbCommand extends ContainerAwareCommand
         $this->fbAppId = $this->getContainer()->getParameter('facebook.app_id');
         $this->fbSecret = $this->getContainer()->getParameter('facebook.app_secret');
 
-        $this->fb = new Facebook([
-            'app_id' => $this->fbAppId,
-            'app_secret' => $this->fbSecret,
-        ]);
+        $this->fb = new Facebook(
+            [
+                'app_id' => $this->fbAppId,
+                'app_secret' => $this->fbSecret
+            ]
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var EntityManager $em */
+        /**
+         * @var EntityManager $em
+         */
         $em = $this->getContainer()->get('Doctrine')->getManager();
 
-        /** @var UserRepository $userRepository */
+        /**
+         * @var UserRepository $userRepository
+         * @method User findOneByEmail
+         */
         $userRepository = $em->getRepository('AppBundle\Entity\User');
 
-        /** @var FacebookResponse $requestRoles */
+        /**
+         * @var FacebookResponse $requestRoles
+         */
         $requestRoles = $this->fb->get("$this->fbAppId/roles", "$this->fbAppId|$this->fbSecret");
 
         // on récupère tous les users de l'application ainsi que leur rôle au sein de l'appli
@@ -67,6 +76,9 @@ class AdminFbCommand extends ContainerAwareCommand
                 $myAdminData = $myAdminCall->getDecodedBody();
                 $email = (isset($myAdminData['email'])) ? $myAdminData['email'] : '';
 
+                /**
+                 * @var User $existUser
+                 */
                 $existUser = $userRepository->findOneByEmail($email);
 
                 if (!$existUser && !empty($email)) {
