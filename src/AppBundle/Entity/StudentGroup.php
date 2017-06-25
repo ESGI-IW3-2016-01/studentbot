@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Calendar\Calendar;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -135,13 +136,13 @@ class StudentGroup
 
 
     /**
-     * Set planning
+     * Set calendar
      *
-     * @param Planning $calendar
+     * @param Calendar $calendar
      *
      * @return StudentGroup
      */
-    public function setCalendar(Planning $calendar)
+    public function setCalendar(Calendar $calendar)
     {
         $this->calendar = $calendar;
 
@@ -149,14 +150,12 @@ class StudentGroup
     }
 
     /**
-     * Get planning
+     * Get calendar
      *
-     * @return Planning
+     * @return Calendar
      */
     public function getCalendar()
     {
         return $this->calendar;
     }
-
 }
-
