@@ -15,7 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Event
 {
-    // TODO : trim and replace in setters to process strings and retrieve data
+    // TODO : trim and replace special chars in strings
+    // TODO : parse description, summary to extract location, teachers and info
 
     /**
      * @ORM\Column(type="integer")
@@ -241,6 +242,8 @@ class Event
     }
 
     /**
+     * Used to display human readable times in easy admin
+     *
      * @return string
      */
     public function getStringDuration(): string
@@ -320,6 +323,6 @@ class Event
      */
     private function _parseSummary(string $string): string
     {
-        return str_replace('&amp;', '&', $string);
+        return $string;
     }
 }

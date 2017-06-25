@@ -60,7 +60,6 @@ class Calendar
         $this->events = new ArrayCollection();
     }
 
-
     /**
      * @return int
      */
@@ -158,7 +157,6 @@ class Calendar
     {
         $this->updatedAt = $updatedAt;
     }
-
 
 }
 

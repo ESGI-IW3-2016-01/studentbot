@@ -10,6 +10,7 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Calendar\Calendar;
 use AppBundle\Entity\Calendar\Event;
+use Doctrine\ORM\EntityManager;
 use ICal\ICal;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,13 +21,27 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ProcessCalendarCommand extends ContainerAwareCommand
 {
+    /**
+     * @var Filesystem
+     */
     private $fs;
+
+    /**
+     * @var Finder
+     */
     private $finder;
+
+    /** @var EntityManager */
     private $em;
+
+    /**
+     * Allowed file extensions
+     */
     const FIlE_EXTESIONS = ['ics', 'ical'];
 
     protected function configure()
     {
+        // TODO : add arguments to process a specific file or entry ?
         $this
             ->setName('bot:calendar:process')
             ->setDescription("Process and save a calendar to database");
@@ -39,7 +54,7 @@ class ProcessCalendarCommand extends ContainerAwareCommand
 
         if (!$this->fs->exists($directory)) {
             $this->fs->mkdir($directory, 0755);
-            // TODO : stop execution because not files were found
+            // TODO : stop execution. No directory implies no files
         }
 
         $this->finder = new Finder();
@@ -50,6 +65,7 @@ class ProcessCalendarCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // TODO : add verbose outputs for debugging | Add Logs with number of events imported etc.
         /** @var SplFileInfo $file */
         foreach ($this->finder as $file) {
             if (in_array($file->getExtension(), ProcessCalendarCommand::FIlE_EXTESIONS)) {
@@ -76,9 +92,6 @@ class ProcessCalendarCommand extends ContainerAwareCommand
                 }
                 $this->em->persist($calendar);
                 $this->em->flush();
-            } else {
-                // TODO Throw wrong format exception
-                return;
             }
         }
     }
