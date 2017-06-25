@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: antoine
- * Date: 06/02/2017
- * Time: 22:42
- */
 
 namespace AppBundle\Command;
 
@@ -21,15 +15,26 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ApiStatusCommand extends ContainerAwareCommand
 {
 
+    /**
+     * @var string
+     */
     private $id;
+
+    /**
+     * @var  string
+     */
     private $action;
+
+    /**
+     * @var array
+     */
     private $actions = ['enable', 'disable'];
 
     protected function configure()
     {
         $this
             ->setName('api:status')
-            ->setDescription("Enable or disable api's")
+            ->setDescription('Enable or disable api\'s')
             ->addArgument('action', InputArgument::OPTIONAL, 'Action to do (enable or disable)')
             ->addArgument('id', InputArgument::OPTIONAL, 'The API id');
     }
@@ -45,7 +50,7 @@ class ApiStatusCommand extends ContainerAwareCommand
 
         $io = new SymfonyStyle($input, $output);
         if (isset($this->action) && !in_array($this->action, $this->actions)) {
-            $io->error("Action should be either \"enable\" or \"disable\"");
+            $io->error('Action should be either \'enable\' or \'disable\'');
             exit;
         }
     }
@@ -53,37 +58,47 @@ class ApiStatusCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        /** @var EntityManager $em */
+        /**
+         * @var EntityManager $em
+         */
         $em = $this->getContainer()->get('Doctrine')->getManager();
-        /** @var ApiRepository $repo */
-        $repo = $em->getRepository('AppBundle\Entity\Api');
+        /**
+         * @var ApiRepository $repository
+         */
+        $repository = $em->getRepository('AppBundle\Entity\Api');
 
         if (empty($this->action) && empty($this->id)) {
-            $apis = $repo->findAll();
+            $apis = $repository->findAll();
             $io->listing($apis);
             return;
         }
 
         if (!empty($this->action) && !empty($this->id)) {
-            /** @var Api $api */
-            $api = $repo->findOneBy(['id' => $this->id]);
+            /**
+             * @var Api $api
+             */
+            $api = $repository->findOneBy(['id' => $this->id]);
             if ($api) {
-                $api->setEnabled($this->action == 'enable');
+                $api->setEnabled('enable' === $this->action);
                 $em->flush();
             } else {
-                $io->error("API not found");
+                $io->error('API not found');
                 return;
             }
             $io->success($api);
         } else {
-            /** @var array $apis */
-            $apis = $repo->findAll();
-            /** @var Api $api */
+            /**
+             * @var array $apis
+             */
+            $apis = $repository->findAll();
+            /**
+             * @var Api $api
+             */
             foreach ($apis as $api) {
                 $api->setEnabled($this->action == 'enable');
             }
             $em->flush();
-            $io->success("All APIs have been " . $this->action . 'd !');
+            $io->success("All APIs have been $this->action\d !");
         }
     }
 }

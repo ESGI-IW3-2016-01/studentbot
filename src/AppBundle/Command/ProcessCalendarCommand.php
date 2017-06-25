@@ -31,7 +31,9 @@ class ProcessCalendarCommand extends ContainerAwareCommand
      */
     private $finder;
 
-    /** @var EntityManager */
+    /**
+     * @var EntityManager
+     */
     private $em;
 
     /**
@@ -66,14 +68,18 @@ class ProcessCalendarCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         // TODO : add verbose outputs for debugging | Add Logs with number of events imported etc.
-        /** @var SplFileInfo $file */
+        /**
+         * @var SplFileInfo $file
+         */
         foreach ($this->finder as $file) {
             if (in_array($file->getExtension(), ProcessCalendarCommand::FIlE_EXTESIONS)) {
 
                 $calendar = new Calendar($file->getFilename());
                 $ical = new ICal($file->getRealPath());
 
-                /** @var \Ical\Event $event */
+                /**
+                 * @var \Ical\Event $event
+                 */
                 foreach ($ical->events() as $event) {
                     $calendarEvent = new Event(
                         $event->uid,
