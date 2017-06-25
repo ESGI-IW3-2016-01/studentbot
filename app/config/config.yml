@@ -7,6 +7,9 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    ical_upload_directory: '%kernel.root_dir%/../var/data/upload/calendars'
+    ical_success_directory: '%kernel.root_dir%/../var/data/upload/calendars/success'
+    ical_error_directory: '%kernel.root_dir%/../var/data/upload/calendars/error'
 
 framework:
     #esi:             ~
