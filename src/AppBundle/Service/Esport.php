@@ -22,25 +22,25 @@ class Esport
         $this->lol_key = $lolKey;
         $this->lang = $lang;
         $this->dispatcher = $dispatcher;
-        $this->client = new Client(['base_uri' => 'https://api.sportradar.us/']);
+        $this->client = new Client(['base_uri' => 'http://api.sportradar.us/']);
     }
 
     public function getResultCsgo() {
-        $date = date("Y/m/d");
+        $date = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
         $uri = 'csgo-ti/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->csgo_key;
 
         return $this->getResult($uri,'csgo');
     }
 
     public function getResultDota() {
-        $date = date("Y/m/d");
+        $date = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
         $uri = 'dota2-ti/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->dota_key;
 
         return $this->getResult($uri,'dota');
     }
 
     public function getResultLol() {
-        $date = date("Y/m/d");
+        $date = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
         $uri = 'lol-ti/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->dota_key;
 
         return $this->getResult($uri,'lol');
