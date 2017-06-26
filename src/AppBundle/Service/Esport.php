@@ -6,7 +6,7 @@ use AppBundle\Event\ApiEvent;
 use GuzzleHttp\Client;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class Football
+class Esport
 {
     private $csgo_key;
     private $dota_key;
