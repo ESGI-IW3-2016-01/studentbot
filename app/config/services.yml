@@ -21,7 +21,7 @@ services:
     app.weather_api_service:
         class: AppBundle\Service\Weather
         arguments: [%weather_key%, "fr", "metric", '@event_dispatcher']
-    api.esport_api_service:
+    app.esport_api_service:
         class: AppBundle\Service\Esport
         arguments: [%esport_csgo_key%, %esport_dota_key%, %esport_lol_key%, 'fr', '@event_dispatcher']
     app.yesorno_api_service:
