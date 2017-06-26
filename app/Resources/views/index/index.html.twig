@@ -13,8 +13,8 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css"/>
-    <link rel="stylesheet" href="css/responsive.css"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/responsive.css"/>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
@@ -25,18 +25,21 @@
 <!-- Navigation ================================================== -->
 <div class="hero-background">
     <div>
-        <img class="strips" src="images/strips.png">
+        <img class="strips" src="/images/strips.png">
     </div>
     <div class="container">
         <div class="header-container header">
-            <a class="navbar-brand logo" href="#"> <img class="logo" src="images/logo.svg"/> </a>
-            <a href="#email-form">
+            <a class="navbar-brand logo" href="#"> <img class="logo" src="/images/logo.svg"/> </a>
+           {#  <a href="#email-form">
                 <button class="header-btn"> Download FREE!</button>
-            </a>
+            </a> #}
             <div class="header-right">
                 <a class="navbar-item" href="#team">The Team</a>
                 <a class="navbar-item" href="#pricing">Pricing</a>
-                <a class="navbar-item" href="#features">Features</a>
+                <a class="navbar-item" href="{{ path('fos_user_profile_show') }}">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    Mon profil
+                </a>
             </div>
         </div>
         <!--navigation-->
@@ -61,10 +64,10 @@
             </div><!--hero-left-->
 
             <div class="col-sm-6 col-sm-6 ipad">
-                <img class="ipad-screen img-responsive" src="images/screen.png"/>
+                <img class="ipad-screen img-responsive" src="/images/screen.png"/>
             </div>
 
-            <div><img class="mouse" src="images/mouse.svg"/></div>
+            <div><img class="mouse" src="/images/mouse.svg"/></div>
 
         </div><!--hero-->
 
@@ -85,7 +88,7 @@
         <div class="col-sm-4 feature">
 
             <div class="feature-icon feature-no-display">
-                <img class="feature-img" src="images/responsive.svg">
+                <img class="feature-img" src="/images/responsive.svg">
             </div>
             <h5 class="feature-head-text feature-no-display"> FULLY RESPONSIVE </h5>
             <p class="feature-subtext light feature-no-display"> Looks amazing on any
@@ -94,7 +97,7 @@
 
         <div class="col-sm-4 feature">
             <div class="feature-icon feature-no-display feature-display-mid">
-                <img class="feature-img" src="images/customizable.svg">
+                <img class="feature-img" src="/images/customizable.svg">
             </div>
             <h5 class="feature-head-text feature-no-display feature-display-mid"> CUSTOMIZABLE </h5>
             <p class="feature-subtext light feature-no-display feature-display-mid"> Change the colors, pictures or any
@@ -104,7 +107,7 @@
 
         <div class="col-sm-4 feature">
             <div class="feature-icon feature-no-display feature-display-last">
-                <img class="bullet-img" src="images/design.svg">
+                <img class="bullet-img" src="/images/design.svg">
             </div>
             <h5 class="feature-head-text feature-no-display feature-display-last"> SLICK AND BEAUTIFUL DESIGN </h5>
             <p class="feature-subtext light feature-no-display feature-display-last"> Trendy and fresh design, fits any
@@ -117,7 +120,7 @@
   ================================================== -->
 
 <div class="logos-section">
-    <img class="logos" src="images/logos.png"/>
+    <img class="logos" src="/images/logos.png"/>
 </div><!--logos-section-->
 
 <!-- White-Section
@@ -126,7 +129,7 @@
 <div class="white-section row">
 
     <div class="imac col-sm-6">
-        <img class="imac-screen img-responsive" src="images/imac.png">
+        <img class="imac-screen img-responsive" src="/images/imac.png">
     </div>
     <!--imac-->
 
@@ -143,7 +146,7 @@
             </div>
         </div>
     </div>
-</div><!--white-section-text-section--->
+</div><!--white-section-text-section -->
 
 
 <!-- Pricing
@@ -228,63 +231,62 @@
 
 
         <div class="col-sm-3 team-member">
-            <img src="images/cto.png">
+            <img src="/images/cto.png">
             <div class="team-member-text">
                 <h4 class="team-member-position light">CTO</h4>
                 <h5 class="bold">Johnny B Good</h5>
                 <p class="light">The brains behind the whole operation</p>
-                <a href="http://www.twitter.com"><img class="team-social-icon" src="images/team-twitter.svg"></a>
+                <a href="http://www.twitter.com"><img class="team-social-icon" src="/images/team-twitter.svg"></a>
                 <a href="http://www.facebook.com"><img class="team-social-icon"
-                                                       src="images/team-facebook.svg"></a>
+                                                       src="/images/team-facebook.svg"></a>
                 <a href="https://plus.google.com/"><img class="team-social-icon"
-                                                        src="images/team-google.svg"></a>
+                                                        src="/images/team-google.svg"></a>
             </div>
         </div>
 
         <div class="col-sm-3 team-member">
-            <img src="images/cto.png">
+            <img src="/images/cto.png">
             <div class="team-member-text">
                 <h4 class="team-member-position light">CTO</h4>
                 <h5 class="bold">Johnny B Good</h5>
                 <p class="light">The brains behind the whole operation</p>
-                <a href="http://www.twitter.com"><img class="team-social-icon" src="images/team-twitter.svg"></a>
+                <a href="http://www.twitter.com"><img class="team-social-icon" src="/images/team-twitter.svg"></a>
                 <a href="http://www.facebook.com"><img class="team-social-icon"
-                                                       src="images/team-facebook.svg"></a>
+                                                       src="/images/team-facebook.svg"></a>
                 <a href="https://plus.google.com/"><img class="team-social-icon"
-                                                        src="images/team-google.svg"></a>
+                                                        src="/images/team-google.svg"></a>
             </div>
         </div>
 
         <div class="col-sm-3 team-member">
-            <img src="images/ceo.png">
+            <img src="/images/ceo.png">
             <div class="team-member-text">
                 <h4 class="team-member-position light">CEO</h4>
                 <h5 class="bold">Roll Over Beethoven</h5>
                 <p class="light">The one that puts it all together </p>
-                <a href="http://www.twitter.com"><img class="team-social-icon" src="images/team-twitter.svg"></a>
+                <a href="http://www.twitter.com"><img class="team-social-icon" src="/images/team-twitter.svg"></a>
                 <a href="http://www.facebook.com"><img class="team-social-icon"
-                                                       src="images/team-facebook.svg"></a>
+                                                       src="/images/team-facebook.svg"></a>
                 <a href="https://plus.google.com/"><img class="team-social-icon"
-                                                        src="images/team-google.svg"></a>
+                                                        src="/images/team-google.svg"></a>
             </div>
         </div>
 
         <div class="col-sm-3 team-member">
-            <img src="images/cfo.png">
+            <img src="/images/cfo.png">
             <div class="team-member-text">
                 <h4 class="team-member-position light">CFO</h4>
                 <h5 class="bold">Chuck Berry</h5>
                 <p class="light">The guy with his hand on the wallet</p>
-                <a href="http://www.twitter.com"><img class="team-social-icon" src="images/team-twitter.svg"></a>
+                <a href="http://www.twitter.com"><img class="team-social-icon" src="/images/team-twitter.svg"></a>
                 <a href="http://www.facebook.com"><img class="team-social-icon"
-                                                       src="images/team-facebook.svg"></a>
+                                                       src="/images/team-facebook.svg"></a>
                 <a href="https://plus.google.com/"><img class="team-social-icon"
-                                                        src="images/team-google.svg"></a>
+                                                        src="/images/team-google.svg"></a>
             </div>
 
         </div>
     </div>
-    >
 
 </div> <!--team-container--->
 
@@ -325,9 +327,9 @@
             <div class="col-sm-2 col-sm-offset-4">
                 <div class="social-links">
                     <a href="https://twitter.com/webscopeapp"> <img class="social-link"
-                                                                    src="images/twitter.svg"/> </a>
+                                                                    src="/images/twitter.svg"/> </a>
                     <a href="https://www.facebook.com/webscopeapp/?ref=aymt_homepage_panel"> <img
-                                src="images/facebook.svg"/> </a>
+                                src="/images/facebook.svg"/> </a>
                 </div>
                 <!--social-links-->
             </div>

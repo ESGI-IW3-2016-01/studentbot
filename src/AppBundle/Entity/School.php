@@ -93,5 +93,10 @@ class School
     {
         return $this->studentGroup;
     }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 }
 

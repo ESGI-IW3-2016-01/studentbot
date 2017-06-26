@@ -44,6 +44,13 @@ class User extends BaseUser
     protected $facebookId;
     
     /**
+     * @ORM\ManyToMany(targetEntity="StudentGroup")
+     * @ORM\OrderBy({"promotion" = "DESC"})
+     * @ORM\JoinTable(name="user_student_group")
+     */
+    protected $studentGroups; // pour l'historique des classes d'un user
+
+    /**
      * Get id
      *
      * @return int
@@ -135,5 +142,51 @@ class User extends BaseUser
 
         return $this;
     }
-}
 
+
+    public function getCurrentStudentGroup()
+    {
+        $myCurrentStudentGroup = null;
+
+        if (!empty($this->studentGroups)) {
+            $myCurrentStudentGroup = $this->studentGroups[0];
+        }
+
+        return $myCurrentStudentGroup;
+    }
+    /**
+     * Add studentGroup
+     *
+     * @param \AppBundle\Entity\StudentGroup $studentGroup
+     *
+     * @return User
+     */
+    public function addStudentGroup(\AppBundle\Entity\StudentGroup $studentGroup)
+    {
+        if (!$this->studentGroups->contains($studentGroup)) {
+            $this->studentGroups[] = $studentGroup;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove studentGroup
+     *
+     * @param \AppBundle\Entity\StudentGroup $studentGroup
+     */
+    public function removeStudentGroup(\AppBundle\Entity\StudentGroup $studentGroup)
+    {
+        $this->studentGroups->removeElement($studentGroup);
+    }
+
+    /**
+     * Get studentGroups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStudentGroups()
+    {
+        return $this->studentGroups;
+    }
+}

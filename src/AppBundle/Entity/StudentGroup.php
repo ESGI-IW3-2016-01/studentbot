@@ -35,9 +35,15 @@ class StudentGroup
      */
     private $schoolYear;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="promotion", type="integer")
+     */
+    private $promotion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="School")
+     * @ORM\ManyToOne(targetEntity="School", inversedBy="studentGroup")
      * @ORM\JoinColumn(name="school_id", referencedColumnName="id")
      */
     private $school;
@@ -158,5 +164,37 @@ class StudentGroup
         return $this->planning;
     }
 
+
+    /**
+     * Gets the value of promotion.
+     *
+     * @return int
+     */
+    public function getPromotion()
+    {
+        return $this->promotion;
+    }
+
+    /**
+     * Sets the value of promotion.
+     *
+     * @param int $promotion the promotion
+     *
+     * @return self
+     */
+    public function setPromotion($promotion)
+    {
+        $this->promotion = $promotion;
+
+        return $this;
+    }
+
+    public function getFullName() {
+        return $this->schoolYear. " ". $this->name;
+    }
+
+    public function __toString() {
+        return $this->getFullName();
+    }
 }
 

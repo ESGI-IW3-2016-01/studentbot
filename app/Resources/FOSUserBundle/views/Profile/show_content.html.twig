@@ -1,0 +1,43 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="white-section row">
+
+    <div class="imac col-sm-12">
+        <div class="white-section-text">
+            <div class="imac-section-desc">
+                {# <p>Photo: {{ user.lastname }}</p> #}
+                <p>Nom: {{ user.lastname }}</p>
+                <p>Prénom: {{ user.firstname }}</p>
+
+                {% if user.getCurrentStudentGroup() is not empty %}
+                    <p>Ecole: {{ user.getCurrentStudentGroup().school }}</p>
+                    <p>Classe: {{ user.getCurrentStudentGroup() }}</p>
+                {% endif %}
+                
+            </div>
+            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-info"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier mon profil</a>
+            
+        </div>
+    </div>
+
+</div><!--white-section-text-section -->
+
+{# <div class="footer">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-4">
+                <div class="social-links">
+                    <a href="#"> <img class="social-link" src="/images/twitter.svg"/> </a>
+                    <a href="#"> <img src="/images/facebook.svg"/> </a>
+                </div>
+                <!--social-links-->
+            </div>
+            <!--social-links-parent-->
+        </div>
+        <!--row-->
+
+    </div>
+    <!--container-->
+</div>
+ #}
