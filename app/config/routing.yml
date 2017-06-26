@@ -1,3 +1,8 @@
+o_auth:
+    resource: "@OAuthBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
@@ -6,6 +11,13 @@ easy_admin_bundle:
     resource: "@EasyAdminBundle/Controller/"
     type:     annotation
     prefix:   /admin
+
+fos_user_security:
+   resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+   
+fos_user_profile:
+   resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+   prefix: /profile
 
 #HWIOAuthBundle routes
 hwi_oauth_security:
@@ -18,10 +30,21 @@ hwi_oauth_security:
 
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
-    prefix:   /login
+    prefix:   /connect
     
 facebook_login:
     path: /login/check-facebook
 
-fos_user_security:
-   resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+
+
+
+# fos_user_profile_edit:
+#     pattern: /etudiant/modifier/profil
+#     defaults: { _controller: AppBundle:Profile:edit }
+#     requirements:
+#         _method: GET|POST
+
+# fos_user_show_profile:
+#     pattern: /sportif/profil
+#     defaults: { _controller: 'AppBundle:Profile:showProfile' }

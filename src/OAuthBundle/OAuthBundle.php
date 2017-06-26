@@ -1,13 +1,13 @@
 <?php
 
-namespace AppBundle;
+namespace OAuthBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class AppBundle extends Bundle
+class OAuthBundle extends Bundle
 {
     public function getParent()
     {
-        return 'FOSUserBundle';
+        return 'HWIOAuthBundle';
     }
 }
