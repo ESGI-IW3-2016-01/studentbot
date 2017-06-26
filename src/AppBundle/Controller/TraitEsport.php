@@ -69,7 +69,7 @@ trait TraitEsport
                 $away_score = $result->sport_event_status->away_score;
 
                 $score_period = '';
-                foreach ($result->sport_event_status->period_score as $score) {
+                foreach ($result->sport_event_status->period_scores as $score) {
                     $score_period .= $score->home_score. '-' . $score->away_score. ' ';
                 }
 
