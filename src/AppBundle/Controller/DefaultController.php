@@ -11,8 +11,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Facebook\Message;
-use AppBundle\Service\Basket;
-use AppBundle\Service\Football;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
@@ -20,6 +18,7 @@ class DefaultController extends Controller
     use TraitQuestionAnswer;
     use TraitFootball;
     use TraitBasket;
+    use TraitEsport;
     use TraitWeather;
     use TraitYoutube;
     use TraitYesOrNo;
@@ -141,6 +140,9 @@ class DefaultController extends Controller
             case "résultat nba" :
             case strcmp("\xf0\x9f\x8f\x80", $chaine) == 0 :
                 $res = $this->basket();
+                break;
+            case count(explode("\xF0\x9F\x8E\xAE", $chaine)) != 1 :
+                $res = $this->esport($chaine);
                 break;
             case count(explode("\xE2\x98\x80", $chaine)) != 1 :
                 $res = $this->weather(explode("\xE2\x98\x80", $chaine)[1]);

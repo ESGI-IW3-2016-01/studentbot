@@ -29,3 +29,6 @@ parameters:
     basket_key : "%env(API_KEY_BASKET)%"
     weather_key : "%env(API_KEY_WEATHER)%"
     news_key : "%env(API_KEY_NEWS)%"
+    esport_csgo_key: "%env(API_KEY_ESPORT_CSGO)%"
+    esport_dota_key: "%env(API_KEY_ESPORT_DOTA)%"
+    esport_lol_key: "%env(API_KEY_ESPORT_LOL)%"
