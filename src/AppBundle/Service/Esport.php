@@ -27,21 +27,21 @@ class Esport
 
     public function getResultCsgo() {
         $date = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
-        $uri = 'csgo-ti/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->csgo_key;
+        $uri = 'csgo-t1/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->csgo_key;
 
         return $this->getResult($uri,'csgo');
     }
 
     public function getResultDota() {
         $date = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
-        $uri = 'dota2-ti/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->dota_key;
+        $uri = 'dota2-t1/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->dota_key;
 
         return $this->getResult($uri,'dota');
     }
 
     public function getResultLol() {
         $date = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
-        $uri = 'lol-ti/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->dota_key;
+        $uri = 'lol-t1/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->dota_key;
 
         return $this->getResult($uri,'lol');
     }
