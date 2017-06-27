@@ -12,7 +12,7 @@ trait TraitEsport
         if (sizeof($tab) == 1 || $tab[0] != "\xF0\x9F\x8E\xAE") {
             $res[] = 'Voici les jeux dont les résultats sont disponibles :';
             $res[] = "\xF0\x9F\x8E\xAE csgo";
-            $res[] = "\xF0\x9F\x8E\xAE dota2";
+            //$res[] = "\xF0\x9F\x8E\xAE dota2";
             $res[] = "\xF0\x9F\x8E\xAE lol";
 
             return $res;
@@ -25,17 +25,17 @@ trait TraitEsport
             case 'csgo':
                 $data = json_decode($esport->getResultCsgo());
                 break;
-            case 'dota2':
+            /*case 'dota2':
             case 'dota':
                 $data = json_decode($esport->getResultDota());
-                break;
+                break;*/
             case 'lol':
                 $data = json_decode($esport->getResultLol());
                 break;
             default:
                 $res[] = 'Voici les jeux dont les résultats sont disponibles :';
                 $res[] = "\xF0\x9F\x8E\xAE csgo";
-                $res[] = "\xF0\x9F\x8E\xAE dota2";
+                //$res[] = "\xF0\x9F\x8E\xAE dota2";
                 $res[] = "\xF0\x9F\x8E\xAE lol";
 
                 return $res;
@@ -49,7 +49,7 @@ trait TraitEsport
         foreach ($data->results as $result) {
             $tournament_name = $result->sport_event->tournament->name;
             $season_name = $result->sport_event->season->name;
-            $tournament_round = $result->sport_event->tournament_round->type . ' - ' . $result->sport_event->tournament_round->name;
+            $tournament_round = $result->sport_event->tournament_round->type . ' - ' . $result->sport_event->tournament_round->number . ' - ' . $result->sport_event->tournament_round->name;
 
             $home_team = '';
             if (isset($result->sport_event->competitors[0]->country)) {
