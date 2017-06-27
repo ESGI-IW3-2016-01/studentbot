@@ -4,11 +4,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
  *
  * @ORM\Table(name="users")
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 class User extends BaseUser
@@ -44,11 +47,44 @@ class User extends BaseUser
     protected $facebookId;
     
     /**
-     * @ORM\ManyToMany(targetEntity="StudentGroup")
-     * @ORM\OrderBy({"promotion" = "DESC"})
-     * @ORM\JoinTable(name="user_student_group")
+     * @var string
+     *
+     * @ORM\Column(name="photo_id", type="string", length=255, nullable=true)
      */
-    protected $studentGroups; // pour l'historique des classes d'un user
+    private $photoId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="photo_extension", type="string", length=255, nullable=true)
+     */
+    private $photoExtension;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="photo_original_name", type="string", length=255, nullable=true)
+     */
+    private $photoOriginalName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="School")
+     * @ORM\JoinColumn(name="school", referencedColumnName="id")
+     */
+    private $school;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="StudentGroup")
+     * @ORM\JoinColumn(name="student_group", referencedColumnName="id")
+     */
+    private $studentGroup;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    public $file;
+
+    private $temp;
 
     /**
      * Get id
@@ -143,50 +179,250 @@ class User extends BaseUser
         return $this;
     }
 
-
-    public function getCurrentStudentGroup()
-    {
-        $myCurrentStudentGroup = null;
-
-        if (!empty($this->studentGroups)) {
-            $myCurrentStudentGroup = $this->studentGroups[0];
-        }
-
-        return $myCurrentStudentGroup;
-    }
     /**
-     * Add studentGroup
+     * Set photoId
      *
-     * @param \AppBundle\Entity\StudentGroup $studentGroup
-     *
+     * @param string $photoId
      * @return User
      */
-    public function addStudentGroup(\AppBundle\Entity\StudentGroup $studentGroup)
+    public function setPhotoId($photoId)
     {
-        if (!$this->studentGroups->contains($studentGroup)) {
-            $this->studentGroups[] = $studentGroup;
-        }
+        $this->photoId = $photoId;
 
         return $this;
     }
 
     /**
-     * Remove studentGroup
+     * Get photoId
      *
-     * @param \AppBundle\Entity\StudentGroup $studentGroup
+     * @return string
      */
-    public function removeStudentGroup(\AppBundle\Entity\StudentGroup $studentGroup)
+    public function getPhotoId()
     {
-        $this->studentGroups->removeElement($studentGroup);
+        return $this->photoId;
     }
 
     /**
-     * Get studentGroups
+     * Set photoExtension
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param string $photoExtension
+     * @return User
      */
-    public function getStudentGroups()
+    public function setPhotoExtension($photoExtension)
     {
-        return $this->studentGroups;
+        $this->photoExtension = $photoExtension;
+
+        return $this;
+    }
+
+    /**
+     * Get photoExtension
+     *
+     * @return string
+     */
+    public function getPhotoExtension()
+    {
+        return $this->photoExtension;
+    }
+
+    /**
+     * Set photoOriginalName
+     *
+     * @param string $photoOriginalName
+     * @return User
+     */
+    public function setPhotoOriginalName($photoOriginalName)
+    {
+        $this->photoOriginalName = $photoOriginalName;
+
+        return $this;
+    }
+
+    /**
+     * Get photoOriginalName
+     *
+     * @return string
+     */
+    public function getPhotoOriginalName()
+    {
+        return $this->photoOriginalName;
+    }
+
+     /*** GESTION UPLOADS photo de profile ***/
+
+    public function getAbsolutePath()
+    {
+        return null === $this->photoId
+             ? null
+             : $this->getUploadRootDir().'/'.$this->photoId;
+    }
+
+    public function getWebPath()
+    {
+        if ($this->photoId == null) {
+            return 'images/inconnu.jpg';
+        }
+
+        return $this->getUploadDir().'/'.$this->photoId;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
+        return __DIR__ . '/../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir() {
+        // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
+        // le document/image dans la vue.
+        return 'uploads/profil';
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->photoId = $filename.'.'.$this->getFile()->guessExtension();
+            $this->photoExtension = $this->file->guessExtension();
+            $this->photoOriginalName = $this->file->getClientOriginalName();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload() {
+        // la propriété « file » peut être vide comme le champ n'est pas requis
+        if (null === $this->file) {
+          return;
+        }
+
+        if (!file_exists($this->getUploadRootDir())) {
+            mkdir($this->getUploadRootDir());
+        }
+        // la méthode « move » prend comme arguments le répertoire cible et
+        // le nom de fichier cible où le fichier doit être déplacé
+        $this->file->move($this->getUploadRootDir(), $this->photoId);
+
+         // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            if (is_file($this->getUploadRootDir().'/'.$this->temp)) {
+                unlink($this->getUploadRootDir().'/'.$this->temp);
+                // clear the temp image path
+                $this->temp = null;
+            }
+        }
+
+        // « nettoie » la propriété « file » comme vous n'en aurez plus besoin
+        $this->file = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if ($this->getphotoId()) {
+            $file = $this->getAbsolutePath();
+            if ($file && is_file($file)) {
+                unlink($file);
+            }
+        }
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        if ($this->file) {
+            // check if we have an old image path
+            if (isset($this->photoId)) {
+                // store the old name to delete after the update
+                $this->temp = $this->photoId;
+                $this->photoId = null;
+            }
+             else {
+                $this->photoId = 'initial';
+            }
+        }
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function removePhoto()
+    {
+        $file_path = $this->getUploadRootDir().'/'.$this->getPhotoId();
+
+        if(file_exists($file_path))
+        {
+            unlink($file_path);
+        }
+    }
+  /**** FIN GESTION UPLOADS ****/
+
+    /**
+     * Gets the value of school.
+     *
+     * @return mixed
+     */
+    public function getSchool()
+    {
+        return $this->school;
+    }
+
+    /**
+     * Sets the value of school.
+     *
+     * @param mixed $school the school
+     *
+     * @return self
+     */
+    public function setSchool($school)
+    {
+        $this->school = $school;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of studentGroup.
+     *
+     * @return mixed
+     */
+    public function getStudentGroup()
+    {
+        return $this->studentGroup;
+    }
+
+    /**
+     * Sets the value of studentGroup.
+     *
+     * @param mixed $studentGroup the student group
+     *
+     * @return self
+     */
+    public function setStudentGroup($studentGroup)
+    {
+        $this->studentGroup = $studentGroup;
+
+        return $this;
     }
 }

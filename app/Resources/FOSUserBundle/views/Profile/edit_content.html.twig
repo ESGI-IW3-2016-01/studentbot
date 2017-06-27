@@ -1,8 +1,146 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
-    {{ form_widget(form) }}
-    <div>
-        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+<div class="white-section row">
+
+    <div class="imac col-sm-12">
+        <div class="white-section-text">
+            <div class="imac-section-desc">
+
+                <form id="form_profile" action="{{ path('fos_user_profile_edit') }}" method="POST" enctype="multipart/form-data">
+                    {{ form_row(form._token) }}
+                
+                    <img src="/{{ app.user.getWebPath }}">
+                    <br>
+                     {% if app.user.photoId is not null %}
+                        <a href="#" id="removePhoto">
+                            Supprimer ma photo
+                        </a>
+                    {% endif %}
+                    <br>
+                    <span class="prof_pic">
+                          <label for="edit_profile_form_file" class="btn btn-primary">
+                              <i class="glyphicon glyphicon-camera"></i> Choisir un fichier
+                          </label>
+                           {{ form_widget(form.file) }}
+                      </span>
+                   
+                    <a href="#" id="clear" style="display:none;"> Retirer la photo</a>
+
+                    {{ form_row(form.lastName) }}
+                    {{ form_row(form.firstName) }}
+                    {{ form_row(form.school) }}
+
+                    <div id="basic-spinner">
+                        <div class="sk-circle">
+                          <div class="sk-circle1 sk-child"></div>
+                          <div class="sk-circle2 sk-child"></div>
+                          <div class="sk-circle3 sk-child"></div>
+                          <div class="sk-circle4 sk-child"></div>
+                          <div class="sk-circle5 sk-child"></div>
+                          <div class="sk-circle6 sk-child"></div>
+                          <div class="sk-circle7 sk-child"></div>
+                          <div class="sk-circle8 sk-child"></div>
+                          <div class="sk-circle9 sk-child"></div>
+                          <div class="sk-circle10 sk-child"></div>
+                          <div class="sk-circle11 sk-child"></div>
+                          <div class="sk-circle12 sk-child"></div>
+                        </div>
+                    </div>
+                    
+
+                    <div id="loadStudentGroup">
+                        
+                        {% if user.studentGroup %}
+                            {{ form_row(form.studentGroup) }}
+                        {% endif %}
+                    </div>
+                    
+                    <br>
+
+                    <div>
+                        <input id="btnSubmit" class="btn btn-default" type="submit" value="Modifier" />
+                    </div>
+                </form>
+            </div>
+            
+        </div>
     </div>
-{{ form_end(form) }}
+
+</div><!--white-section-text-section -->
+
+{% block javascript %}
+
+
+<script type="text/javascript">
+    $(document).ready(function($) {
+
+        // On supprime la photo
+        $("#removePhoto").click(function () {
+             if (window.confirm("Voulez-vous vraiment supprimer votre photo ?")) {
+                location.href = "{{ path('remove_my_photo') }}";
+            }
+        });
+        // On enlève la photo sélectionnez
+        $("#clear").click(function () {
+            $("#edit_profile_form_file").val("");
+            $('.profile_value').html("");
+            $("#clear").hide();
+        });
+
+        $("#edit_profile_form_file").change(function () {
+            var chemin;
+            if(chemin != "") {
+                $("#clear").show();
+            }
+        });
+
+        $('form').on('change', '#edit_profile_form_school', function(event) {
+                var idSchool = $(this).val();
+
+                if (idSchool != '') {
+                    $.ajax({
+                      url: "{{ path('load_form_profile') }}",
+                      type: 'GET',
+                      dataType: 'html',
+                      data: {idSchool: idSchool},
+                      beforeSend: function(xhr) {
+                         $("#basic-spinner").show();
+                      }
+                    })
+                    .done(function(data) {
+                        if (data != "KO") {
+                            $('#loadStudentGroup').html(data);
+                            $("#basic-spinner").hide();
+                        }
+                    })
+                    .fail(function() {
+                        $("#basic-spinner").hide();
+                        alert("Une erreur est survenue");
+                    })
+                }
+            });
+    });
+
+</script>
+
+{% endblock %}
+{# <div class="footer">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2 col-sm-offset-4">
+                <div class="social-links">
+                    <a href="#"> <img class="social-link" src="/images/twitter.svg"/> </a>
+                    <a href="#"> <img src="/images/facebook.svg"/> </a>
+                </div>
+                <!--social-links-->
+            </div>
+            <!--social-links-parent-->
+        </div>
+        <!--row-->
+
+    </div>
+    <!--container-->
+</div>
+ #}
+

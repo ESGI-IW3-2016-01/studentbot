@@ -37,9 +37,8 @@ class StudentGroup
     private $scholarYear;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="promotion", type="integer")
+     * @ORM\ManyToOne(targetEntity="Promotion")
+     * @ORM\JoinColumn(name="promotion_id", referencedColumnName="id")
      */
     private $promotion;
 

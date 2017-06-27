@@ -22,3 +22,4 @@ docker/mariadb/db-datas/
 /nbproject/private/
 
 src/AppBundle/Monolog
+/web/uploads/*
