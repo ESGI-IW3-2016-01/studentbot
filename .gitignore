@@ -19,3 +19,4 @@
 docker/mariadb/db-datas/
 !docker/mariadb/db-datas/.gitkeep
 !docker/mariadb/.gitkeep
+/web/uploads/*

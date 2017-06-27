@@ -5,15 +5,23 @@
     <div class="imac col-sm-12">
         <div class="white-section-text">
             <div class="imac-section-desc">
-                {# <p>Photo: {{ user.lastname }}</p> #}
+                <img src="/{{ user.getWebPath }}">
+                <br>
+                <br>
                 <p>Nom: {{ user.lastname }}</p>
                 <p>Prénom: {{ user.firstname }}</p>
 
-                {% if user.getCurrentStudentGroup() is not empty %}
+                {% if user.school is not empty %}
                     <p>Ecole: {{ user.getCurrentStudentGroup().school }}</p>
-                    <p>Classe: {{ user.getCurrentStudentGroup() }}</p>
+                {% else %}
+                    <p>Ecole: Non renseigné</p>
                 {% endif %}
-                
+
+                {% if user.studentGroup is not empty %}
+                    <p>Classe: {{ user.studentGroup }}</p>
+                {% else %}
+                    <p>Classe: Non renseigné</p>
+                {% endif %}
             </div>
             <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-info"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier mon profil</a>
             
