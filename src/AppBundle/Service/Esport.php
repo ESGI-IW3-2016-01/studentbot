@@ -41,7 +41,7 @@ class Esport
 
     public function getResultLol() {
         $date = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
-        $uri = 'lol-t1/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->dota_key;
+        $uri = 'lol-t1/'. $this->lang .'/schedules/'. $date.  '/results.json?api_key=' . $this->lol_key;
 
         return $this->getResult($uri,'lol');
     }
