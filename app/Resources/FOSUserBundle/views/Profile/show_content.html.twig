@@ -12,7 +12,7 @@
                 <p>Prénom: {{ user.firstname }}</p>
 
                 {% if user.school is not empty %}
-                    <p>Ecole: {{ user.getCurrentStudentGroup().school }}</p>
+                    <p>Ecole: {{ user.school }}</p>
                 {% else %}
                     <p>Ecole: Non renseigné</p>
                 {% endif %}
