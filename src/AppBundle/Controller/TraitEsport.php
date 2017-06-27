@@ -13,7 +13,7 @@ trait TraitEsport
             $res[] = 'Voici les jeux dont les résultats sont disponibles :';
             $res[] = "\xF0\x9F\x8E\xAE csgo";
             $res[] = "\xF0\x9F\x8E\xAE dota2";
-            $res[] = "\xF0\x9F\x8E\xAE lol";
+            //$res[] = "\xF0\x9F\x8E\xAE lol";
 
             return $res;
         }
@@ -29,14 +29,14 @@ trait TraitEsport
             case 'dota':
                 $data = json_decode($esport->getResultDota());
                 break;
-            case 'lol':
+            /*case 'lol':
                 $data = json_decode($esport->getResultLol());
-                break;
+                break;*/
             default:
                 $res[] = 'Voici les jeux dont les résultats sont disponibles :';
                 $res[] = "\xF0\x9F\x8E\xAE csgo";
                 $res[] = "\xF0\x9F\x8E\xAE dota2";
-                $res[] = "\xF0\x9F\x8E\xAE lol";
+                //$res[] = "\xF0\x9F\x8E\xAE lol";
 
                 return $res;
         }
