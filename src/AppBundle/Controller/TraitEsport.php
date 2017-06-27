@@ -41,7 +41,7 @@ trait TraitEsport
                 return $res;
         }
 
-        if (!isset($data->results)) {
+        if (!isset($data->results) || sizeof($data->result) == 0) {
             $res = "Aucun résultat pour cette date.";
             return $res;
         }
