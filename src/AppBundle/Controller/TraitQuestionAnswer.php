@@ -5,7 +5,7 @@ trait TraitQuestionAnswer
 {
     private function questionAnswer($question)
     {
-
+        $res = [];
         $questionAnswerService = $this->container->get('app.question_answer_service');
 
         $questionAnswer = $questionAnswerService->getAnswerByQuestion($question);
@@ -14,6 +14,12 @@ trait TraitQuestionAnswer
             return false;
         }
 
-        return $questionAnswer->getAnswer();
+        $lines = explode('*',$questionAnswer->getAnswer());
+
+        foreach ($lines as $line) {
+            $res[] = $line;
+        }
+
+        return $res;
     }
 }
