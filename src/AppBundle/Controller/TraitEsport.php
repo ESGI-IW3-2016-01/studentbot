@@ -12,7 +12,7 @@ trait TraitEsport
         if (sizeof($tab) == 1 || $tab[0] != "\xF0\x9F\x8E\xAE") {
             $res[] = 'Voici les jeux dont les résultats sont disponibles :';
             $res[] = "\xF0\x9F\x8E\xAE csgo";
-            $res[] = "\xF0\x9F\x8E\xAE dota2";
+            //$res[] = "\xF0\x9F\x8E\xAE dota2";
             //$res[] = "\xF0\x9F\x8E\xAE lol";
 
             return $res;
@@ -25,7 +25,7 @@ trait TraitEsport
             case 'csgo':
                 $data = json_decode($esport->getResultCsgo());
                 break;
-            case 'dota2':
+            /*case 'dota2':
             case 'dota':
                 $data = json_decode($esport->getResultDota());
                 break;
@@ -35,7 +35,7 @@ trait TraitEsport
             default:
                 $res[] = 'Voici les jeux dont les résultats sont disponibles :';
                 $res[] = "\xF0\x9F\x8E\xAE csgo";
-                $res[] = "\xF0\x9F\x8E\xAE dota2";
+                //$res[] = "\xF0\x9F\x8E\xAE dota2";
                 //$res[] = "\xF0\x9F\x8E\xAE lol";
 
                 return $res;
