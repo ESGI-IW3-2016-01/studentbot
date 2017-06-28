@@ -228,8 +228,8 @@ easy_admin:
                       # - { property: 'password', type: 'password' }
                       - { type: 'group', css_class: 'col-sm-6'}
                       - { type: 'section', label: 'Identity', icon: 'info' }
-                      - { property: 'Firstname', type: 'text', label: 'PréName' }
-                      - { property: 'Lastname', type: 'text', label: 'Name' }
+                      - { property: 'Firstname', type: 'text', label: 'Prénom' }
+                      - { property: 'Lastname', type: 'text', label: 'Nom' }
                   actions:
                       delete:
                           name: delete
