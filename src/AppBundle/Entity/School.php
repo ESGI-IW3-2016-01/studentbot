@@ -28,7 +28,21 @@ class School
      */
     private $name;
 
+    /**
+     * @ORM\Column(name="street", type="string", length=255)
+     */
+    private $street;
 
+    /**
+     * @ORM\Column(name="city", type="string", length=255)
+     */
+    private $city;
+
+    /**
+     * @ORM\Column(name="postal_code", type="integer")
+     */
+    private $postalCode;
+    
     /**
      * @ORM\OneToMany(targetEntity="StudentGroup", mappedBy="school")
      */
@@ -98,5 +112,107 @@ class School
     {
         return $this->name;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->studentGroup = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Set street
+     *
+     * @param string $street
+     *
+     * @return School
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * Get street
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return School
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set postalCode
+     *
+     * @param integer $postalCode
+     *
+     * @return School
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCode
+     *
+     * @return integer
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * Add studentGroup
+     *
+     * @param \AppBundle\Entity\StudentGroup $studentGroup
+     *
+     * @return School
+     */
+    public function addStudentGroup(\AppBundle\Entity\StudentGroup $studentGroup)
+    {
+        $this->studentGroup[] = $studentGroup;
+
+        return $this;
+    }
+
+    /**
+     * Remove studentGroup
+     *
+     * @param \AppBundle\Entity\StudentGroup $studentGroup
+     */
+    public function removeStudentGroup(\AppBundle\Entity\StudentGroup $studentGroup)
+    {
+        $this->studentGroup->removeElement($studentGroup);
+    }
+}

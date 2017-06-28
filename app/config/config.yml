@@ -79,6 +79,10 @@ fos_user:
 
 
 easy_admin:
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
     site_name: '<div class="home-logo">StudentBot</div>'
     design:
         form_theme: 'horizontal'
@@ -96,6 +100,74 @@ easy_admin:
         Emoji:
             class: AppBundle\Entity\Facebook\Emoji
             label: 'Emoji'
+        School:
+            class: AppBundle\Entity\School
+            label: 'École'
+            list:
+              fields:
+                  - { property: 'id', type: 'integer' }
+                  - { property: 'name', type: 'text', label: "Nom de l'établissement" }
+                  - { property: 'street', type: 'text', label: "Rue" }
+                  - { property: 'city', type: 'text', label: "Ville" }
+                  - { property: 'postalCode', type: 'text', label: "Code postal" }
+              title: "Liste des établissements scolaire "
+              actions:
+                  - { name: 'new', label: 'Nouveau' }
+                  - { name: 'search', label: 'Recherche' }
+                  - { name: 'edit', icon: 'pencil', label: 'Edit' }
+                  - { name: 'delete', icon: 'remove', label: 'Supprimer'}
+            form:
+              title: 'Edit École'
+              fields:
+                  - { property: 'name', type: 'text', label: "Nom de l'établissement" }
+                  - { property: 'street', type: 'text', label: 'Rue' }
+                  - { property: 'city', type: 'text', label: 'Ville' }
+                  - { property: 'postalCode', type: 'text', label: 'Code postal' }
+
+        Promotion:
+            class: AppBundle\Entity\Promotion
+            label: 'Promotion'
+            list:
+              fields:
+                  - { property: 'startDate', type: 'date', label: "Date de début" }
+                  - { property: 'endDate', type: 'date', label: "Date de Fin" }
+              title: "Liste des promotions"
+              actions:
+                  - { name: 'new', label: 'Nouveau' }
+                  - { name: 'search', label: 'Recherche' }
+                  - { name: 'edit', icon: 'pencil', label: 'Edit' }
+                  - { name: 'delete', icon: 'remove', label: 'Supprimer'}
+            form:
+              title: 'Edit Promotion'
+              fields:
+                  - { property: 'startDate', type: 'date', label: 'Date de début', type_options: {'format': 'dd/MM/yyyy', 'attr': {'class': 'datepicker'} } }
+                  - { property: 'endDate', type: 'date', label: 'Date de fin', type_options: {'format': 'dd/MM/yyyy', 'attr': {'class': 'datepicker'} } }
+        StudentGroup:
+            class: AppBundle\Entity\StudentGroup
+            label: 'Classe'
+            list:
+              sort: 'promotion'
+              fields:
+                  - { property: 'id', type: 'text', label: "Id" }
+                  - { property: 'name', type: 'text', label: "Nom" }
+                  - { property: 'schoolYear', type: 'text', label: "Année d'étude" }
+                  - { property: 'promotion', label: "Promotion" }
+                  - { property: 'school', label: "École" }
+                  - { property: 'planning', label: "Agenda" }
+              title: "Liste des classes"
+              actions:
+                  - { name: 'new', label: 'Nouveau' }
+                  - { name: 'search', label: 'Recherche' }
+                  - { name: 'edit', icon: 'pencil', label: 'Edit' }
+                  - { name: 'delete', icon: 'remove', label: 'Supprimer'}
+            form:
+              title: 'Edit classe'
+              fields:
+                  - { property: 'name', type: 'text', label: "Nom" }
+                  - { property: 'schoolYear', type: 'text', label: "Année d'étude" }
+                  - { property: 'promotion', label: "Promotion", type_options: {'required': 'true'} }
+                  - { property: 'school', label: "École", type_options: {'required': 'true'} }
+                  - { property: 'planning', label: "Agenda" }
         User:
           class: AppBundle\Entity\User
           label: 'User'
@@ -106,6 +178,8 @@ easy_admin:
                   - { property: 'email', type: 'email' }
                   - last_login
                   - locked
+                  - { property: 'school', label: "École" }
+                  - { property: 'studentGroup', label: "Classe" }
               title: "Customers list"
           form:
               title: 'Edit User'
@@ -113,12 +187,12 @@ easy_admin:
                   - { type: 'group', css_class: 'col-sm-6' }
                   - { type: 'section', label: 'User Profil', icon: 'user' }
                   - { property: 'Username', type: 'text' }
-                  - { property: 'email', type: 'email' }
-                  - { property: 'password', type: 'password' }
+                  # - { property: 'email', type: 'email' }
+                  # - { property: 'password', type: 'password' }
                   - { type: 'group', css_class: 'col-sm-6'}
                   - { type: 'section', label: 'Identity', icon: 'info' }
-                  - { property: 'Firstname', type: 'text' }
-                  - { property: 'Lastname', type: 'text' }
+                  - { property: 'Firstname', type: 'text', label: 'Prénom' }
+                  - { property: 'Lastname', type: 'text', label: 'Nom' }
               actions:
                   delete:
                       name: delete
