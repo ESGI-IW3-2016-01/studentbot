@@ -21,6 +21,7 @@ class DefaultController extends Controller
     use TraitWeather;
     use TraitYoutube;
     use TraitYesOrNo;
+    use TraitCalendar;
 
     private $image;
 
@@ -141,6 +142,14 @@ class DefaultController extends Controller
             case "yes or no ?" :
                 $res = $this->yesOrNo();
                 $this->image = true;
+                break;
+            case "agenda":
+            case "calendar":
+            case "planning":
+                $res = $this->calendar();
+                break;
+            case strstr($chaine, 'calendar') :
+                $res = $this->calendar($chaine);
                 break;
             default :
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
