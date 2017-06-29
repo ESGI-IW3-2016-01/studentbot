@@ -25,6 +25,10 @@ parameters:
     facebook.page_access_token: "%env(FACEBOOK_ACCESS_TOKEN)%"
     facebook.message_uri: https://graph.facebook.com/v2.6/me/messages
 
+    amazon.access_key: "%end(AWS_ACCESS_KEY)%"
+    amazon.secret_key: "%end(AWS_SECRET_KEY)%"
+    amazon.bucket_name: "%end(AWS_BUTCKET_NAME)%"
+
     football_key : "%env(API_KEY_FOOTBALL)%"
     basket_key : "%env(API_KEY_BASKET)%"
     weather_key : "%env(API_KEY_WEATHER)%"

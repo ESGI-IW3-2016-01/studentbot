@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\School;
 
 use AppBundle\Entity\Calendar\Calendar;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class StudentGroup
 {
     /**
-     * @var int
+     * @var int $id
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -23,33 +23,43 @@ class StudentGroup
     private $id;
 
     /**
-     * @var string
+     * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
-     * @var int
+     * @var int $scholarYear
      *
-     * @ORM\Column(name="schoolYear", type="integer")
+     * @ORM\Column(name="scholar_year", type="integer")
      */
-    private $schoolYear;
+    private $scholarYear;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="School")
+     * @var School $school
+     *
+     * @ORM\ManyToOne(targetEntity="School", inversedBy="studentGroup")
      * @ORM\JoinColumn(name="school_id", referencedColumnName="id")
      */
     private $school;
 
 
     /**
+     * @var Calendar $calendar
+     *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Calendar\Calendar", cascade={"persist", "merge", "remove"})
      * @ORM\JoinColumn(name="calendar_id", referencedColumnName="id")
      */
     private $calendar;
 
+    /**
+     * @var int $groupNumber
+     *
+     * @ORM\Column(name="group_number", type="integer")
+     */
+    private $groupNumber;
 
     /**
      * Get id
@@ -88,13 +98,13 @@ class StudentGroup
     /**
      * Set schoolYear
      *
-     * @param integer $schoolYear
+     * @param integer $scholarYear
      *
      * @return StudentGroup
      */
-    public function setSchoolYear($schoolYear)
+    public function setScholarYear($scholarYear)
     {
-        $this->schoolYear = $schoolYear;
+        $this->scholarYear = $scholarYear;
 
         return $this;
     }
@@ -104,9 +114,9 @@ class StudentGroup
      *
      * @return int
      */
-    public function getSchoolYear()
+    public function getScholarYear()
     {
-        return $this->schoolYear;
+        return $this->scholarYear;
     }
 
 
@@ -157,5 +167,29 @@ class StudentGroup
     public function getCalendar()
     {
         return $this->calendar;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getGroupNumber()
+    {
+        return $this->groupNumber;
+    }
+
+    /**
+     * @param int $groupNumber
+     */
+    public function setGroupNumber(int $groupNumber)
+    {
+        $this->groupNumber = $groupNumber;
+    }
+
+    /**
+     * @return string
+     */
+    function __toString(): string
+    {
+        return $this->scholarYear . $this->name . $this->groupNumber;
     }
 }

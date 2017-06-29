@@ -325,4 +325,10 @@ class Event
     {
         return $string;
     }
+
+    function __toString()
+    {
+        return $this->summary;
+    }
+
 }
