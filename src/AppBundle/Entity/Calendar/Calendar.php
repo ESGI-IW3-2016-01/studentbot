@@ -99,7 +99,6 @@ class Calendar
 
     /**
      * Calendar constructor.
-     * @internal param string $name
      */
     public function __construct()
     {
@@ -111,7 +110,7 @@ class Calendar
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
