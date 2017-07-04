@@ -35,11 +35,22 @@
             </a> #}
             <div class="header-right">
                 <a class="navbar-item" href="#team">The Team</a>
-                <a class="navbar-item" href="#pricing">Pricing</a>
+                {% if is_granted('ROLE_ADMIN')  %}
+                    <a class="navbar-item" href="{{ path('admin') }}">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                        Administration
+                    </a>
+                {% endif %}
                 {% if is_granted('ROLE_USER') %}
                     <a class="navbar-item" href="{{ path('fos_user_profile_show') }}">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         Mon profil
+                    </a>
+                {% endif %}
+                {% if app.user %}
+                    <a class="navbar-item" href="{{ path('fos_user_security_logout') }}">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        Se déconnecter
                     </a>
                 {% endif %}
             </div>
@@ -57,12 +68,9 @@
                 <a href="#email-form">
                     <button class="hero-btn">Parlez-moi !</button>
                 </a>
-
-                 {% if app.user is empty %}
-                    <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" class="btn btn-block btn-social btn-facebook" ><span class="fa fa-facebook"></span> Connexion facebook</a>
-                {% else %}
-                    <a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a>
-                {% endif %}
+                    {% if app.user is empty %}
+                        <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" class="btn btn-block btn-social btn-facebook" ><span class="fa fa-facebook"></span> Connexion facebook</a>                    
+                    {% endif %}
             </div><!--hero-left-->
 
             <div class="col-sm-6 col-sm-6 ipad">
@@ -328,9 +336,9 @@
 
             <div class="col-sm-2 col-sm-offset-4">
                 <div class="social-links">
-                    <a href="https://twitter.com/webscopeapp"> <img class="social-link"
+                    <a href="#"> <img class="social-link"
                                                                     src="/images/twitter.svg"/> </a>
-                    <a href="https://www.facebook.com/webscopeapp/?ref=aymt_homepage_panel"> <img
+                    <a href="#"> <img
                                 src="/images/facebook.svg"/> </a>
                 </div>
                 <!--social-links-->

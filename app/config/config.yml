@@ -85,6 +85,16 @@ easy_admin:
         datetime: 'd/m/Y H:i:s'
     site_name: '<div class="home-logo">StudentBot</div>'
     design:
+        menu:
+            - { label: 'Homepage', route: 'homepage' }
+            - { entity: 'Api' }
+            - { entity: 'ApiLog' }
+            - { entity: 'Emoji' }
+            - { entity: 'School' }
+            - { entity: 'Promotion' }
+            - { entity: 'StudentGroup' }
+            - { entity: 'User'}
+            - { label: 'Log out', route: 'fos_user_security_logout' }
         form_theme: 'horizontal'
         assets:
             css:
@@ -94,6 +104,28 @@ easy_admin:
         Api:
             class: AppBundle\Entity\Api
             label: 'API'
+            list:
+              fields:
+                  - { property: 'id', type: 'integer' }
+                  - { property: 'name', type: 'text', label: "api.name.label" }
+                  - { property: 'enabled', label: "api.enabled.label" }
+                  - { property: 'description', type: 'text', label: "api.description.label" }
+                  - { property: 'baseUrl', type: 'text', label: "api.baseUrl.label" }
+                  - { property: 'token', type: 'text', label: "api.token.label" }
+              title: "api.admin.title"
+              actions:
+                  - { name: 'new', label: 'btn.new' }
+                  - { name: 'search', label: 'btn.search' }
+                  - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                  - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+            form:
+              title: 'Edit Api'
+              fields:
+                  - { property: 'name', type: 'text', label: "api.name.label" }
+                  - { property: 'enabled', label: "api.enabled.label" }
+                  - { property: 'description', type: 'text', label: "api.description.label" }
+                  - { property: 'baseUrl', type: 'text', label: "api.baseUrl.label" }
+                  - { property: 'token', type: 'text', label: "api.token.label" }
         ApiLog:
             class: AppBundle\Entity\ApiLog
             label: 'ApiLog'
@@ -102,7 +134,7 @@ easy_admin:
             label: 'Emoji'
         School:
             class: AppBundle\Entity\School
-            label: 'École'
+            label: 'admin.school.label'
             list:
               fields:
                   - { property: 'id', type: 'integer' }
@@ -126,7 +158,7 @@ easy_admin:
 
         Promotion:
             class: AppBundle\Entity\Promotion
-            label: 'Promotion'
+            label: 'admin.promotion.label'
             list:
               fields:
                   - { property: 'startDate', type: 'date', label: "Date de début" }
@@ -144,7 +176,7 @@ easy_admin:
                   - { property: 'endDate', type: 'date', label: 'Date de fin', type_options: {'format': 'dd/MM/yyyy', 'attr': {'class': 'datepicker'} } }
         StudentGroup:
             class: AppBundle\Entity\StudentGroup
-            label: 'Classe'
+            label: 'admin.studentGroup.label'
             list:
               sort: 'promotion'
               fields:
@@ -170,7 +202,7 @@ easy_admin:
                   - { property: 'planning', label: "Agenda" }
         User:
           class: AppBundle\Entity\User
-          label: 'User'
+          label: 'admin.user.label'
           list:
               fields:
                   - Username
