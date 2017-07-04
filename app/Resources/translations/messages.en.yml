@@ -1,0 +1,17 @@
+admin.school.name: Name
+admin.school.label: School
+admin.promotion.label: Promotion
+admin.studentGroup.label: Student Group
+admin.user.label: User
+api.name.label: Nom de l'api
+api.enabled.label: Activé
+api.description.label: Description
+api.baseUrl.label: Url
+api.token.label: Token
+api.admin.title: List of API
+school.name.label: Nom de l'établissement
+label.name: Nom
+btn.new: Nouveau
+btn.search: Recherche
+btn.edit: Edit
+btn.delete: Delete

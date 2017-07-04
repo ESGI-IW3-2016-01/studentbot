@@ -642,3 +642,41 @@ ul {
 #basic-spinner{
     display: none;
 }
+
+.btn-block + .btn-block {
+    margin-top: 5px;
+}
+.btn-facebook {
+    background-color: #3b5998;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+.btn-social {
+    overflow: hidden;
+    padding-left: 44px;
+    position: relative;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.btn-block {
+    display: block;
+    width: 80%;
+}
+.btn {
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+}
