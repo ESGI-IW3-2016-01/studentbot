@@ -107,6 +107,7 @@ easy_admin:
                 title: 'Message Analysis'
                 fields:
                     - { property: 'msgid', type: 'text', label: 'ID' }
+                    - 'createdAt'
                     - { property: 'text', type: 'text', label: 'Text' }
                     - { property: 'entities', label: 'Intents', template: 'tag_entities.html.twig' }
         Calendar:

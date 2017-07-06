@@ -31,6 +31,7 @@ class Calendar
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
+
     /**
      * @var DateTime $createdAt
      *

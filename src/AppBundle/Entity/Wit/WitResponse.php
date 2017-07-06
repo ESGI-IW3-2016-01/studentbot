@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity\Wit;
 
+use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 /**
  * Class WitResponse
@@ -37,11 +39,19 @@ class WitResponse
     private $entities;
 
     /**
+     * @var DateTime $createdAt
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
      * WitResponse constructor.
      * @param array $response
      */
     public function __construct(array $response)
     {
+        $this->createdAt = new DateTime('now', new DateTimeZone('Europe/Paris'));
         if ($response) {
             foreach ($response as $key => $value) {
                 $method = 'set' . ucfirst(str_replace('_','',$key));
@@ -98,5 +108,21 @@ class WitResponse
     public function setEntities($entities)
     {
         $this->entities = $entities;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param DateTime $createdAt
+     */
+    public function setCreatedAt(DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
     }
 }
