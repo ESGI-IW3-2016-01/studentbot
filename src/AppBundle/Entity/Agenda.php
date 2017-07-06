@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Planning
+ * Agenda
  *
- * @ORM\Table(name="planning")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PlanningRepository")
+ * @ORM\Table(name="agenda")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AgendaRepository")
  */
-class Planning
+class Agenda
 {
     /**
      * @var int
@@ -30,7 +30,7 @@ class Planning
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Event", mappedBy="planning")
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="agenda")
      */
     private $event;
 
@@ -49,7 +49,7 @@ class Planning
      *
      * @param string $name
      *
-     * @return Planning
+     * @return Agenda
      */
     public function setName($name)
     {

@@ -65,10 +65,10 @@ class Event
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Planning", inversedBy="event")
-     * @ORM\JoinColumn(name="planning_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Agenda", inversedBy="event")
+     * @ORM\JoinColumn(name="agenda_id", referencedColumnName="id")
      */
-    private $planning;
+    private $agenda;
 
     /**
      * Get id
@@ -226,27 +226,27 @@ class Event
 
 
     /**
-     * Set planning
+     * Set agenda
      *
-     * @param Planning $planning
+     * @param Agenda $agenda
      *
      * @return StudentGroup
      */
-    public function setPlanning(Planning $planning)
+    public function setAgenda(Agenda $agenda)
     {
-        $this->planning = $planning;
+        $this->agenda = $agenda;
 
         return $this;
     }
 
     /**
-     * Get planning
+     * Get agenda
      *
-     * @return Planning
+     * @return Agenda
      */
-    public function getPlanning()
+    public function getAgenda()
     {
-        return $this->planning;
+        return $this->agenda;
     }
 }
 

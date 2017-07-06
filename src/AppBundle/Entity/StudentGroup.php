@@ -49,10 +49,10 @@ class StudentGroup
 
 
     /**
-     * @ORM\OneToOne(targetEntity="Planning", cascade={"persist", "merge", "remove"})
-     * @ORM\JoinColumn(name="planning_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Agenda", cascade={"persist", "merge", "remove"})
+     * @ORM\JoinColumn(name="agenda_id", referencedColumnName="id")
      */
-    private $planning;
+    private $agenda;
 
 
     /**
@@ -140,27 +140,27 @@ class StudentGroup
 
 
     /**
-     * Set planning
+     * Set agenda
      *
-     * @param Planning $planning
+     * @param Agenda $agenda
      *
      * @return StudentGroup
      */
-    public function setPlanning(Planning $planning)
+    public function setAgenda(Agenda $agenda)
     {
-        $this->planning = $planning;
+        $this->agenda = $agenda;
 
         return $this;
     }
 
     /**
-     * Get planning
+     * Get agenda
      *
-     * @return Planning
+     * @return Agenda
      */
-    public function getPlanning()
+    public function getAgenda()
     {
-        return $this->planning;
+        return $this->agenda;
     }
 
 
