@@ -150,7 +150,9 @@ class DefaultController extends Controller
                 }
                 break;
             case count(explode("\xF0\x9F\x8E\xAE", $chaine)) != 1 :
-                $res = $this->esport($chaine);
+                if ($apiService->getApi('esport')) {
+                    $res = $this->esport($chaine);
+                }
                 break;
             case count(explode("\xE2\x98\x80", $chaine)) != 1 :
                 if ($apiService->getApi('weather')) {

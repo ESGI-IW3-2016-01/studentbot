@@ -14,7 +14,7 @@ class ApiService
 
     public function getApi($apiName) {
         $apiRepository = $this->manager->getRepository('AppBundle:Api');
-        $api = $apiRepository->findOneBy(["name" => $apiName]);
+        $api = $apiRepository->findOneBy(["name" => $apiName, "enable" => true]);
         $this->manager->flush();
 
         return $api;

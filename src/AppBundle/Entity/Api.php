@@ -22,7 +22,7 @@ class Api
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=50)
      */
     private $name;
 
@@ -34,21 +34,9 @@ class Api
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=250)
      */
     private $description;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
-     */
-    private $baseUrl;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
-     */
-    private $token;
 
     /**
      * @return mixed
@@ -112,38 +100,6 @@ class Api
     public function setDescription($description)
     {
         $this->description = $description;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBaseUrl()
-    {
-        return $this->baseUrl;
-    }
-
-    /**
-     * @param string $baseUrl
-     */
-    public function setBaseUrl($baseUrl)
-    {
-        $this->baseUrl = $baseUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param string $token
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
     }
 
     public function __toString() {
