@@ -105,6 +105,7 @@ easy_admin:
             disabled_actions: ['edit', 'view', 'new', 'delete']
             list:
                 title: 'Message Analysis'
+                sort: 'createdAt'
                 fields:
                     - { property: 'msgid', type: 'text', label: 'ID' }
                     - 'createdAt'
@@ -115,6 +116,7 @@ easy_admin:
             class: AppBundle\Entity\Calendar\Calendar
             lavel: 'Calendar'
             list:
+                sort: 'createdAt'
                 fields:
                     - 'id'
                     - 'name'
