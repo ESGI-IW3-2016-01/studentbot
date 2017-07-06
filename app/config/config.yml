@@ -147,9 +147,9 @@ easy_admin:
                   - { property: 'api', type: 'text', label: "Api" }
                   - { property: 'date', label: "api.enabled.label" }
                   - { property: 'code', type: 'text', label: "api_log.code.label" }
-        Emoji:
-            class: AppBundle\Entity\Facebook\Emoji
-            label: 'Emoji'
+        #Emoji:
+         #   class: AppBundle\Entity\Facebook\Emoji
+         #   label: 'Emoji'#
         School:
             class: AppBundle\Entity\School
             label: 'admin.school.label'

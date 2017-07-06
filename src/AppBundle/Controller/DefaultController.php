@@ -119,31 +119,46 @@ class DefaultController extends Controller
 
     private function choiceAPI($chaine)
     {
+        $apiService = $this->container->get('app.api_service');
         $this->image = false;
         $chaine = strtolower($chaine);
         switch ($chaine) {
             case "résultat football" :
             case strcmp("\xe2\x9a\xbd", $chaine) == 0 :
-                $res = $this->football();
+                if ($apiService->getApi('football')) {
+                    $res = $this->football();
+                }
                 break;
             case "résultat basket" :
             case "résultat nba" :
             case strcmp("\xf0\x9f\x8f\x80", $chaine) == 0 :
-                $res = $this->basket();
+                if ($apiService->getApi('basket')) {
+                    $res = $this->basket();
+                }
                 break;
             case count(explode("\xE2\x98\x80", $chaine)) != 1 :
-                $res = $this->weather(explode("\xE2\x98\x80", $chaine)[1]);
+                if ($apiService->getApi('weather')) {
+                    $res = $this->weather(explode("\xE2\x98\x80", $chaine)[1]);
+                }
                 break;
             case count(explode("\xf0\x9f\x8e\xbc", $chaine)) != 1 :
-                $res = $this->youtube($chaine);
+                if ($apiService->getApi('youtube')) {
+                    $res = $this->youtube($chaine);
+                }
                 break;
             case "yes or no ?" :
-                $res = $this->yesOrNo();
+                if ($apiService->getApi('yesorno')) {
+                    $res = $this->yesOrNo();
+                }
                 $this->image = true;
                 break;
             default :
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
                 break;
+        }
+
+        if (!$res) {
+            $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
         }
 
         return $res;
