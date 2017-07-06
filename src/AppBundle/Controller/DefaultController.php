@@ -146,8 +146,10 @@ class DefaultController extends Controller
 
     private function choiceAPI($chaine)
     {
+        $apiService = $this->container->get('app.api_service');
         $this->image = false;
         $chaine = strtolower($chaine);
+
         switch ($chaine) {
             case "résultat football" :
             case strcmp("\xe2\x9a\xbd", $chaine) == 0 :
@@ -192,10 +194,6 @@ class DefaultController extends Controller
             default :
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
                 break;
-        }
-
-        if (!$res) {
-            $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
         }
 
         return $res;

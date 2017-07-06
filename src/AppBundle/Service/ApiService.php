@@ -21,10 +21,15 @@ class ApiService
         $this->manager = $entityManager;
     }
 
+    /**
+     * @param $apiName
+     * @return Api
+     */
     public function getApi($apiName)
     {
         $apiRepository = $this->manager->getRepository('AppBundle:Api');
-        $api = $apiRepository->findOneBy(["name" => $apiName, "enabled" => true]);
+        /** @var Api $api */
+        $api = $apiRepository->findOneBy(['name' => $apiName, 'enabled' => true]);
         $this->manager->flush();
 
         return $api;
