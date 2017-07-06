@@ -57,13 +57,13 @@ class Event
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=1023)
      */
     private $summary;
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=1023)
      */
     private $description;
 
@@ -325,4 +325,10 @@ class Event
     {
         return $string;
     }
+
+    function __toString()
+    {
+        return $this->summary;
+    }
+
 }

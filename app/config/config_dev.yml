@@ -45,3 +45,6 @@ monolog:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+parameters:
+    file_storage: local

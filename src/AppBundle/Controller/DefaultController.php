@@ -2,10 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Facebook\Attachment;
 use AppBundle\Entity\Facebook\SendMessage;
 use AppBundle\Service\MessageSender;
-use AppBundle\Service\NewsService;
+use AppBundle\Service\WitService;
 use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,6 +54,10 @@ class DefaultController extends Controller
         $logger->error($request->getContent(), ['sender_faceboo_id' => null]);
 
         $message = $this->createMessageRecievedFromBody($request->getContent());
+
+        /** @var WitService $witService */
+        $witService = $this->container->get('app.wit_service');
+        $witService->handleMessage($message->getText());
 
         /** @var MessageSender $messageSenderService */
         $messageSenderService = $this->container->get('app.message_sender');

@@ -2,12 +2,14 @@
 
 namespace AppBundle\Entity\Calendar;
 
+use AppBundle\Entity\School\StudentGroup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use DateTime, DateTimeZone;
+use File;
 
 /**
- * Planning
+ * Calendrier / Planning
  *
  * @ORM\Table(name="calendar")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Calendar\CalendarRepository")
@@ -15,7 +17,7 @@ use DateTime, DateTimeZone;
 class Calendar
 {
     /**
-     * @var int
+     * @var int $id
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -24,37 +26,83 @@ class Calendar
     private $id;
 
     /**
-     * @var string
+     * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     private $name;
+
     /**
-     * @var DateTime
+     * @var DateTime $createdAt
+     *
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @var DateTime
+     * @var DateTime $updatedAt
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
 
     /**
-     * @var ArrayCollection
+     * @var DateTime $updatedAt
      *
-     * @ORM\OneToMany(targetEntity="Event", mappedBy="calendar", cascade={"persist"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $processedAt;
+
+    /**
+     * @var ArrayCollection $events
+     *
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="calendar", cascade={"remove"})
      */
     private $events;
 
     /**
-     * Calendar constructor.
-     * @param string $name
+     * @var string $filename
+     * @ORM\Column(type="string", nullable=true)
      */
-    public function __construct($name)
+    private $filename;
+
+    /**
+     * @var string $filePath
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $filePath;
+
+    /**
+     * @var string $location
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $location;
+    /**
+     * Set to true when file has been processed
+     * @var bool $processed
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $processed;
+
+    /**
+     * @var File
+     */
+    private $file;
+
+    /**
+     * @var StudentGroup $group
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\School\StudentGroup", cascade={"persist", "merge", "remove"})
+     * @ORM\JoinColumn(name="student_group_id", referencedColumnName="id")
+     */
+    private $group;
+
+    /**
+     * Calendar constructor.
+     * @internal param string $name
+     */
+    public function __construct()
     {
-        $this->name = $name;
         $this->createdAt = new DateTime('now', New DateTimeZone('Europe/Paris'));
         $this->updatedAt = $this->createdAt;
         $this->events = new ArrayCollection();
@@ -63,7 +111,7 @@ class Calendar
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -79,7 +127,7 @@ class Calendar
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -89,6 +137,7 @@ class Calendar
      */
     public function setName(string $name)
     {
+        $this->updatedAt = new DateTime('now', new DateTimeZone('Europe/Paris'));
         $this->name = $name;
     }
 
@@ -105,6 +154,7 @@ class Calendar
      */
     public function setEvents(ArrayCollection $events)
     {
+        $this->updatedAt = new DateTime('now', new DateTimeZone('Europe/Paris'));
         $this->events = $events;
     }
 
@@ -114,6 +164,7 @@ class Calendar
      */
     public function addEvent(Event $event): bool
     {
+        $this->updatedAt = new DateTime('now', new DateTimeZone('Europe/Paris'));
         return $this->events->add($event);
     }
 
@@ -156,6 +207,128 @@ class Calendar
     public function setUpdatedAt(DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @param string $filename
+     */
+    public function setFilename(string $filename)
+    {
+        $this->updatedAt = new DateTime('now', new DateTimeZone('Europe/Paris'));
+        $this->filename = $filename;
+    }
+
+    /**
+     * @return StudentGroup|null
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param StudentGroup $group
+     */
+    public function setGroup(StudentGroup $group)
+    {
+        $this->updatedAt = new DateTime('now', new DateTimeZone('Europe/Paris'));
+        $this->group = $group;
+    }
+
+    /**
+     * @return string
+     */
+    function __toString(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProcessed(): bool
+    {
+        return $this->processed;
+    }
+
+    /**
+     * @param bool $processed
+     */
+    public function setProcessed(bool $processed)
+    {
+        $this->processed = $processed;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getProcessedAt(): DateTime
+    {
+        return $this->processedAt;
+    }
+
+    /**
+     * @param DateTime $processedAt
+     */
+    public function setProcessedAt(DateTime $processedAt)
+    {
+        $this->processedAt = $processedAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilePath()
+    {
+        return $this->filePath;
+    }
+
+    /**
+     * @param string $filePath
+     */
+    public function setFilePath(string $filePath)
+    {
+        $this->filePath = $filePath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     */
+    public function setLocation(string $location)
+    {
+        $this->location = $location;
     }
 
 }
