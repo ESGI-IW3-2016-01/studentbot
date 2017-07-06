@@ -129,6 +129,24 @@ easy_admin:
         ApiLog:
             class: AppBundle\Entity\ApiLog
             label: 'ApiLog'
+            list:
+              fields:
+                  - { property: 'id', type: 'integer' }
+                  - { property: 'api', label: "Api" }
+                  - { property: 'date', label: "api_log.date.label" }
+                  - { property: 'code', type: 'text', label: "api_log.code.label" }
+              title: "api.admin.title"
+              actions:
+                  - { name: 'new', label: 'btn.new' }
+                  - { name: 'search', label: 'btn.search' }
+                  - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                  - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+            form:
+              title: 'Edit Api log'
+              fields:
+                  - { property: 'api', type: 'text', label: "Api" }
+                  - { property: 'date', label: "api.enabled.label" }
+                  - { property: 'code', type: 'text', label: "api_log.code.label" }
         Emoji:
             class: AppBundle\Entity\Facebook\Emoji
             label: 'Emoji'
@@ -138,42 +156,42 @@ easy_admin:
             list:
               fields:
                   - { property: 'id', type: 'integer' }
-                  - { property: 'name', type: 'text', label: "Nom de l'établissement" }
-                  - { property: 'street', type: 'text', label: "Rue" }
-                  - { property: 'city', type: 'text', label: "Ville" }
-                  - { property: 'postalCode', type: 'text', label: "Code postal" }
-              title: "Liste des établissements scolaire "
+                  - { property: 'name', type: 'text', label: "school.name.label" }
+                  - { property: 'street', type: 'text', label: "school.street.label" }
+                  - { property: 'city', type: 'text', label: "school.city.label" }
+                  - { property: 'postalCode', type: 'text', label: "school.postal_code.label" }
+              title: "school.admin.title.list"
               actions:
-                  - { name: 'new', label: 'Nouveau' }
-                  - { name: 'search', label: 'Recherche' }
-                  - { name: 'edit', icon: 'pencil', label: 'Edit' }
-                  - { name: 'delete', icon: 'remove', label: 'Supprimer'}
+                  - { name: 'new', label: 'btn.new' }
+                  - { name: 'search', label: 'btn.search' }
+                  - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                  - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-              title: 'Edit École'
+              title: 'school.admin.title.edit'
               fields:
-                  - { property: 'name', type: 'text', label: "Nom de l'établissement" }
-                  - { property: 'street', type: 'text', label: 'Rue' }
-                  - { property: 'city', type: 'text', label: 'Ville' }
-                  - { property: 'postalCode', type: 'text', label: 'Code postal' }
+                  - { property: 'name', type: 'text', label: "school.name.label" }
+                  - { property: 'street', type: 'text', label: "school.street.label" }
+                  - { property: 'city', type: 'text', label: "school.city.label" }
+                  - { property: 'postalCode', type: 'text', label: "school.postal_code.label" }
 
         Promotion:
             class: AppBundle\Entity\Promotion
             label: 'admin.promotion.label'
             list:
               fields:
-                  - { property: 'startDate', type: 'date', label: "Date de début" }
-                  - { property: 'endDate', type: 'date', label: "Date de Fin" }
-              title: "Liste des promotions"
+                  - { property: 'startDate', type: 'date', label: "promotion.start_date.label" }
+                  - { property: 'endDate', type: 'date', label: "promotion.end_date.label" }
+              title: "promotion.admin.title.list"
               actions:
-                  - { name: 'new', label: 'Nouveau' }
-                  - { name: 'search', label: 'Recherche' }
-                  - { name: 'edit', icon: 'pencil', label: 'Edit' }
-                  - { name: 'delete', icon: 'remove', label: 'Supprimer'}
+                  - { name: 'new', label: 'btn.new' }
+                  - { name: 'search', label: 'btn.search' }
+                  - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                  - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-              title: 'Edit Promotion'
+              title: 'promotion.admin.title.edit'
               fields:
-                  - { property: 'startDate', type: 'date', label: 'Date de début', type_options: {'format': 'dd/MM/yyyy', 'attr': {'class': 'datepicker'} } }
-                  - { property: 'endDate', type: 'date', label: 'Date de fin', type_options: {'format': 'dd/MM/yyyy', 'attr': {'class': 'datepicker'} } }
+                  - { property: 'startDate', type: 'date', label: 'promotion.start_date.label', type_options: {'format': 'dd/MM/yyyy', 'attr': {'class': 'datepicker'} } }
+                  - { property: 'endDate', type: 'date', label: 'promotion.end_date.label', type_options: {'format': 'dd/MM/yyyy', 'attr': {'class': 'datepicker'} } }
         StudentGroup:
             class: AppBundle\Entity\StudentGroup
             label: 'admin.studentGroup.label'
@@ -181,61 +199,61 @@ easy_admin:
               sort: 'promotion'
               fields:
                   - { property: 'id', type: 'text', label: "Id" }
-                  - { property: 'name', type: 'text', label: "Nom" }
-                  - { property: 'schoolYear', type: 'text', label: "Année d'étude" }
-                  - { property: 'promotion', label: "Promotion" }
-                  - { property: 'school', label: "École" }
-                  - { property: 'planning', label: "Agenda" }
-              title: "Liste des classes"
+                  - { property: 'name', type: 'text', label: "student_group.name.label" }
+                  - { property: 'schoolYear', type: 'text', label: "student_group.school_year.label" }
+                  - { property: 'promotion', label: "student_group.promotion.label" }
+                  - { property: 'school', label: "student_group.school.label" }
+                  - { property: 'planning', label: "student_group.planning.label" }
+              title: "student_group.admin.title.list"
               actions:
-                  - { name: 'new', label: 'Nouveau' }
-                  - { name: 'search', label: 'Recherche' }
-                  - { name: 'edit', icon: 'pencil', label: 'Edit' }
-                  - { name: 'delete', icon: 'remove', label: 'Supprimer'}
+                  - { name: 'new', label: 'btn.new' }
+                  - { name: 'search', label: 'btn.search' }
+                  - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                  - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-              title: 'Edit classe'
+              title: 'student_group.admin.title.edit'
               fields:
-                  - { property: 'name', type: 'text', label: "Nom" }
-                  - { property: 'schoolYear', type: 'text', label: "Année d'étude" }
-                  - { property: 'promotion', label: "Promotion", type_options: {'required': 'true'} }
-                  - { property: 'school', label: "École", type_options: {'required': 'true'} }
-                  - { property: 'planning', label: "Agenda" }
+                  - { property: 'name', type: 'text', label: "student_group.name.label" }
+                  - { property: 'schoolYear', type: 'text', label: "student_group.school_year.label" }
+                  - { property: 'promotion', label: "student_group.promotion.label", type_options: {'required': 'true'} }
+                  - { property: 'school', label: "student_group.school.label", type_options: {'required': 'true'} }
+                  - { property: 'planning', label: "student_group.planning.label" }
         User:
           class: AppBundle\Entity\User
           label: 'admin.user.label'
           list:
               fields:
-                  - Username
-                  - idFacebook
-                  - { property: 'email', type: 'email' }
-                  - last_login
-                  - locked
-                  - { property: 'school', label: "École" }
-                  - { property: 'studentGroup', label: "Classe" }
-              title: "Customers list"
+                  - { property: 'username', type: 'text', label: "user.username.label" }
+                  - { property: 'idFacebook', type: 'text', label: "user.idFacebook.label" }
+                  - { property: 'email', type: 'email', label: "user.email.label"}
+                  - { property: 'last_login', label: "user.last_login.label" }
+                  - { property: 'locked', label: "user.locked.label" }
+                  - { property: 'school', label: "user.school.label" }
+                  - { property: 'studentGroup', label: "user.student_group.label" }
+              title: "user.admin.title.list"
           form:
-              title: 'Edit User'
+              title: 'user.admin.title.edit'
               fields:
                   - { type: 'group', css_class: 'col-sm-6' }
-                  - { type: 'section', label: 'User Profil', icon: 'user' }
-                  - { property: 'Username', type: 'text' }
-                  # - { property: 'email', type: 'email' }
-                  # - { property: 'password', type: 'password' }
+                  - { type: 'section', label: 'User Profil', icon: 'user'}
+                  - { property: 'username',label: "user.username.label", type: 'text'}
+                  # - { property: 'email', type: 'email', label: "Classe" }
+                  # - { property: 'password', type: 'password', label: "Classe" }
                   - { type: 'group', css_class: 'col-sm-6'}
                   - { type: 'section', label: 'Identity', icon: 'info' }
-                  - { property: 'Firstname', type: 'text', label: 'Prénom' }
-                  - { property: 'Lastname', type: 'text', label: 'Nom' }
+                  - { property: 'Firstname', type: 'text', label: 'Firstname' }
+                  - { property: 'Lastname', type: 'text', label: 'Lastname' }
               actions:
                   delete:
                       name: delete
                       type: method
-                      label: action.delete
+                      label: btn.delete
                       css_class: 'btn btn-default action-delete'
                       icon: trash-o
                   list:
                       name: list
                       type: method
-                      label: action.list
+                      label: btn.list
                       css_class: 'btn btn-secondary action-list'
                       icon: caret-square-o-left
 

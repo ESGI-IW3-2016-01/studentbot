@@ -9,9 +9,43 @@ api.description.label: Description
 api.baseUrl.label: Url
 api.token.label: Token
 api.admin.title: List of API
-school.name.label: Nom de l'établissement
+api_log.admin.title: List of API logs
+api_log.date.label: Date
+api_log.code.label: Code
+school.name.label: School
+school.street.label: Street
+school.city.label: City
+school.postal_code.label: Postal code
+school.admin.title.list: List of school
+school.admin.title.edit: Edit school
+promotion.start_date.label: Start date
+promotion.end_date.label: End date
+promotion.admin.title.list: List of promotions
+promotion.admin.title.edit: Edit promotion
+student_group.name.label: Name
+student_group.school_year.label: School year
+student_group.promotion.label: Promotion
+student_group.school.label: School
+student_group.planning.label: Planning
+student_group.admin.title.list: Liste of classes
+student_group.admin.title.edit: Edit class
+user.username.label: Username
+user.idFacebook.label: IdFacebook
+user.email.label: Email
+user.last_login.label: Last login
+user.locked.label: Locked
+user.school.label: School
+user.student_group.label: Class
+user.admin.title.list: List of users
+user.admin.title.edit: Edit user
+User Profil: User Profil
+Identity: Identity
+Firstname: Prénom
+Lastname: Nom
 label.name: Nom
 btn.new: Nouveau
 btn.search: Recherche
 btn.edit: Edit
 btn.delete: Delete
+btn.list: List
+
