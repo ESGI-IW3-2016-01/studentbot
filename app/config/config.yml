@@ -98,15 +98,17 @@ easy_admin:
         ApiLog:
             class: AppBundle\Entity\ApiLog
             label: 'API Logs'
+            disabled_actions: ['edit', 'view', 'new']
         Wit:
             class: AppBundle\Entity\Wit\WitResponse
             label: 'Messages'
+            disabled_actions: ['edit', 'view', 'new', 'delete']
             list:
                 title: 'Message Analysis'
                 fields:
-                    - { property: 'msgid', type: 'string', label: 'ID' }
+                    - { property: 'msgid', type: 'text', label: 'ID' }
                     - { property: 'text', type: 'text', label: 'Text' }
-                    - { property: 'entities', type: 'json', label: 'Intents', template: 'tag_entities.html.twig' }
+                    - { property: 'entities', label: 'Intents', template: 'tag_entities.html.twig' }
         Calendar:
             controller: AppBundle\Controller\CalendarController
             class: AppBundle\Entity\Calendar\Calendar

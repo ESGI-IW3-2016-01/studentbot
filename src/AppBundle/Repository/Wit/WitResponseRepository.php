@@ -5,9 +5,9 @@ namespace AppBundle\Repository\Wit;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Class WiResponseRepository
+ * Class WitResponseRepository
  */
-class WiResponseRepository extends EntityRepository
+class WitResponseRepository extends EntityRepository
 {
 
 }
