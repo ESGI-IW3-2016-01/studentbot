@@ -26,7 +26,7 @@ student_group.name.label: Name
 student_group.school_year.label: School year
 student_group.promotion.label: Promotion
 student_group.school.label: School
-student_group.planning.label: Planning
+student_group.agenda.label: Planning
 student_group.admin.title.list: Liste of classes
 student_group.admin.title.edit: Edit class
 user.username.label: Username

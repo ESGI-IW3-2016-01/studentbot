@@ -264,7 +264,7 @@ easy_admin:
                   - { property: 'schoolYear', type: 'text', label: "student_group.school_year.label" }
                   - { property: 'promotion', label: "student_group.promotion.label" }
                   - { property: 'school', label: "student_group.school.label" }
-                  - { property: 'planning', label: "student_group.planning.label" }
+                  - { property: 'agenda', label: "student_group.agenda.label" }
               title: "student_group.admin.title.list"
               actions:
                   - { name: 'new', label: 'btn.new' }
@@ -278,7 +278,7 @@ easy_admin:
                   - { property: 'schoolYear', type: 'text', label: "student_group.school_year.label" }
                   - { property: 'promotion', label: "student_group.promotion.label", type_options: {'required': 'true'} }
                   - { property: 'school', label: "student_group.school.label", type_options: {'required': 'true'} }
-                  - { property: 'planning', label: "student_group.planning.label" }
+                  - { property: 'agenda', label: "student_group.agenda.label" }
         User:
               class: AppBundle\Entity\User
               label: 'User'

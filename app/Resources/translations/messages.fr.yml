@@ -26,7 +26,7 @@ student_group.name.label: Nom
 student_group.school_year.label: "Année d'étude"
 student_group.promotion.label: Promotion
 student_group.school.label: École
-student_group.planning.label: Agenda
+student_group.agenda.label: Agenda
 student_group.admin.title.list: Liste des classes
 student_group.admin.title.edit: Éditer une classe
 user.username.label: "Nom d'utilisateur"
