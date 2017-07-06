@@ -36,3 +36,4 @@ parameters:
     esport_csgo_key: "%env(API_KEY_ESPORT_CSGO)%"
     esport_dota_key: "%env(API_KEY_ESPORT_DOTA)%"
     esport_lol_key: "%env(API_KEY_ESPORT_LOL)%"
+    wit_key: "%env(API_KEY_WIT)%"

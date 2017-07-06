@@ -91,13 +91,22 @@ easy_admin:
     entities:
         QuestionAnswer:
             class: AppBundle\Entity\QuestionAnswer
-            label: 'Question / Answer'
+            label: 'Custom Answers'
         Api:
             class: AppBundle\Entity\Api
-            label: 'API'
+            label: "API's"
         ApiLog:
             class: AppBundle\Entity\ApiLog
-            label: 'ApiLog'
+            label: 'API Logs'
+        Wit:
+            class: AppBundle\Entity\Wit\WitResponse
+            label: 'Messages'
+            list:
+                title: 'Message Analysis'
+                fields:
+                    - { property: 'msgid', type: 'string', label: 'ID' }
+                    - { property: 'text', type: 'text', label: 'Text' }
+                    - { property: 'entities', type: 'json', label: 'Intents', template: 'tag_entities.html.twig' }
         Calendar:
             controller: AppBundle\Controller\CalendarController
             class: AppBundle\Entity\Calendar\Calendar
@@ -109,7 +118,7 @@ easy_admin:
                     - 'filename'
                     - 'createdAt'
                     - 'updatedAt'
-                    - 'processed'
+                    - { property: 'processed', type: 'boolean' }
             form:
                 fields:
                     - 'name'
