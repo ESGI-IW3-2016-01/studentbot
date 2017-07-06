@@ -68,12 +68,7 @@ trait TraitEsport
                 $home_score = $result->sport_event_status->home_score;
                 $away_score = $result->sport_event_status->away_score;
 
-                $score_period = '';
-                foreach ($result->sport_event_status->period_scores as $score) {
-                    $score_period .= $score->home_score. '-' . $score->away_score. ' ';
-                }
-
-                $str = $tournament_name. ' ' . $season_name . ' ' . $tournament_round . ' | ' . $home_team . ' ' . $home_score . ' - ' . $away_score . ' ' . $away_team. ' score detail : ' . $score_period;
+                $str = $tournament_name. ' ' . $season_name . ' ' . $tournament_round . ' | ' . $home_team . ' ' . $home_score . ' - ' . $away_score . ' ' . $away_team;
             } else {
                 $status = $result->sport_event_status->status;
                 $str = $tournament_name. ' ' . $season_name . ' ' . $tournament_round . ' | ' . $home_team . ' '. $status . ' '. $away_team;
