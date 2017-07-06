@@ -3,15 +3,48 @@ admin.school.label: École
 admin.promotion.label: Promotion
 admin.studentGroup.label: Classe
 admin.user.label: Utilisateur
-api.name.label: Nom de l'api
+api.name.label: "Nom de l'api"
 api.enabled.label: Activé
 api.description.label: Description
 api.baseUrl.label: Url
 api.token.label: Token
 api.admin.title: Liste des API
-school.name.label: Nom de l'établissement
+api_log.admin.title: Liste des logs API
+api_log.date.label: Date
+api_log.code.label: Code
+school.name.label: "Nom de l'établissement"
+school.street.label: Rue
+school.city.label: Ville
+school.postal_code.label: Code postal
+school.admin.title.list: Liste des établissements scolaire
+school.admin.title.edit: Edit école
+promotion.start_date.label: Date de début
+promotion.end_date.label: Date de fin
+promotion.admin.title.list: Liste des promotions
+promotion.admin.title.edit: Éditer promotion
+student_group.name.label: Nom
+student_group.school_year.label: "Année d'étude"
+student_group.promotion.label: Promotion
+student_group.school.label: École
+student_group.planning.label: Agenda
+student_group.admin.title.list: Liste des classes
+student_group.admin.title.edit: Éditer une classe
+user.username.label: "Nom d'utilisateur"
+user.idFacebook.label: IdFacebook
+user.email.label: Email
+user.last_login.label: Dernière connexion
+user.locked.label: Bloqué
+user.school.label: École
+user.student_group.label: Classe
+user.admin.title.list: Liste des utilisateurs
+user.admin.title.edit: Éditer utilisateur
+User Profil: "Profil de l'utilisateur"
+Identity: Identité
+Firstname: Prénom
+Lastname: Nom
 label.name: Nom
 btn.new: Nouveau
 btn.search: Recherche
-btn.edit: Edit
-btn.delete: Delete
+btn.edit: Éditer
+btn.delete: Supprimer
+btn.list: Liste
