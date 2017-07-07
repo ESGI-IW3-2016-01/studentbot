@@ -11,6 +11,11 @@ trait TraitBasket
 
         $data = json_decode($json_data);
 
+        if (!isset($data->games)) {
+            $res = "Aucun résultat pour cette date.";
+            return $res;
+        }
+
         $res = [];
         foreach ($data->games as $games) {
             $home_team = $games->home->name;

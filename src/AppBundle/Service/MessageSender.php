@@ -2,13 +2,6 @@
 
 namespace AppBundle\Service;
 
-/**
- * Created by PhpStorm.
- * User: Antoine
- * Date: 30/10/2016
- * Time: 11:50
- */
-
 use GuzzleHttp\Client;
 use AppBundle\Entity\Facebook\SendMessage;
 

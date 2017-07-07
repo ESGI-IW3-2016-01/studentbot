@@ -17,7 +17,3 @@ monolog:
 #        database: # Log tous les messages reçus de facebook en base de donnée
 #            type: stream
 #            level: notice
-
-doctrine:
-    dbal:
-        driver:   pdo_pgsql

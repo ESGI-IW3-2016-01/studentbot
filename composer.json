@@ -33,7 +33,12 @@
         "javiereguiluz/easyadmin-bundle": "^1.15",
         "facebook/graph-sdk": "5.4.*",
         "guzzlehttp/guzzle": "^6.2",
-        "hwi/oauth-bundle": "0.5.*@dev"
+        "hwi/oauth-bundle": "0.5.*@dev",
+        "johngrogg/ics-parser": "^2.0",
+        "squizlabs/php_codesniffer": "^3.0",
+        "aws/aws-sdk-php": "^3.31",
+        "aws/aws-sdk-php-symfony": "^1.2",
+        "ext-mbstring": "^7.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
@@ -52,7 +57,8 @@
         "post-install-cmd": [
             "@symfony-scripts",
             "php bin/console doctrine:schema:update --dump-sql --force --env=prod",
-            "php bin/console facebook:page:subscribe --env=prod"
+            "php bin/console facebook:page:subscribe --env=prod",
+            "php bin/console facebook:get:admin --env=prod"
         ],
         "post-update-cmd": [
             "@symfony-scripts"

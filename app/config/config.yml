@@ -2,11 +2,16 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+#    - { resource: "@HWIOAuthBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    file_storage: s3
+    ical_upload_directory: '%kernel.root_dir%/../var/data/upload/calendars'
+    ical_success_directory: '%kernel.root_dir%/../var/data/upload/calendars/success'
+    ical_error_directory: '%kernel.root_dir%/../var/data/upload/calendars/error'
 
 framework:
     #esi:             ~
@@ -40,7 +45,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
+        driver:   pdo_pgsql
         url:      "%env(DATABASE_URL)%"
         host:     "%database_host%"
         port:     "%database_port%"
@@ -48,12 +53,6 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
-        # if using pdo_sqlite as your database driver:
-        #   1. add the path in parameters.yml
-        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
-        #   2. Uncomment database_path in parameters.yml.dist
-        #   3. Uncomment next line:
-        #     path:     "%database_path%"
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -78,6 +77,10 @@ fos_user:
 
 
 easy_admin:
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
     site_name: '<div class="home-logo">StudentBot</div>'
     design:
         form_theme: 'horizontal'
@@ -86,51 +89,135 @@ easy_admin:
                 - 'https://fonts.googleapis.com/css?family=Syncopate'
                 - 'css/custom.css'
     entities:
+        QuestionAnswer:
+            class: AppBundle\Entity\QuestionAnswer
+            label: 'Custom Answers'
         Api:
             class: AppBundle\Entity\Api
-            label: 'API'
+            label: "API's"
         ApiLog:
             class: AppBundle\Entity\ApiLog
-            label: 'ApiLog'
-        Emoji:
-            class: AppBundle\Entity\Facebook\Emoji
-            label: 'Emoji'
+            label: 'API Logs'
+            disabled_actions: ['edit', 'view', 'new']
+        Wit:
+            class: AppBundle\Entity\Wit\WitResponse
+            label: 'Messages'
+            disabled_actions: ['edit', 'view', 'new', 'delete']
+            list:
+                title: 'Message Analysis'
+                sort: 'createdAt'
+                fields:
+                    - { property: 'msgid', type: 'text', label: 'ID' }
+                    - 'createdAt'
+                    - { property: 'text', type: 'text', label: 'Text' }
+                    - { property: 'entities', label: 'Intents', template: 'tag_entities.html.twig' }
+        Calendar:
+            controller: AppBundle\Controller\CalendarController
+            class: AppBundle\Entity\Calendar\Calendar
+            lavel: 'Calendar'
+            list:
+                sort: 'createdAt'
+                fields:
+                    - 'id'
+                    - 'name'
+                    - 'filename'
+                    - 'createdAt'
+                    - 'updatedAt'
+                    - { property: 'processed', type: 'boolean' }
+            form:
+                fields:
+                    - 'name'
+                    - 'group'
+                    - { property: 'file', type: 'file' }
+        Events:
+            class: AppBundle\Entity\Calendar\Event
+            lavel: 'Courses'
+            list:
+                fields: ['id', 'calendar', 'uid', 'startAt', 'endAt', {property: 'stringduration', label: 'Duration'}, 'summary']
+        School:
+            class: AppBundle\Entity\School\School
+            list:
+                fields:
+                    - { property: 'id', type: 'integer' }
+                    - { property: 'name', type: 'text', label: "Name" }
+                    - { property: 'street', type: 'text', label: "Address" }
+                    - { property: 'postalCode', type: 'text', label: "Postal Code" }
+                    - { property: 'city', type: 'text', label: "City" }
+                actions:
+                    - { name: 'new', label: 'New' }
+                    - { name: 'search', label: 'Search' }
+                    - { name: 'edit', icon: 'pencil', label: 'Edit' }
+                    - { name: 'delete', icon: 'remove', label: 'Delete'}
+            form:
+                title: 'New School'
+                fields:
+                    - { property: 'name', type: 'text', label: "Name" }
+                    - { property: 'street', type: 'text', label: 'Address' }
+                    - { property: 'city', type: 'text', label: 'City' }
+                    - { property: 'postalCode', type: 'text', label: 'Postal Code' }
+                    - { property: 'description', type: 'textarea', label: 'Description', type_options: {'required': 'false'} }
+        StudentGroup:
+            class: AppBundle\Entity\School\StudentGroup
+            label: 'Classe'
+            list:
+                fields:
+                    - { property: 'id', type: 'text', label: "Id" }
+                    - { property: 'scholarYear', type: 'text', label: "Year" }
+                    - { property: 'name', type: 'text', label: "Name" }
+                    - { property: 'groupNumber', type: 'integer', label: "Group #" }
+                    - { property: 'school', label: "School" }
+                    - { property: 'calendar', label: "Calendar" }
+                actions:
+                    - { name: 'new', label: 'New' }
+                    - { name: 'search', label: 'Search' }
+                    - { name: 'edit', icon: 'pencil', label: 'Edit' }
+                    - { name: 'delete', icon: 'remove', label: 'Delete'}
+            form:
+                title: 'Student Group'
+                fields:
+                    - { property: 'scholarYear', type: 'text', label: "Year" }
+                    - { property: 'name', type: 'text', label: "Name" }
+                    - { property: 'groupNumber', type: 'integer', label: "Group #" }
+                    - { property: 'school', label: "School", type_options: {'required': 'true'} }
+                    - { property: 'calendar', label: "Calendar", type_options: {'required': 'false'} }
         User:
-          class: AppBundle\Entity\User
-          label: 'User'
-          list:
-              fields:
-                  - Username
-                  - idFacebook
-                  - { property: 'email', type: 'email' }
-                  - last_login
-                  - locked
-              title: "Customers list"
-          form:
-              title: 'Edit User'
-              fields:
-                  - { type: 'group', css_class: 'col-sm-6' }
-                  - { type: 'section', label: 'User Profil', icon: 'user' }
-                  - { property: 'Username', type: 'text' }
-                  - { property: 'email', type: 'email' }
-                  - { property: 'password', type: 'password' }
-                  - { type: 'group', css_class: 'col-sm-6'}
-                  - { type: 'section', label: 'Identity', icon: 'info' }
-                  - { property: 'Firstname', type: 'text' }
-                  - { property: 'Lastname', type: 'text' }
-              actions:
-                  delete:
-                      name: delete
-                      type: method
-                      label: action.delete
-                      css_class: 'btn btn-default action-delete'
-                      icon: trash-o
-                  list:
-                      name: list
-                      type: method
-                      label: action.list
-                      css_class: 'btn btn-secondary action-list'
-                      icon: caret-square-o-left
+              class: AppBundle\Entity\User
+              label: 'User'
+              list:
+                  fields:
+                      - Username
+                      - idFacebook
+                      - { property: 'email', type: 'email' }
+                      - last_login
+                      - locked
+                      - { property: 'school', label: "School" }
+                      - { property: 'studentGroup', label: "Classe" }
+                  title: "Customers list"
+              form:
+                  title: 'Edit User'
+                  fields:
+                      - { type: 'group', css_class: 'col-sm-6' }
+                      - { type: 'section', label: 'User Profil', icon: 'user' }
+                      - { property: 'Username', type: 'text' }
+                      # - { property: 'email', type: 'email' }
+                      # - { property: 'password', type: 'password' }
+                      - { type: 'group', css_class: 'col-sm-6'}
+                      - { type: 'section', label: 'Identity', icon: 'info' }
+                      - { property: 'Firstname', type: 'text', label: 'PréName' }
+                      - { property: 'Lastname', type: 'text', label: 'Name' }
+                  actions:
+                      delete:
+                          name: delete
+                          type: method
+                          label: action.delete
+                          css_class: 'btn btn-default action-delete'
+                          icon: trash-o
+                      list:
+                          name: list
+                          type: method
+                          label: action.list
+                          css_class: 'btn btn-secondary action-list'
+                          icon: caret-square-o-left
 
 hwi_oauth:
     http_client:

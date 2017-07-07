@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: antoine
- * Date: 05/02/2017
- * Time: 16:52
- */
 
 namespace AppBundle\Command;
 
@@ -56,7 +50,9 @@ class GreetingTextCommand extends ContainerAwareCommand
 
         if ($input->getOption("list")) {
             $em = $this->getContainer()->get('Doctrine')->getManager();
-            /** @var GreetingTextRepository $repo */
+            /**
+             * @var GreetingTextRepository $repo
+             */
             $repo = $em->getRepository('AppBundle\Entity\Facebook\GreetingText');
             $texts = $repo->findAll(['isEnabled' => true])->getText();
             $io->listing($texts);
@@ -72,7 +68,9 @@ class GreetingTextCommand extends ContainerAwareCommand
         } else {
             $io->title('Activating greeting text...');
             $em = $this->getContainer()->get('Doctrine')->getManager();
-            /** @var GreetingTextRepository $repo */
+            /**
+             * @var GreetingTextRepository $repo
+             */
             $repo = $em->getRepository('AppBundle\Entity\Facebook\GreetingText');
             $text = $repo->findOneBy(['isEnabled' => true])->getText();
 

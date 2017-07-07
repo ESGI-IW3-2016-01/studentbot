@@ -11,6 +11,10 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+
 monolog:
     handlers:
         main:
@@ -19,7 +23,7 @@ monolog:
             handler:      grouped
         grouped:
             type: group
-            members: [file, database]
+            members: [file]
         file:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"
@@ -41,3 +45,6 @@ monolog:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+parameters:
+    file_storage: local

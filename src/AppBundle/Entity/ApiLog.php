@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: antoine
- * Date: 06/02/2017
- * Time: 20:59
- */
 
 namespace AppBundle\Entity;
 
+use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -57,7 +52,7 @@ class ApiLog
     public function __construct($api, $code)
     {
         $this->api = $api;
-        $this->date = new DateTime();
+        $this->date = new DateTime('now', new DateTimeZone('Europe/Paris'));
         $this->code = $code;
     }
 

@@ -19,3 +19,6 @@
 docker/mariadb/db-datas/
 !docker/mariadb/db-datas/.gitkeep
 !docker/mariadb/.gitkeep
+/nbproject/private/
+
+src/AppBundle/Monolog

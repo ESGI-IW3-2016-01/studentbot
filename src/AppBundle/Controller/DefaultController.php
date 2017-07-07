@@ -2,22 +2,22 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Facebook\Attachment;
 use AppBundle\Entity\Facebook\SendMessage;
 use AppBundle\Service\MessageSender;
+use AppBundle\Service\WitService;
 use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Facebook\Message;
-use AppBundle\Service\Basket;
-use AppBundle\Service\Football;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
 {
+    use TraitQuestionAnswer;
     use TraitFootball;
     use TraitBasket;
+    use TraitEsport;
     use TraitWeather;
     use TraitYoutube;
     use TraitYesOrNo;
@@ -34,13 +34,15 @@ class DefaultController extends Controller
     {
         // session_destroy();
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
+        return $this->render('index/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
         ]);
     }
 
     /**
      * @Route("/webhook", name="webhook")
+     * @param Request $request
+     * @return Response
      */
     public function webhookAction(Request $request)
     {
@@ -53,6 +55,10 @@ class DefaultController extends Controller
         $logger->error($request->getContent(), ['sender_faceboo_id' => null]);
 
         $message = $this->createMessageRecievedFromBody($request->getContent());
+
+        /** @var WitService $witService */
+        $witService = $this->container->get('app.wit_service');
+        $witService->handleMessage($message->getText());
 
         /** @var MessageSender $messageSenderService */
         $messageSenderService = $this->container->get('app.message_sender');
@@ -68,7 +74,13 @@ class DefaultController extends Controller
                     break;
             }
         } else {
-            $res = $this->choiceAPI($message->getText());
+            $question = $message->getText();
+
+            $res = $this->questionAnswer($question);
+            if (!$res) {
+                $res = $this->choiceAPI($question);
+            }
+
             if (!is_array($res)) {
                 $res = [$res];
             }
@@ -121,26 +133,42 @@ class DefaultController extends Controller
 
     private function choiceAPI($chaine)
     {
+        $apiService = $this->container->get('app.api_service');
         $this->image = false;
         $chaine = strtolower($chaine);
         switch ($chaine) {
             case "résultat football" :
             case strcmp("\xe2\x9a\xbd", $chaine) == 0 :
-                $res = $this->football();
+                if ($apiService->getApi('football')) {
+                    $res = $this->football();
+                }
                 break;
             case "résultat basket" :
             case "résultat nba" :
             case strcmp("\xf0\x9f\x8f\x80", $chaine) == 0 :
-                $res = $this->basket();
+                if ($apiService->getApi('basket')) {
+                    $res = $this->basket();
+                }
+                break;
+            case count(explode("\xF0\x9F\x8E\xAE", $chaine)) != 1 :
+                if ($apiService->getApi('esport')) {
+                    $res = $this->esport($chaine);
+                }
                 break;
             case count(explode("\xE2\x98\x80", $chaine)) != 1 :
-                $res = $this->weather(explode("\xE2\x98\x80", $chaine)[1]);
+                if ($apiService->getApi('weather')) {
+                    $res = $this->weather(explode("\xE2\x98\x80", $chaine)[1]);
+                }
                 break;
             case count(explode("\xf0\x9f\x8e\xbc", $chaine)) != 1 :
-                $res = $this->youtube($chaine);
+                if ($apiService->getApi('youtube')) {
+                    $res = $this->youtube($chaine);
+                }
                 break;
             case "yes or no ?" :
-                $res = $this->yesOrNo();
+                if ($apiService->getApi('yesorno')) {
+                    $res = $this->yesOrNo();
+                }
                 $this->image = true;
                 break;
             case "agenda":
@@ -154,6 +182,10 @@ class DefaultController extends Controller
             default :
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
                 break;
+        }
+
+        if (!$res) {
+            $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
         }
 
         return $res;

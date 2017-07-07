@@ -6,10 +6,10 @@ use FOS\UserBundle\Model\UserInterface as FOSUserInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Ath\UserBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use AppBundle\Entity\User;
 
 class MyOAuthProvider extends FOSUBUserProvider
 {
@@ -23,6 +23,7 @@ class MyOAuthProvider extends FOSUBUserProvider
 
         parent::__construct($userManager, $properties);
     }
+    
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $providerName = $response->getResourceOwner()->getName();
@@ -42,7 +43,7 @@ class MyOAuthProvider extends FOSUBUserProvider
                 return $realUser;
             }
         }
-        $this->session->getFlashBag()->add('error', 'Vous n\'avez pas le droit de vous connecter à ce site');
+        $this->session->getFlashBag()->add('error', 'Un problème est survenue lors de la connexion');
         
         return null;
     }
@@ -116,7 +117,7 @@ class MyOAuthProvider extends FOSUBUserProvider
         $token = $response->getAccessToken();
         $tabResponse = $response->getResponse();
 
-        /*$facebookId =  $tabResponse['id']; // Facebook ID, e.g. 537091253102004
+        /*$facebookId =  $tabResponse['id']; // Facebook ID
         $prenom = $tabResponse['first_name'];
         $nom = $tabResponse['last_name'];
         $gender = $tabResponse['gender'];*/
@@ -131,7 +132,17 @@ class MyOAuthProvider extends FOSUBUserProvider
         );
 
         if(!$user) {
-            return null;
+            $user = new User();
+            $user->setFacebookId($tabResponse['id']);
+            $user->setUsername($tabResponse['name']);
+            $user->setPlainPassword('test');
+            $user->setFirstName($tabResponse['first_name']);
+            $user->setEnabled(1);
+            $user->setLastName($tabResponse['last_name']);
+            $user->setEmail($email);
+            $user->addRole('ROLE_USER');
+            $this->em->persist($user);
+            $this->em->flush();
         }
  
         return $user;

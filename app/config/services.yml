@@ -21,9 +21,24 @@ services:
     app.weather_api_service:
         class: AppBundle\Service\Weather
         arguments: [%weather_key%, "fr", "metric", '@event_dispatcher']
+    app.esport_api_service:
+        class: AppBundle\Service\Esport
+        arguments: [%esport_csgo_key%, %esport_dota_key%, %esport_lol_key%, 'fr', '@event_dispatcher']
     app.yesorno_api_service:
         class: AppBundle\Service\YesOrNo
         arguments: ['@event_dispatcher']
+    app.api_service:
+        class: AppBundle\Service\ApiService
+        arguments: ['@doctrine.orm.default_entity_manager']
     my_user_provider:
         class: AppBundle\Security\Core\User\MyOAuthProvider
-        arguments: ['@fos_user.user_manager',{facebook: facebookId}, '@doctrine.orm.default_entity_manager', '@session']
+        arguments: ['@fos_user.user_manager', { facebook: facebookId }, '@doctrine.orm.default_entity_manager', '@session']
+    app.question_answer_service:
+        class: AppBundle\Service\QuestionAnswerService
+        arguments: ['@doctrine.orm.default_entity_manager']
+    app.news_service:
+        class: AppBundle\Service\NewsService
+        arguments: [%news_key%, '@event_dispatcher']
+    app.wit_service:
+        class: AppBundle\Service\WitService
+        arguments: [%wit_key%, '@doctrine.orm.default_entity_manager', '@event_dispatcher']
