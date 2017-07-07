@@ -5,7 +5,6 @@ trait TraitCalendar
 {
     private function calendar($chaine = null)
     {
-        
         if ($chaine != null) {
 
             /** @var Calendar $calendar */
@@ -13,17 +12,26 @@ trait TraitCalendar
 
             if ($chaine->contains('next class')){
                 $res = $calendar->getNextClass();
+            } elseif ($chaine->contains('day class')) {
+                $res = $calendar->getDayClass();
             } elseif ($chaine->contains('')) {
-
+                
             } else {
-                $str = 'Sorry i don\'t understand your request. 
-                        Please write "planning" for help ';
+                $str = 'Désolé je n\'ai pas compris votre demande. 
+                        Ecrivez "planning" pour plus d\'aide ';
                 $res = $str;
             }
 
         } else {
             $str = 'Utilisation de l\'agenda:
                     Ajouté un planning : importer directement un fichier sous format ical.
+                    Renseigner son école : écrivez "make a choice"
+                    Renseigner sa classe : 
+                    
+                    Pour connaitre son planning :
+                     - le prochain cours : 
+                     - les cours de la journée :
+                     - les cours de la semaine :
                     ';
             $res = $str;
         }
