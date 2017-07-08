@@ -92,7 +92,7 @@ class DefaultController extends Controller
                 if ($this->image) {
                     $responseMessage = new SendMessage($message->getSender(), null, null, $resMessage);
                 } else {
-                    $responseMessage = new SendMessage($message->getSender(), $resMessage, null, "https://tctechcrunch2011.files.wordpress.com/2017/06/amazon-whole-foods-banner.jpg?w=764&h=400&crop=1");
+                    $responseMessage = new SendMessage($message->getSender(), $resMessage);
                 }
                 $messageSenderService->sendMessage($responseMessage);
             }
