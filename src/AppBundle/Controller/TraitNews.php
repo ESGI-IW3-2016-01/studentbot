@@ -15,10 +15,10 @@ trait TraitNews
 
         $res = [];
         foreach ($listNews as $news) {
-            $res[] = '\xF0\x9F\x91\xA4 ' . $news->getAuthor();
-            $res[] = '\xF0\x9F\x93\x8C ' . $news->getTitle();
-            $res[] = '\xF0\x9F\x93\x96 ' . $news->getDescription();
-            $res[] = '\xF0\x9F\x8C\x90' . $news->getUrl();
+            $res[] = "\xF0\x9F\x91\xA4 " . $news->getAuthor();
+            $res[] = "\xF0\x9F\x93\x8C " . $news->getTitle();
+            $res[] = "\xF0\x9F\x93\x96 " . $news->getDescription();
+            $res[] = "\xF0\x9F\x8C\x90 " . $news->getUrl();
         }
 
         return $res;
