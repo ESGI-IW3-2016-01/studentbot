@@ -38,6 +38,7 @@ security:
         - { path: ^/login/check-facebook, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/public, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/etudiant, role: ROLE_USER }
         - { path: ^/welcome, role: ROLE_ADMIN }
         - { path: ^/admin/, role: ROLE_ADMIN }

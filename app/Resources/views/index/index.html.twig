@@ -53,6 +53,14 @@
                         {{ "logout" | trans({}, 'messages') }}
                     </a>
                 {% endif %}
+
+                <a class="navbar-item {% if app.request.locale == 'fr'%}active-flag{% endif %}" href="{{ path('choose_language', {'locale' : 'fr'}) }}" role="button">
+                    <img class="lang-flag" width="22" height="22" src="/images/flags/fr.png" alt="FR" />
+                </a>
+
+                <a class="navbar-item {% if app.request.locale == 'en'%}active-flag{% endif %}" href="{{ path('choose_language', {'locale' : 'en'}) }}" role="button">
+                    <img class="lang-flag" width="22" height="22" src="/images/flags/en.png" alt="EN" />
+                </a>
             </div>
         </div>
         <!--navigation-->

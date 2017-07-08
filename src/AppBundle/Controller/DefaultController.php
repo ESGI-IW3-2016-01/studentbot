@@ -198,4 +198,30 @@ class DefaultController extends Controller
 
         return $res;
     }
+
+    /**
+     * @Route("/public/choisir-locale/{locale}", name="choose_language")
+     * @param Request $request
+     * @return Response
+     */
+    public function chooseLanguageAction(Request $request, $locale = null)
+    {
+        $r = $this->get('request_stack')->getCurrentRequest();
+
+        if ($locale != null) {
+            // On enregistre la locale en session
+            $this->get('session')->set('_locale', $locale);
+            $r->setLocale($this->get('session')->get('_locale'));
+            $this->get('translator')->setLocale($locale);
+        }
+
+        // on tente de rediriger vers la page d'origine
+        $url = $request->headers->get('referer');
+
+        if (empty($url)) {
+            $url = $this->container->get('router')->generate('homepage');
+        }
+
+        return $this->redirect($url);
+    }
 }
