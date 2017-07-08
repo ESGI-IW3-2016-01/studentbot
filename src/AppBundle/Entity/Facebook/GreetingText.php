@@ -2,16 +2,17 @@
 
 namespace AppBundle\Entity\Facebook;
 
+use AppBundle\Entity\Facebook\Enums\Locales;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
- * @ORM\Entity
  * @ORM\Table(name="greeting_text")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GreetingTextRepository")
  */
 class GreetingText
 {
-
-
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -27,30 +28,24 @@ class GreetingText
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isEnabled;
+    private $enabled;
 
     /**
-     * @ORM\Column(type="string", length=2)
-     */
-    private $language;
-
-    /**
-     * @ORM\Column(type="string", length=2)
+     * @var Locales $locale
+     * @OneToOne(targetEntity="AppBundle\Entity\Facebook\Enums\Locales")
+     * @JoinColumn(name="locales_id", referencedColumnName="id")
      */
     private $locale;
 
     /**
      * GreetingText constructor.
-     * @param $text
-     * @param $locale
-     * @param $enabled
+     * @internal param $text
+     * @internal param $locale
+     * @internal param $enabled
      */
-    public function __construct($text,$locale, $enabled = false)
+    public function __construct()
     {
-        $this->text = $text;
-        $this->isEnabled = $enabled;
-        $this->language = 'en';
-        $this->locale = 'UK';
+        $this->enabled = false;
     }
 
     /**
@@ -88,16 +83,44 @@ class GreetingText
     /**
      * @return mixed
      */
-    public function getIsEnabled()
+    public function getEnabled()
     {
-        return $this->isEnabled;
+        return $this->enabled;
     }
 
     /**
-     * @param mixed $isEnabled
+     * @param mixed $enabled
      */
-    public function setIsEnabled($isEnabled)
+    public function setEnabled($enabled)
     {
-        $this->isEnabled = $isEnabled;
+        $this->enabled = $enabled;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param mixed $locale
+     */
+    public function setLocale($locale)
+    {
+        if (in_array($locale, Locales::SUPPORTED_LOCALES)) {
+            $this->locale = $locale;
+        } else {
+            $this->locale = new Locales('default');
+        }
+    }
+
+    public function toArray()
+    {
+        return [
+            'locale' => $this->locale->getValue(),
+            'text' => $this->text
+        ];
     }
 }

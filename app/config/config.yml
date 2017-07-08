@@ -99,6 +99,10 @@ easy_admin:
             class: AppBundle\Entity\ApiLog
             label: 'API Logs'
             disabled_actions: ['edit', 'view', 'new']
+        GreetingText:
+            class: AppBundle\Entity\Facebook\GreetingText
+            label: 'Greeting Texts'
+            disabled_actions: ['view']
         MenuItem:
             controller: AppBundle\Controller\MenuItemController
             class: AppBundle\Entity\Facebook\MenuItem
