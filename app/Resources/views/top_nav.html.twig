@@ -29,7 +29,21 @@
                 </li>
             {% endif %}
         </ul>
-
+        
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <li class="menu-lang">
+                    <a class="{% if app.request.locale == 'fr'%}active-flag{% endif %}" href="{{ path('choose_language', {'locale' : 'fr'}) }}" role="button">
+                    <img class="lang-flag" width="22" height="22" src="/images/flags/fr.png" alt="FR" />
+                    </a>
+                </li>
+                <li class="menu-lang">
+                    <a class="{% if app.request.locale == 'en'%}active-flag{% endif %}" href="{{ path('choose_language', {'locale' : 'en'}) }}" role="button">
+                    <img class="lang-flag" width="22" height="22" src="/images/flags/en.png" alt="EN" />
+                </a>
+                </li>
+            </li>
+        </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
