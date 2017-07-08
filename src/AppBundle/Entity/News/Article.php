@@ -10,32 +10,32 @@ class Article
     /**
      * @var string
      */
-    private $_author;
+    private $_author = 'empty';
 
     /**
      * @var string
      */
-    private $_title;
+    private $_title = 'empty';
 
     /**
      * @var string
      */
-    private $_description;
+    private $_description = 'empty';
 
     /**
      * @var string
      */
-    private $_url;
+    private $_url = 'empty';
 
     /**
      * @var string
      */
-    private $_urlToImage;
+    private $_urlToImage = 'empty';
 
     /**
      * @var DateTime
      */
-    private $_publishedAt;
+    private $_publishedAt = 'empty';
 
     /**
      * Source constructor.
