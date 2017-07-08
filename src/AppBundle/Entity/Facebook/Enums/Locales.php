@@ -1,17 +1,6 @@
 <?php
 /**
- * INSERT INTO locales (value)
-VALUES ('en_US'), ('ca_ES'), ('cs_CZ'), ('cx_PH'), ('cy_GB'), ('da_DK'), ('de_DE'), ('eu_ES'), ('en_UD'), ('es_LA'),
-('es_ES'), ('gn_PY'), ('fi_FI'), ('fr_FR'), ('gl_ES'), ('hu_HU'), ('it_IT'), ('ja_JP'), ('ko_KR'), ('nb_NO'),
-('nn_NO'), ('nl_NL'), ('fy_NL'), ('pl_PL'), ('pt_BR'), ('pt_PT'), ('ro_RO'), ('ru_RU'), ('sk_SK'), ('sl_SI'),
-('sv_SE'), ('th_TH'), ('tr_TR'), ('ku_TR'), ('zh_CN'), ('zh_HK'), ('zh_TW'), ('af_ZA'), ('sq_AL'), ('hy_AM'),
-('az_AZ'), ('be_BY'), ('bn_IN'), ('bs_BA'), ('bg_BG'), ('hr_HR'), ('nl_BE'), ('en_GB'), ('et_EE'), ('fo_FO'),
-('fr_CA'), ('ka_GE'), ('el_GR'), ('gu_IN'), ('hi_IN'), ('is_IS'), ('id_ID'), ('ga_IE'), ('jv_ID'), ('kn_IN'),
-('kk_KZ'), ('lv_LV'), ('lt_LT'), ('mk_MK'), ('mg_MG'), ('ms_MY'), ('mt_MT'), ('mr_IN'), ('mn_MN'), ('ne_NP'),
-('pa_IN'), ('sr_RS'), ('so_SO'), ('sw_KE'), ('tl_PH'), ('ta_IN'), ('te_IN'), ('ml_IN'), ('uk_UA'), ('uz_UZ'),
-('vi_VN'), ('km_KH'), ('tg_TJ'), ('ar_AR'), ('he_IL'), ('ur_PK'), ('fa_IR'), ('ps_AF'), ('my_MM'), ('qz_MM'),
-('or_IN'), ('si_LK'), ('rw_RW'), ('cb_IQ'), ('ha_NG'), ('ja_KS'), ('br_FR'), ('tz_MA'), ('co_FR'), ('as_IN'),
-('ff_NG'), ('sc_IT'), ('sz_PL');
+ * INSERT INTO locales (id, value) VALUES (1, 'n_US'), (2, 'a_ES'), (3, 's_CZ'), (4, 'x_PH'), (5, 'y_GB'), (6, 'a_DK'), (7, 'e_DE'), (8, 'u_ES'), (9, 'n_UD'), (10, 'es_LA'), (11, 'es_ES'), (12, 'gn_PY'), (13, 'fi_FI'), (14, 'fr_FR'), (15, 'gl_ES'), (16, 'hu_HU'), (17, 'it_IT'), (18, 'ja_JP'), (19, 'ko_KR'), (20, 'nb_NO'), (21, 'nn_NO'), (22, 'nl_NL'), (23, 'fy_NL'), (24, 'pl_PL'), (25, 'pt_BR'), (26, 'pt_PT'), (27, 'ro_RO'), (28, 'ru_RU'), (29, 'sk_SK'), (30, 'sl_SI'), (31, 'sv_SE'), (32, 'th_TH'), (33, 'tr_TR'), (34, 'ku_TR'), (35, 'zh_CN'), (36, 'zh_HK'), (37, 'zh_TW'), (38, 'af_ZA'), (39, 'sq_AL'), (40, 'hy_AM'), (41, 'az_AZ'), (42, 'be_BY'), (43, 'bn_IN'), (44, 'bs_BA'), (45, 'bg_BG'), (46, 'hr_HR'), (47, 'nl_BE'), (48, 'en_GB'), (49, 'et_EE'), (50, 'fo_FO'), (51, 'fr_CA'), (52, 'ka_GE'), (53, 'el_GR'), (54, 'gu_IN'), (55, 'hi_IN'), (56, 'is_IS'), (57, 'id_ID'), (58, 'ga_IE'), (59, 'jv_ID'), (60, 'kn_IN'), (61, 'kk_KZ'), (62, 'lv_LV'), (63, 'lt_LT'), (64, 'mk_MK'), (65, 'mg_MG'), (66, 'ms_MY'), (67, 'mt_MT'), (68, 'mr_IN'), (69, 'mn_MN'), (70, 'ne_NP'), (71, 'pa_IN'), (72, 'sr_RS'), (73, 'so_SO'), (74, 'sw_KE'), (75, 'tl_PH'), (76, 'ta_IN'), (77, 'te_IN'), (78, 'ml_IN'), (79, 'uk_UA'), (80, 'uz_UZ'), (81, 'vi_VN'), (82, 'km_KH'), (83, 'tg_TJ'), (84, 'ar_AR'), (85, 'he_IL'), (86, 'ur_PK'), (87, 'fa_IR'), (88, 'ps_AF'), (89, 'my_MM'), (90, 'qz_MM'), (91, 'or_IN'), (92, 'si_LK'), (93, 'rw_RW'), (94, 'cb_IQ'), (95, 'ha_NG'), (96, 'ja_KS'), (97, 'br_FR'), (98, 'tz_MA'), (99, 'co_FR'), (100, 'as_IN'), (101, 'ff_NG'), (102, 'sc_IT'), (103, 'sz_PL');
  */
 
 namespace AppBundle\Entity\Facebook\Enums;

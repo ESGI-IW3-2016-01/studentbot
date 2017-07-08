@@ -31,7 +31,6 @@ class MenuItemController extends AdminBaseController
                 // TODO Exception !
             }
         }
-        dump($menuItem);
     }
 
     /**
