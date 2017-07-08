@@ -18,7 +18,7 @@ trait TraitNews
             $str = '';
 
             if ($news->getAuthor()) {
-                $str .= "\xF0\x9F\x91\xA4 " . $news->getAuthor() . "\x0D\x0A"
+                $str .= "\xF0\x9F\x91\xA4 " . $news->getAuthor() . "\x0D\x0A";
             }
 
             if ($news->getTitle()) {
