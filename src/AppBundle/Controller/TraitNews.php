@@ -6,21 +6,19 @@ trait TraitNews
     private function news()
     {
         $news = $this->container->get('app.news_service');
-        $json_data = $news->getArticles();
+        $listNews = $news->getArticles();
 
-        $data = json_decode($json_data);
-
-        if ($data->status != 'ok') {
+        if (!$listNews) {
             $res  = "Aucun article disponible.";
             return $res;
         }
 
         $res = [];
-        foreach ($data->articles as $article) {
-            $res[] = '\xF0\x9F\x91\xA4 ' . $article->author . ' '. $article->publishedAt;
-            $res[] = '\xF0\x9F\x93\x8C ' . $article->title;
-            $res[] = '\xF0\x9F\x93\x96 ' . $article->description;
-            $res[] = '\xF0\x9F\x8C\x90' . $article->url;
+        foreach ($listNews as $news) {
+            $res[] = '\xF0\x9F\x91\xA4 ' . $news->getAuthor() . ' '. $news->getPublishedAt();
+            $res[] = '\xF0\x9F\x93\x8C ' . $news->getTitle();
+            $res[] = '\xF0\x9F\x93\x96 ' . $news->getDescription();
+            $res[] = '\xF0\x9F\x8C\x90' . $news->getUrl();
         }
 
         return $res;
