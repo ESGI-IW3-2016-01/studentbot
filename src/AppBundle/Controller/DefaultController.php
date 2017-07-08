@@ -24,6 +24,7 @@ class DefaultController extends Controller
     use TraitNews;
 
     private $image;
+    private $textAndImage;
     private $apiService;
 
     /**
@@ -89,11 +90,21 @@ class DefaultController extends Controller
                 $res = [$res];
             }
             foreach ($res as $resMessage) {
-                if ($this->image) {
-                    $responseMessage = new SendMessage($message->getSender(), null, null, $resMessage);
+                $isMessageWithImage = explode("\xF0\x9F\x93\xB7",$resMessage);
+                if (count($isMessageWithImage) != 1) {
+                    $responseMessage = new SendMessage($message->getSender(), $isMessageWithImage[0]);
+                    $messageSenderService->sendMessage($responseMessage);
+
+                    $responseMessageWithImage = new SendMessage($message->getSender(), null, null, $isMessageWithImage[1]);
+                    $messageSenderService->sendMessage($responseMessageWithImage);
                 } else {
-                    $responseMessage = new SendMessage($message->getSender(), $resMessage);
+                    if ($this->image) {
+                        $responseMessage = new SendMessage($message->getSender(), null, null, $resMessage);
+                    } else {
+                        $responseMessage = new SendMessage($message->getSender(), $resMessage);
+                    }
                 }
+
                 $messageSenderService->sendMessage($responseMessage);
             }
         }
@@ -178,6 +189,7 @@ class DefaultController extends Controller
                 if ($this->apiService->getApi('NEWS')) {
                     $res = $this->news($chaine);
                 }
+                $this->textAndImage = true;
                 break;
             default :
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";

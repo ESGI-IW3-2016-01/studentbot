@@ -18,7 +18,8 @@ trait TraitNews
             $res[] = "\xF0\x9F\x91\xA4 " . $news->getAuthor() . "\x0D\x0A"
                 . "\xF0\x9F\x93\x8C " . $news->getTitle() . "\x0D\x0A"
                 . "\xF0\x9F\x93\x96 " . $news->getDescription().  "\x0D\x0A"
-                . "\xF0\x9F\x8C\x90 " . $news->getUrl();
+                . "\xF0\x9F\x8C\x90 " . $news->getUrl().  "\x0D\x0A"
+                . "\xF0\x9F\x93\xB7 " . $news->getUrlToImage();
         }
 
         return $res;
