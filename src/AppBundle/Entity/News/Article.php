@@ -64,7 +64,7 @@ class Article
     /**
      * @param string $author
      */
-    public function setAuthor(string $author)
+    public function setAuthor(string $author = 'empty')
     {
         $this->_author = $author;
     }
