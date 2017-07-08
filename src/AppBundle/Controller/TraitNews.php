@@ -6,7 +6,7 @@ trait TraitNews
     private function news()
     {
         $news = $this->container->get('app.news_service');
-        $listNews = $news->getArticles();
+        $listNews = $news->getArticles('IGN');
 
         if (!$listNews) {
             $res  = "Aucun article disponible.";
