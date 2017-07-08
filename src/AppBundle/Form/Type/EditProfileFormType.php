@@ -20,19 +20,19 @@ class EditProfileFormType extends AbstractType
         $now = new \DateTime();
 
         $builder
-            ->add('file', FileType::class, array('required' => false, 'label' => 'Photo', 'attr' => array()))
-            ->add('lastName', TextType::class, array('label' => 'Nom', 'attr' => array('class' =>'form-control', 'placeholder' => 'nom')))
-            ->add('firstName', TextType::class, array('label' => 'Prénom', 'attr' => array('class' =>'form-control', 'placeholder' => 'prenom')))
+            ->add('file', FileType::class, array('required' => false, 'label' => 'label_photo', 'attr' => array()))
+            ->add('lastName', TextType::class, array('label' => 'label_lastname', 'attr' => array('class' =>'form-control', 'placeholder' => 'label_lastname')))
+            ->add('firstName', TextType::class, array('label' => 'label_firstname', 'attr' => array('class' =>'form-control', 'placeholder' => 'label_firstname')))
             ->add('school', null, array('class' => 'AppBundle:School',
                 'expanded' => false,
                 'required' => true,
                 'attr' => array('class' =>'form-control'),
-                'label' => 'Votre école',
+                'label' => 'label_school',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('s')
                     ->orderBy('s.name', 'ASC');
                 },
-                'placeholder' => 'Choisir votre école',
+                'placeholder' => 'label_school',
                 'empty_data'  => null,
             ));
 
@@ -41,7 +41,7 @@ class EditProfileFormType extends AbstractType
                 'expanded' => false,
                 'required' => true,
                 'attr' => array('class' =>'form-control'),
-                'label' => 'Votre classe',
+                'label' => 'label_student_group',
                 'query_builder' => function (EntityRepository $er) use ( $school, $now) {
                     return $er->createQueryBuilder('s')
                     ->join('s.promotion', 'p')
@@ -57,10 +57,9 @@ class EditProfileFormType extends AbstractType
                 'expanded' => false,
                 'required' => true,
                 'attr' => array('class' =>'form-control'),
-                'label' => 'Votre classe',
+                'label' => 'label_student_group',
                 'query_builder' => null));
         }
-
             
         ;
     }
@@ -71,6 +70,7 @@ class EditProfileFormType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\User',
+            'translation_domain' => 'messages'
         ));
     }
 

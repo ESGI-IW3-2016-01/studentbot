@@ -41,6 +41,7 @@ class ProfileController extends BaseController
      */
     public function removePhotoAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+        $trad = $this->container->get('translator');
 
         $user = $this->getUser();
 
@@ -53,7 +54,7 @@ class ProfileController extends BaseController
         $em->persist($user);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add('info', "Votre photo a bien été supprimé");
+        $this->get('session')->getFlashBag()->add('info', $trad->trans("flash_message_remove_photo", array(), 'messages'));
 
         return $this->redirect($this->generateUrl('fos_user_profile_edit'));
     }

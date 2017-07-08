@@ -6,25 +6,25 @@
       
         
         <ul class="nav navbar-nav">
-            <li><a href="{{ path('homepage') }}"><i class="fa fa-home" aria-hidden="true"></i> Accueil</a></li>
+            <li><a href="{{ path('homepage') }}"><i class="fa fa-home" aria-hidden="true"></i> {{ "top_nav_home" | trans({}, 'messages') }}</a></li>
             {% if is_granted('ROLE_USER') %}
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Profil <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> {{ "top_nav_profil" | trans({}, 'messages') }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="{{ path('fos_user_profile_show') }}">Voir mon profil</a></li>
-                      <li><a href="{{ path('fos_user_profile_edit') }}">Modifier mon profil</a></li>
+                      <li><a href="{{ path('fos_user_profile_show') }}">{{ "top_nav_show_profil" | trans({}, 'messages') }}</a></li>
+                      <li><a href="{{ path('fos_user_profile_edit') }}">{{ "top_nav_edit_profil" | trans({}, 'messages') }}</a></li>
                     </ul>
                 </li>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
-                <li><a href="{{ path('admin') }}"><i class="fa fa-cog" aria-hidden="true"></i> Administration</a></li>
+                <li><a href="{{ path('admin') }}"><i class="fa fa-cog" aria-hidden="true"></i> {{ "top_nav_administration" | trans({}, 'messages') }}</a></li>
             {% endif %}
 
             {% if app.user %}
                 <li>
                     <a href="{{ path('fos_user_security_logout') }}">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        Se déconnecter
+                        {{ "logout" | trans({}, 'messages') }}
                     </a>
                 </li>
             {% endif %}

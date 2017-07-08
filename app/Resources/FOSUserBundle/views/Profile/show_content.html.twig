@@ -8,22 +8,22 @@
                 <img src="/{{ user.getWebPath }}">
                 <br>
                 <br>
-                <p>Nom: {{ user.lastname }}</p>
-                <p>Prénom: {{ user.firstname }}</p>
+                <p>{{ "label_lastname" | trans({}, 'messages') }}: {{ user.lastname }}</p>
+                <p>{{ "label_firstname" | trans({}, 'messages') }}: {{ user.firstname }}</p>
 
                 {% if user.school is not empty %}
-                    <p>Ecole: {{ user.school }}</p>
+                    <p>{{ "label_school" | trans({}, 'messages') }}: {{ user.school }}</p>
                 {% else %}
-                    <p>Ecole: Non renseigné</p>
+                    <p>{{ "label_school" | trans({}, 'messages') }}: {{ "not_specified" | trans({}, 'messages') }}</p>
                 {% endif %}
 
                 {% if user.studentGroup is not empty %}
-                    <p>Classe: {{ user.studentGroup }}</p>
+                    <p>{{ "label_student_group" | trans({}, 'messages') }}: {{ user.studentGroup }}</p>
                 {% else %}
-                    <p>Classe: Non renseigné</p>
+                    <p>{{ "label_student_group" | trans({}, 'messages') }}: {{ "not_specified" | trans({}, 'messages') }}</p>
                 {% endif %}
             </div>
-            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-info"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier mon profil</a>
+            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-info"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{ "top_nav_edit_profil" | trans({}, 'messages') }}</a>
             
         </div>
     </div>
