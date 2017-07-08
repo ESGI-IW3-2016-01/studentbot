@@ -47,7 +47,9 @@ class Article
             foreach ($data as $key => $value) {
                 $method = 'set' . ucfirst($key);
                 if (method_exists($this, $method)) {
-                    $this->$method($value);
+                    if($value) {
+                        $this->$method($value);
+                    }
                 }
             }
         }
@@ -64,7 +66,7 @@ class Article
     /**
      * @param string $author
      */
-    public function setAuthor(string $author = 'empty')
+    public function setAuthor(string $author )
     {
         $this->_author = $author;
     }
