@@ -6,7 +6,7 @@ trait TraitNews
     private function news()
     {
         $news = $this->container->get('app.news_service');
-        $listNews = $news->getArticles('IGN');
+        $listNews = $news->getArticles();
 
         if (!$listNews) {
             $res  = "Aucun article disponible.";
@@ -18,7 +18,7 @@ trait TraitNews
             $str = '';
 
             if ($news->getAuthor()) {
-                $str .= "\xF0\x9F\x91\xA4 " . $news->getAuthor() . "\x0D\x0A";
+                $str .= "\xF0\x9F\x91\xA4 " . $news->getAuthor() . "\x0D\x0A"
             }
 
             if ($news->getTitle()) {

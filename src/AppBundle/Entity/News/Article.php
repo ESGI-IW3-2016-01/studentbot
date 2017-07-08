@@ -10,32 +10,32 @@ class Article
     /**
      * @var string
      */
-    private $_author = 'empty';
+    private $_author;
 
     /**
      * @var string
      */
-    private $_title = 'empty';
+    private $_title;
 
     /**
      * @var string
      */
-    private $_description = 'empty';
+    private $_description;
 
     /**
      * @var string
      */
-    private $_url = 'empty';
+    private $_url;
 
     /**
      * @var string
      */
-    private $_urlToImage = 'empty';
+    private $_urlToImage;
 
     /**
      * @var DateTime
      */
-    private $_publishedAt = 'empty';
+    private $_publishedAt;
 
     /**
      * Source constructor.
@@ -47,9 +47,7 @@ class Article
             foreach ($data as $key => $value) {
                 $method = 'set' . ucfirst($key);
                 if (method_exists($this, $method)) {
-                    if($value) {
-                        $this->$method($value);
-                    }
+                    $this->$method($value);
                 }
             }
         }
@@ -66,7 +64,7 @@ class Article
     /**
      * @param string $author
      */
-    public function setAuthor(string $author )
+    public function setAuthor(string $author)
     {
         $this->_author = $author;
     }
