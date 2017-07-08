@@ -103,9 +103,8 @@ class DefaultController extends Controller
                     } else {
                         $responseMessage = new SendMessage($message->getSender(), $resMessage);
                     }
+                    $messageSenderService->sendMessage($responseMessage);
                 }
-
-                $messageSenderService->sendMessage($responseMessage);
             }
         }
         return new Response();
