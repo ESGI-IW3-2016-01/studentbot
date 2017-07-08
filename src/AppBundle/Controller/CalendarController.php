@@ -11,6 +11,15 @@ use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as AdminBase
 use DateTime, DateTimeZone;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class CalendarController
+ *
+ * @author Antoine Cusset <a.cusset@gmail.com>
+ * @link https://github.com/acusset
+ * @category
+ * @license
+ * @package AppBundle\Controller
+ */
 class CalendarController extends AdminBaseController
 {
     const FS_AWS = 's3';
@@ -82,7 +91,7 @@ class CalendarController extends AdminBaseController
      */
     private function writeCalendarFileToAWS(UploadedFile $file)
     {
-        // TODO
+        // TODO Replace with new non deprecated method
         $s3 = S3Client::factory([
             'region' => 'eu-west-2',
             'version' => '2006-03-01',
