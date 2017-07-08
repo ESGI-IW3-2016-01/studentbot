@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\School\StudentGroup;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -42,6 +43,14 @@ class User extends BaseUser
      * @ORM\Column(name="facebook_id", type="string", nullable=true)
      */
     protected $facebookId;
+
+    /**
+     * @var StudentGroup
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\School\StudentGroup", inversedBy="user")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     */
+    private $groupId;
     
     /**
      * Get id
@@ -134,6 +143,30 @@ class User extends BaseUser
         $this->facebookId = $facebookId;
 
         return $this;
+    }
+
+    /**
+     * Set studentGroup
+     *
+     * @param string $studentGroupId
+     *
+     * @return Integer
+     */
+    public function setGroupId($studentGroupId)
+    {
+        $this->groupId = $studentGroupId;
+
+        return $this;
+    }
+
+    /**
+     * Get studentGroup
+     *
+     * @return Integer
+     */
+    public function getGroupId()
+    {
+        return $this->groupId;
     }
 }
 

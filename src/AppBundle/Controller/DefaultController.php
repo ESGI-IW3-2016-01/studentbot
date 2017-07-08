@@ -57,8 +57,8 @@ class DefaultController extends Controller
         $message = $this->createMessageRecievedFromBody($request->getContent());
 
         /** @var WitService $witService */
-        $witService = $this->container->get('app.wit_service');
-        $witService->handleMessage($message->getText());
+//        $witService = $this->container->get('app.wit_service');
+//        $witService->handleMessage($message->getText());
 
         /** @var MessageSender $messageSenderService */
         $messageSenderService = $this->container->get('app.message_sender');
@@ -78,7 +78,7 @@ class DefaultController extends Controller
 
             $res = $this->questionAnswer($question);
             if (!$res) {
-                $res = $this->choiceAPI($question);
+                $res = $this->choiceAPI($question, $message->getSender());
             }
 
             if (!is_array($res)) {
@@ -90,6 +90,8 @@ class DefaultController extends Controller
                 } else {
                     $responseMessage = new SendMessage($message->getSender(), $resMessage);
                 }
+                $logger->error('#################################');
+                $logger->error($resMessage);
                 $messageSenderService->sendMessage($responseMessage);
             }
         }
@@ -131,7 +133,7 @@ class DefaultController extends Controller
         return $messageObject;
     }
 
-    private function choiceAPI($chaine)
+    private function choiceAPI($chaine, $current_user)
     {
         $apiService = $this->container->get('app.api_service');
         $this->image = false;
@@ -176,18 +178,21 @@ class DefaultController extends Controller
             case "planning":
                 $res = $this->calendar();
                 break;
-            case strstr($chaine, 'calendar') :
-                $res = $this->calendar($chaine);
+            case strstr($chaine, 'planning') :
+            case strstr($chaine, 'agenda') :
+                $res = $this->calendar($chaine, $current_user);
                 break;
             default :
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
                 break;
         }
 
+        $logger = $this->get('logger');
+        $logger->error('###############feeferfrsfsfsef##################');
+        $logger->error($res);
         if (!$res) {
             $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
         }
-
         return $res;
     }
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\School;
 
 use AppBundle\Entity\Calendar\Calendar;
+use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
