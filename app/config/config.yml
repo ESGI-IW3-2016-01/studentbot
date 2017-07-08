@@ -209,8 +209,8 @@ easy_admin:
               label: 'User'
               list:
                   fields:
-                      - Username
-                      - idFacebook
+                      - username
+                      - facebookId
                       - { property: 'email', type: 'email' }
                       - last_login
                       - locked
