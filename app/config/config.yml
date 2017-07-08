@@ -93,6 +93,7 @@ easy_admin:
             class: AppBundle\Entity\QuestionAnswer
             label: 'Custom Answers'
         Api:
+            controller: AppBundle\Controller\ApiController
             class: AppBundle\Entity\Api
             label: "API's"
         ApiLog:

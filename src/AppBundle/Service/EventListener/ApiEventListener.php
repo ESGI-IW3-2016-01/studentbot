@@ -8,9 +8,20 @@ use AppBundle\Event\ApiEvent;
 use AppBundle\Repository\ApiRepository;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Class ApiEventListener
+ *
+ * @author Antoine Cusset <a.cusset@gmail.com>
+ * @link https://github.com/acusset
+ * @category
+ * @license
+ * @package AppBundle\Service\EventListener
+ */
 class ApiEventListener
 {
-    /** @var EntityManager $manager */
+    /**
+     * @var EntityManager $manager
+     */
     private $manager;
 
     public function __construct(EntityManager $entityManager)
