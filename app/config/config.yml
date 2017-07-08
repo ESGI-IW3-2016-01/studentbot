@@ -99,6 +99,26 @@ easy_admin:
             class: AppBundle\Entity\ApiLog
             label: 'API Logs'
             disabled_actions: ['edit', 'view', 'new']
+        MenuItem:
+            controller: AppBundle\Controller\MenuItemController
+            class: AppBundle\Entity\Facebook\MenuItem
+            label: 'Bot Menu'
+            disabled_actions: ['view']
+            list:
+                'title': 'Menu Items'
+                'sort': 'id'
+                fields:
+                    - 'id'
+                    - 'title'
+                    - 'type'
+                    - 'url'
+                    - 'payload'
+                    - 'enabled'
+            form:
+                fields:
+                    - 'title'
+                    - 'type'
+                    - 'url'
         Wit:
             class: AppBundle\Entity\Wit\WitResponse
             label: 'Messages'
