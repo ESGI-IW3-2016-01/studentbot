@@ -23,6 +23,7 @@ class DefaultController extends Controller
     use TraitYesOrNo;
 
     private $image;
+    private $apiService;
 
     /**
      * @Route("/", name="homepage")
@@ -45,6 +46,7 @@ class DefaultController extends Controller
      */
     public function webhookAction(Request $request)
     {
+        $this->apiService = $this->container->get('app.api_service');
         if ($request->query->has('hub_challenge')) {
             return new Response($request->query->get('hub_challenge'));
         }
@@ -56,8 +58,10 @@ class DefaultController extends Controller
         $message = $this->createMessageRecievedFromBody($request->getContent());
 
         /** @var WitService $witService */
-        $witService = $this->container->get('app.wit_service');
-        $witService->handleMessage($message->getText());
+        if ($this->apiService->getApi('WIT')) {
+            $witService = $this->container->get('app.wit_service');
+            $witService->handleMessage($message->getText());
+        }
 
         /** @var MessageSender $messageSenderService */
         $messageSenderService = $this->container->get('app.message_sender');
@@ -132,40 +136,39 @@ class DefaultController extends Controller
 
     private function choiceAPI($chaine)
     {
-        $apiService = $this->container->get('app.api_service');
         $this->image = false;
         $chaine = strtolower($chaine);
         switch ($chaine) {
             case "résultat football" :
             case strcmp("\xe2\x9a\xbd", $chaine) == 0 :
-                if ($apiService->getApi('football')) {
+                if ($this->apiService->getApi('FOOTBALL')) {
                     $res = $this->football();
                 }
                 break;
             case "résultat basket" :
             case "résultat nba" :
             case strcmp("\xf0\x9f\x8f\x80", $chaine) == 0 :
-                if ($apiService->getApi('basket')) {
+                if ($this->apiService->getApi('BASKET')) {
                     $res = $this->basket();
                 }
                 break;
             case count(explode("\xF0\x9F\x8E\xAE", $chaine)) != 1 :
-                if ($apiService->getApi('esport')) {
+                if ($this->apiService->getApi('ESPORT')) {
                     $res = $this->esport($chaine);
                 }
                 break;
             case count(explode("\xE2\x98\x80", $chaine)) != 1 :
-                if ($apiService->getApi('weather')) {
+                if ($this->apiService->getApi('WEATHER')) {
                     $res = $this->weather(explode("\xE2\x98\x80", $chaine)[1]);
                 }
                 break;
             case count(explode("\xf0\x9f\x8e\xbc", $chaine)) != 1 :
-                if ($apiService->getApi('youtube')) {
+                if ($this->apiService->getApi('YOUTUBE')) {
                     $res = $this->youtube($chaine);
                 }
                 break;
             case "yes or no ?" :
-                if ($apiService->getApi('yesorno')) {
+                if ($this->apiService->getApi('YESORNO')) {
                     $res = $this->yesOrNo();
                 }
                 $this->image = true;
