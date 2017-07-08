@@ -13,18 +13,18 @@
                     <br>
                      {% if app.user.photoId is not null %}
                         <a href="#" id="removePhoto">
-                            Supprimer ma photo
+                            {{ "delete_my_photo" | trans({}, 'messages') }}
                         </a>
                     {% endif %}
                     <br>
                     <span class="prof_pic">
                           <label for="edit_profile_form_file" class="btn btn-primary">
-                              <i class="glyphicon glyphicon-camera"></i> Choisir un fichier
+                              <i class="glyphicon glyphicon-camera"></i> {{ "choose_photo" | trans({}, 'messages') }}
                           </label>
                            {{ form_widget(form.file) }}
                       </span>
                    
-                    <a href="#" id="clear" style="display:none;"> Retirer la photo</a>
+                    <a href="#" id="clear" style="display:none;"> {{ "revoke_photo" | trans({}, 'messages') }}</a>
 
                     {{ form_row(form.lastName) }}
                     {{ form_row(form.firstName) }}
@@ -58,7 +58,7 @@
                     <br>
 
                     <div>
-                        <input id="btnSubmit" class="btn btn-default" type="submit" value="Modifier" />
+                        <input id="btnSubmit" class="btn btn-success" type="submit" value="{{ "btn.submit.edit" | trans({}, "messages") }}" />
                     </div>
                 </form>
             </div>
@@ -76,7 +76,7 @@
 
         // On supprime la photo
         $("#removePhoto").click(function () {
-             if (window.confirm("Voulez-vous vraiment supprimer votre photo ?")) {
+             if (window.confirm('{{ "confirm.delete.photo" | trans({}, "messages") }}')) {
                 location.href = "{{ path('remove_my_photo') }}";
             }
         });

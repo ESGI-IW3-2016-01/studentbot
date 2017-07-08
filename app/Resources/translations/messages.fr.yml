@@ -48,3 +48,43 @@ btn.search: Recherche
 btn.edit: Éditer
 btn.delete: Supprimer
 btn.list: Liste
+delete_my_photo: Supprimer ma photo
+choose_photo: Choisir une photo
+revoke_photo: Retirer la photo
+btn.submit.edit: Modifier
+confirm.delete.photo: Voulez-vous vraiment supprimer votre photo ?
+follow_us_on_facebook: Suivez nous sur facebook
+sign_in_fb: Connexion facebook
+logout: Déconnexion
+navbar_team_link: L'équipe
+navbar_admin_link: Administration
+navbar_profile_link: Mon profil
+index_h1: Le bot préféré des étudiants
+simple_answers_speed: Des réponses simples, rapides et super utiles
+talk_me: Parlez-moi !
+title.features: Fonctionnalités
+fully_responsive: Totalement responsive
+features_amazing: "Aspect génial sur n'importe quel appareil: smartphone, tablette, ordinateur portable et bureautique."
+title.customizable: CUSTOMIZABLE
+customizable_features: Changez les couleurs, les images ou l'une des sections en fonction de vos besoins.
+title.slick_beautiful: FLUIDE ET BEAU DESIGN
+features_beautiful: Trendy and fresh design, fits any website.
+title.need_nothing: VOUS N'AVEZ BESOIN DE RIEN
+need_nothing_detail: Utilisez l'application messenger de votre smartphone pour parler à Student Bot. Flashez le code avec Facebook Messenger pour commencer la discussion . C'est simple, allez-y !
+title.the_team: L'EQUIPE
+top_nav_home: Accueil
+top_nav_profil: Profil
+top_nav_show_profil: Voir mon profil
+top_nav_edit_profil: Modifier mon profil
+top_nav_administration: Administration
+flash_message_remove_photo: Votre photo a bien été supprimé
+label_photo: Photo
+label_lastname: Nom
+label_firstname: Prénom
+label_school: Votre école
+label_student_group: Votre classe
+flash_msg_edit_profil_success: Modification enregistré
+flash_msg_edit_profil_error: Une erreur est survenue lors de l'enregistrement
+flash_msg_sign_in_success: Vous êtes bien authentifié
+flash_msg_sign_in_error: Un problème est survenue lors de la connexion
+not_specified: Non renseigné

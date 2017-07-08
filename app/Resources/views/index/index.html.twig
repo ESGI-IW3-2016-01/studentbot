@@ -34,23 +34,23 @@
                 <button class="header-btn"> Download FREE!</button>
             </a> #}
             <div class="header-right">
-                <a class="navbar-item" href="#team">The Team</a>
+                <a class="navbar-item" href="#team">{{ "navbar_team_link" | trans({}, 'messages') }}</a>
                 {% if is_granted('ROLE_ADMIN')  %}
                     <a class="navbar-item" href="{{ path('admin') }}">
                         <i class="fa fa-cog" aria-hidden="true"></i>
-                        Administration
+                        {{ "navbar_admin_link" | trans({}, 'messages') }}
                     </a>
                 {% endif %}
                 {% if is_granted('ROLE_USER') %}
                     <a class="navbar-item" href="{{ path('fos_user_profile_show') }}">
                         <i class="fa fa-user" aria-hidden="true"></i>
-                        Mon profil
+                        {{ "navbar_profile_link" | trans({}, 'messages') }}
                     </a>
                 {% endif %}
                 {% if app.user %}
                     <a class="navbar-item" href="{{ path('fos_user_security_logout') }}">
                         <i class="fa fa-sign-out" aria-hidden="true"></i>
-                        Se déconnecter
+                        {{ "logout" | trans({}, 'messages') }}
                     </a>
                 {% endif %}
             </div>
@@ -63,13 +63,13 @@
 
         <div class="hero row">
             <div class="hero-right col-sm-6 col-sm-6">
-                <h1 class="header-headline bold"> Le Bot préféré des étudiants <br></h1>
-                <h4 class="header-running-text light"> Des réponses simples, rapides et super utiles</h4>
+                <h1 class="header-headline bold"> {{ "index_h1" | trans({}, 'messages') }}<br></h1>
+                <h4 class="header-running-text light"> {{ "simple_answers_speed" | trans({}, 'messages') }}</h4>
                 <a href="#email-form">
-                    <button class="hero-btn">Parlez-moi !</button>
+                    <button class="hero-btn">{{ "talk_me" | trans({}, 'messages') }}</button>
                 </a>
                     {% if app.user is empty %}
-                        <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" class="btn btn-block btn-social btn-facebook" ><span class="fa fa-facebook"></span> Connexion facebook</a>                    
+                        <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" class="btn btn-block btn-social btn-facebook" ><span class="fa fa-facebook"></span> {{ "sign_in_fb" | trans({}, 'messages') }}</a>                    
                     {% endif %}
             </div><!--hero-left-->
 
@@ -93,35 +93,31 @@
 
     <div class="features-container row">
 
-        <h2 class="features-headline light">FEATURES</h2>
+        <h2 class="features-headline light">{{ "title.features" | trans({}, 'messages') }}</h2>
 
         <div class="col-sm-4 feature">
 
             <div class="feature-icon feature-no-display">
                 <img class="feature-img" src="/images/responsive.svg">
             </div>
-            <h5 class="feature-head-text feature-no-display"> FULLY RESPONSIVE </h5>
-            <p class="feature-subtext light feature-no-display"> Looks amazing on any
-                device: smartphone, tablet, laptop and desktop.</p>
+            <h5 class="feature-head-text feature-no-display"> {{ "fully_responsive" | trans({}, 'messages') }} </h5>
+            <p class="feature-subtext light feature-no-display"> {{ "features_amazing" | trans({}, 'messages') }}</p>
         </div>
 
         <div class="col-sm-4 feature">
             <div class="feature-icon feature-no-display feature-display-mid">
                 <img class="feature-img" src="/images/customizable.svg">
             </div>
-            <h5 class="feature-head-text feature-no-display feature-display-mid"> CUSTOMIZABLE </h5>
-            <p class="feature-subtext light feature-no-display feature-display-mid"> Change the colors, pictures or any
-                of the sections
-                to suit your needs.</p>
+            <h5 class="feature-head-text feature-no-display feature-display-mid"> {{ "title.customizable" | trans({}, 'messages') }} </h5>
+            <p class="feature-subtext light feature-no-display feature-display-mid"> {{ "customizable_features" | trans({}, 'messages') }}</p>
         </div>
 
         <div class="col-sm-4 feature">
             <div class="feature-icon feature-no-display feature-display-last">
                 <img class="bullet-img" src="/images/design.svg">
             </div>
-            <h5 class="feature-head-text feature-no-display feature-display-last"> SLICK AND BEAUTIFUL DESIGN </h5>
-            <p class="feature-subtext light feature-no-display feature-display-last"> Trendy and fresh design, fits any
-                website.</p>
+            <h5 class="feature-head-text feature-no-display feature-display-last"> {{ "title.slick_beautiful" | trans({}, 'messages') }} </h5>
+            <p class="feature-subtext light feature-no-display feature-display-last"> {{ "features_beautiful" | trans({}, 'messages') }}</p>
         </div>
     </div> <!--features-container-->
 </div> <!--features-section-->
@@ -147,12 +143,11 @@
 
         <div class="white-section-text">
 
-            <h2 class="imac-section-header light">VOUS N'AVEZ BESOIN DE RIEN</h2>
+            <h2 class="imac-section-header light">{{ "title.need_nothing" | trans({}, 'messages') }}</h2>
 
             <div class="imac-section-desc">
 
-            <span>  Utilisez l'application messenger de votre smartphone pour parler à Student Bot. Flashez le code
-                avec Facebook Messenger pour commencer la discussion . C'est simple, allez-y !</span>
+            <span>  {{ "need_nothing_detail" | trans({}, 'messages') }}</span>
             </div>
         </div>
     </div>
@@ -235,7 +230,7 @@
   ================================================== -->
 
 <div id="team" class="team">
-    <h2 class="team-section-header light text-center">L'EQUIPE</h2>
+    <h2 class="team-section-header light text-center">{{ "title.the_team" | trans({}, 'messages') }}</h2>
 
     <div class="team-container row">
 

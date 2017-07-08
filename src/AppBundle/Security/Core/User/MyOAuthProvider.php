@@ -10,16 +10,18 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use AppBundle\Entity\User;
+use Symfony\Component\Translation\TranslatorInterface as Translator;
 
 class MyOAuthProvider extends FOSUBUserProvider
 {
     private $em;
     private $session;
 
-    public function __construct(UserManagerInterface $userManager, Array $properties, ObjectManager $em, $session)
+    public function __construct(UserManagerInterface $userManager, Array $properties, ObjectManager $em, $session, Translator $translator)
     {
         $this->em=$em;
         $this->session = $session;
+        $this->translator = $translator;
 
         parent::__construct($userManager, $properties);
     }
@@ -39,11 +41,11 @@ class MyOAuthProvider extends FOSUBUserProvider
             $username = $user->getUsername();
             $realUser = $this->loadUserByUsername($username); // connexion du user
             if ($realUser) {
-                $this->session->getFlashBag()->add('info', 'Vous êtes bien authentifié');
+                $this->session->getFlashBag()->add('info', $this->translator->trans("flash_msg_sign_in_success", array(), 'messages'));
                 return $realUser;
             }
         }
-        $this->session->getFlashBag()->add('error', 'Un problème est survenue lors de la connexion');
+        $this->session->getFlashBag()->add('error', $this->translator->trans("flash_msg_sign_in_error", array(), 'messages'));
         
         return null;
     }

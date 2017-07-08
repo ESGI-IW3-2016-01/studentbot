@@ -7,7 +7,7 @@
                 <img src="https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/15178125_1880759412153595_3682887542296239417_n.png?oh=5361f890d1c71d45b057ee206169537c&oe=5906DF6F"
                     style="height:450px;margin:65px;">
                 <a href="https://www.facebook.com/StudentBot-1860943057468564/?fref=ts" target="_blank">
-                    <button class="facebook_button">Suivez nous sur Facebook</button>
+                    <button class="facebook_button"> {{ "follow_us_on_facebook" | trans({}, 'messages') }}</button>
                 </a>
                 <div class="fb-send-to-messenger"
                   messenger_app_id="199254233818913" 
@@ -20,9 +20,9 @@
         </div>
     </div>
     {% if app.user is empty %}
-        <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" class="btn btn-block btn-social btn-facebook" ><span class="fa fa-facebook"></span> Connexion facebook</a>
+        <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" class="btn btn-block btn-social btn-facebook" ><span class="fa fa-facebook"></span> {{ "sign_in_fb" | trans({}, 'messages') }}</a>
     {% else %}
-        <a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a>
+        <a href="{{ path('fos_user_security_logout') }}">{{ "logout" | trans({}, 'messages') }}</a>
     {% endif %}
     
 {% endblock %}

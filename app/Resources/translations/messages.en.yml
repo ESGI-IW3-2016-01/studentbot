@@ -48,4 +48,43 @@ btn.search: Recherche
 btn.edit: Edit
 btn.delete: Delete
 btn.list: List
-
+choose_photo: Choose photo
+delete_my_photo: Delete my photo
+revoke_photo: Revoke photo
+btn.submit.edit: Edit
+confirm.delete.photo: Are you sure you want to delete your photo ?
+follow_us_on_facebook: Follow us on facebook
+sign_in_fb: Sign in Fb
+logout: Logout
+navbar_team_link: The team
+navbar_admin_link: Administration
+navbar_profile_link: My profile
+index_h1: The favorite bot of students
+simple_answers_speed: Simple, fast and super useful answers
+talk_me: Talk to me !
+title.features: FEATURES
+fully_responsive: FULLY RESPONSIVE
+features_amazing: "Looks amazing on any device: smartphone, tablet, laptop and desktop."
+title.customizable: CUSTOMIZABLE
+customizable_features: Change the colors, pictures or any of the sections to suit your needs.
+title.slick_beautiful: SLICK AND BEAUTIFUL DESIGN
+features_beautiful: Trendy and fresh design, fits any website.
+title.need_nothing: YOU NEED need_nothing
+need_nothing_detail: Use the messenger application on your smartphone to talk to Student Bot. Flasher the code with Facebook Messenger to start the discussion. It's simple, go for it!
+title.the_team: THE TEAM
+top_nav_home: Home
+top_nav_profil: Profile
+top_nav_show_profil: See my profile
+top_nav_edit_profil: Edit my profile
+top_nav_administration: Administration
+flash_message_remove_photo: Your photo has been successfully deleted
+label_photo: Photo
+label_lastname: Name
+label_firstname: Firstname
+label_school: Your school
+label_student_group: Your class
+flash_msg_edit_profil_success: Editing saved
+flash_msg_edit_profil_error: An error occurred while recording
+flash_msg_sign_in_success: You are well authenticated
+flash_msg_sign_in_error: A problem occurred during the connection
+not_specified: Not specified
