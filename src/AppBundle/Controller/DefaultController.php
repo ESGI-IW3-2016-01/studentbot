@@ -83,7 +83,7 @@ class DefaultController extends Controller
 
             $res = $this->questionAnswer($question);
             if (!$res) {
-                $res = $this->choiceAPI($question);
+                $res = $this->choiceAPI($question, $message->getSender());
             }
 
             if (!is_array($res)) {
@@ -145,7 +145,7 @@ class DefaultController extends Controller
         return $messageObject;
     }
 
-    private function choiceAPI($chaine)
+    private function choiceAPI($chaine, $current_user)
     {
         $apiService = $this->container->get('app.api_service');
         $this->image = false;
@@ -191,8 +191,9 @@ class DefaultController extends Controller
             case "planning":
                 $res = $this->calendar();
                 break;
-            case strstr($chaine, 'calendar') :
-                $res = $this->calendar($chaine);
+            case strstr($chaine, 'planning') :
+            case strstr($chaine, 'agenda') :
+                $res = $this->calendar($chaine, $current_user);
                 break;
             case strcmp("\xF0\x9F\x93\xB0",$chaine) == 0 :
                 if ($this->apiService->getApi('NEWS')) {
@@ -204,7 +205,6 @@ class DefaultController extends Controller
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
                 break;
         }
-
         return $res;
     }
 

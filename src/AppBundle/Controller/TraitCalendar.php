@@ -3,19 +3,19 @@ namespace AppBundle\Controller;
 
 trait TraitCalendar
 {
-    private function calendar($chaine = null)
+    private function calendar($chaine = null, $current_user)
     {
         if ($chaine != null) {
 
             /** @var Calendar $calendar */
             $calendar = $this->container->get('app.calendar_api_service');
 
-            if ($chaine->contains('next class')){
-                $res = $calendar->getNextClass();
-            } elseif ($chaine->contains('day class')) {
-                $res = $calendar->getDayClass();
-            } elseif ($chaine->contains('')) {
-                
+            if (strpos($chaine, 'prochain')){
+                $res = $calendar->getNextClass($current_user);
+            } elseif (strpos($chaine, 'jours')) {
+                $res = $calendar->getDayClass($current_user);
+            } elseif (strpos($chaine, 'semaine')) {
+                $res = $calendar->getWeekClass($current_user);
             } else {
                 $str = 'Désolé je n\'ai pas compris votre demande. 
                         Ecrivez "planning" pour plus d\'aide ';
@@ -25,13 +25,13 @@ trait TraitCalendar
         } else {
             $str = 'Utilisation de l\'agenda:
                     Ajouté un planning : importer directement un fichier sous format ical.
-                    Renseigner son école : écrivez "make a choice"
+                    Renseigner son école :
                     Renseigner sa classe : 
                     
-                    Pour connaitre son planning :
-                     - le prochain cours : 
-                     - les cours de la journée :
-                     - les cours de la semaine :
+                    Pour connaitre son agenda :
+                     - le prochain cours : écrivez "Agenda prochain"
+                     - les cours de la journée : écrivez "Agenda cours jours"
+                     - les cours de la semaine : écrivez "Agenda cours semaine"
                     ';
             $res = $str;
         }

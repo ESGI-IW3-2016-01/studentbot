@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\School\StudentGroup;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -45,7 +46,15 @@ class User extends BaseUser
      * @ORM\Column(name="facebook_id", type="string", nullable=true)
      */
     protected $facebookId;
-    
+
+    /**
+     * @var StudentGroup
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\School\StudentGroup", inversedBy="user")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     */
+    private $groupId;
+
     /**
      * @var string
      *
@@ -424,5 +433,29 @@ class User extends BaseUser
         $this->studentGroup = $studentGroup;
 
         return $this;
+    }
+
+    /**
+     * Set studentGroup
+     *
+     * @param string $studentGroupId
+     *
+     * @return Integer
+     */
+    public function setGroupId($studentGroupId)
+    {
+        $this->groupId = $studentGroupId;
+
+        return $this;
+    }
+
+    /**
+     * Get studentGroup
+     *
+     * @return StudentGroup
+     */
+    public function getGroupId()
+    {
+        return $this->groupId;
     }
 }
