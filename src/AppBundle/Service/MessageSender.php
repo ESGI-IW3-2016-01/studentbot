@@ -2,6 +2,8 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\Facebook\QuickReply;
+use AppBundle\Entity\Facebook\QuickReplyResponse;
 use GuzzleHttp\Client;
 use AppBundle\Entity\Facebook\SendMessage;
 
@@ -29,7 +31,7 @@ class MessageSender
     /**
      * @param string $action
      * @param string $recipient
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @return null|\Psr\Http\Message\ResponseInterface
      */
     private function sendAction($action, $recipient)
     {
@@ -42,6 +44,7 @@ class MessageSender
         } catch (\Exception $e) {
             error_log($e->getMessage());
         }
+        return null;
     }
 
     public function sendMarkSeen($recipient)
@@ -61,23 +64,21 @@ class MessageSender
 
     public function sendShortText($text, $recipient)
     {
-        $body = ['recipient' => ['id' => $recipient], "message" => ["text" => $text]];
-        $uri = $this->graph . '/me/messages';
-        try {
-            $response = $this->client->post($uri, ['json' => $body, 'query' => ['access_token' => $this->token]]);
+        $body = [
+            'recipient' => [
+                'id' => $recipient
+            ],
+            'message' => [
+                'text' => $text
+            ]
+        ];
 
-            error_log('[Guzzle Response] ' . $response->getStatusCode() . ' : ' . $response->getBody());
+        $this->send($body);
 
-            return $response;
-
-        } catch (\Exception $e) {
-            error_log($e->getMessage());
-        }
     }
 
     /**
      * @param SendMessage $message
-     * @return \Psr\Http\Message\ResponseInterface
      */
     public function sendMessage(SendMessage $message)
     {
@@ -95,16 +96,71 @@ class MessageSender
             $body['message'] = ['attachment' => ['type' => 'image', 'payload' => ['url' => $message->getAttachment()]]];
         }
 
+        $this->send($body);
+    }
+
+    /**
+     * @param $quickReplies array of QuickReply
+     * @param $text
+     * @param $recipient
+     */
+    public function sendQuickReply($quickReplies, $text, $recipient)
+    {
+        $array = [];
+        if (count($quickReplies) > 0) {
+            /** @var QuickReply $quickReply */
+            foreach ($quickReplies as $quickReply) {
+                $array[] = $quickReply->toArray();
+            }
+
+            $body = [
+                'recipient' => [
+                    'id' => $recipient
+                ],
+                'message' => [
+                    'text' => $text,
+                    'quick_replies' => $array
+                ]
+            ];
+
+            $this->send($body);
+
+        } else {
+            //TODO : throw error
+        }
+    }
+
+    /**
+     * @param QuickReplyResponse $quickReplyResponse
+     */
+    public function sendQuickReplyResponse(QuickReplyResponse $quickReplyResponse)
+    {
+        $this->send($quickReplyResponse->toArray());
+    }
+
+    /**
+     * Send message to Facebook
+     * @param $body
+     * @return null|\Psr\Http\Message\ResponseInterface
+     */
+    private function send($body)
+    {
         $uri = $this->graph . '/me/messages';
         try {
-            $response = $this->client->post($uri, ['json' => $body, 'query' => ['access_token' => $this->token]]);
+            $response = $this->client->post($uri, [
+                'json' => $body,
+                'query' => [
+                    'access_token' => $this->token
+                ]
+            ]);
 
-            error_log('[Guzzle Response] ' . $response->getStatusCode() . ' : ' . $response->getBody());
+            error_log('[Guzzle Response]' . $response->getStatusCode() . ' : ' . $response->getBody());
 
             return $response;
 
         } catch (\Exception $e) {
             error_log($e->getMessage());
         }
+        return null;
     }
 }

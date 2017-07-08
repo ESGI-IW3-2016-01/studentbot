@@ -42,3 +42,20 @@ services:
     app.wit_service:
         class: AppBundle\Service\WitService
         arguments: [%wit_key%, '@doctrine.orm.default_entity_manager', '@event_dispatcher']
+    school_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\School\School
+    app.school_service:
+        class: AppBundle\Service\SchoolService
+        arguments: ['@school_repository']
+    student_group_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\School\StudentGroup
+    app.student_group_service:
+        class: AppBundle\Service\StudentGroupService
+        arguments: ['@student_group_repository']
+
