@@ -103,7 +103,6 @@ class Api
     }
 
     public function __toString() {
-        $status = $this->isEnabled() == 1 ? 'enabled' : 'disabled';
-        return $this->id . ' ' . $this->name . " API ($status)";
+        return "$this->name API";
     }
 }
