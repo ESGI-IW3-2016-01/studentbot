@@ -21,6 +21,7 @@ class DefaultController extends Controller
     use TraitWeather;
     use TraitYoutube;
     use TraitYesOrNo;
+    use TraitNews;
 
     private $image;
     private $apiService;
@@ -172,6 +173,11 @@ class DefaultController extends Controller
                     $res = $this->yesOrNo();
                 }
                 $this->image = true;
+                break;
+            case strcmp("\xF0\x9F\x93\xB0",$chaine) == 0 :
+                if ($this->apiService->getApi('NEWS')) {
+                    $res = $this->news($chaine);
+                }
                 break;
             default :
                 $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
