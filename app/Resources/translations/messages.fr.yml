@@ -3,6 +3,13 @@ admin.school.label: École
 admin.promotion.label: Promotion
 admin.studentGroup.label: Classe
 admin.user.label: Utilisateur
+admin.calendar.label: Agenda
+admin.questionAnswer.label: Question / Réponse
+admin.api.label: Liste des API
+admin.apiLogs.label: Historique API
+admin.greetingText.label: Message d'acceuil
+admin.menuItem.label: Menu robot
+api.admin.title.edit: Edition API
 api.name.label: "Nom de l'api"
 api.enabled.label: Activé
 api.description.label: Description
@@ -95,7 +102,6 @@ event.startAt.label: Début
 event.endAt.label: Fin
 event.duration.label: Durée
 event.summary.label: Résumé
-admin.calendar.label: Planning
 calendar.id.label: ID
 calendar.createdAt.label: Date création
 calendar.name.label: Nom
@@ -104,11 +110,6 @@ calendar.updatedAt.label: Date MàJ
 calendar.processed.label: Importé
 calendar.group.label: Groupe
 calendar.file.label: Fichier
-admin.questionAnswer.label: Question / Réponse
-admin.api.label: Liste des API
-admin.apiLogs.label: Historique API
-admin.greetingText.label: Message d'acceuil
-admin.menuItem.label: Menu robot
 menu_item.title.label: Titre
 menu_item.type.label: Type
 menu_item.url.label: Lien
@@ -116,3 +117,10 @@ menu_item.payload.label: Charge utile
 menu_item.enabled.label: Activé
 wit.text.label: Texte
 wit.entities.label: Entités
+question_answer.question.label: Question
+question_answer.answer.label: Réponse
+greetingText.text.label: Texte
+greetingText.enabled.label: Activé
+greetingText.locale.label: Langue
+greetingText.admin.title.edit: Edition message d'accueil
+wit.messageAnalysis.label: Message analysé

@@ -107,6 +107,23 @@ easy_admin:
         QuestionAnswer:
             class: AppBundle\Entity\QuestionAnswer
             label: 'admin.questionAnswer.label'
+            list:
+                title: 'admin.questionAnswer.label'
+                sort: 'id'
+                fields:
+                    - { property: 'id', type: 'integer', label: 'ID' }
+                    - { property: 'question', label: 'question_answer.question.label' }
+                    - { property: 'answer', label: 'question_answer.answer.label' }
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+            form:
+                title: 'questionAnswer.admin.title.edit'
+                fields:
+                    - { property: 'question', label: 'question_answer.question.label' }
+                    - { property: 'answer', label: 'question_answer.answer.label' }
         Api:
             controller: AppBundle\Controller\ApiController
             class: AppBundle\Entity\Api
@@ -117,14 +134,14 @@ easy_admin:
                     - { property: 'name', type: 'text', label: 'api.name.label' }
                     - { property: 'enabled', label: 'api.enabled.label' }
                     - { property: 'description', type: 'text', label: 'api.description.label' }
-                title: 'api.admin.title'
+                title: 'admin.api.label'
                 actions:
                     - { name: 'new', label: 'btn.new' }
                     - { name: 'search', label: 'btn.search' }
                     - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
                     - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-                title: 'Edit Api'
+                title: 'api.admin.title.edit'
                 fields:
                     - { property: 'name', type: 'text', label: 'api.name.label' }
                     - { property: 'enabled', label: 'api.enabled.label' }
@@ -139,14 +156,13 @@ easy_admin:
                     - { property: 'api', label: 'Api' }
                     - { property: 'date', label: 'api_log.date.label' }
                     - { property: 'code', type: 'text', label: 'api_log.code.label' }
-                title: 'api.admin.title'
+                title: 'admin.apiLogs.label'
                 actions:
                     - { name: 'new', label: 'btn.new' }
                     - { name: 'search', label: 'btn.search' }
                     - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
                     - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-                title: 'Edit Api log'
                 fields:
                     - { property: 'api', type: 'text', label: 'Api' }
                     - { property: 'date', label: 'api.enabled.label' }
@@ -154,6 +170,24 @@ easy_admin:
         GreetingText:
             class: AppBundle\Entity\Facebook\GreetingText
             label: 'admin.greetingText.label'
+            list:
+                fields:
+                    - { property: 'id', label: 'ID' }
+                    - { property: 'text', label: 'greetingText.text.label' }
+                    - { property: 'enabled', label: 'greetingText.enabled.label' }
+                    - { property: 'locale', label: 'greetingText.locale.label' }
+                title: 'admin.greetingText.label'
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+            form:
+                title: 'greetingText.admin.title.edit'
+                fields:
+                    - { property: 'text', label: 'greetingText.text.label' }
+                    - { property: 'enabled', label: 'greetingText.enabled.label' }
+                    - { property: 'locale', label: 'greetingText.locale.label' }
             disabled_actions: ['view']
         MenuItem:
             controller: AppBundle\Controller\MenuItemController
@@ -170,6 +204,11 @@ easy_admin:
                     - { property: 'url', label: 'menu_item.url.label' }
                     - { property: 'payload', label: 'menu_item.payload.label' }
                     - { property: 'enabled', label: 'menu_item.enabled.label' }
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
                 fields:
                     - { property: 'title', label: 'menu_item.title.label' }
@@ -177,10 +216,10 @@ easy_admin:
                     - { property: 'url', label: 'menu_item.url.label' }
         Wit:
             class: AppBundle\Entity\Wit\WitResponse
-            label: 'Messages WIT'
+            label: 'wit.messageAnalysis.label'
             disabled_actions: ['edit', 'view', 'new', 'delete']
             list:
-                title: 'Message Analysis'
+                title: 'wit.messageAnalysis.label'
                 sort: 'createdAt'
                 fields:
                     - { property: 'createdAt', label: 'calendar.createdAt.label' }
@@ -234,6 +273,7 @@ easy_admin:
             label: 'admin.calendar.label'
             disabled_actions: ['edit', 'view', 'new']
             list:
+                title: 'admin.calendar.label'
                 sort: 'id'
                 fields:
                     - { property: 'id', type: 'text', label: 'calendar.id.label'}
@@ -251,6 +291,7 @@ easy_admin:
             class: AppBundle\Entity\Calendar\Event
             label: 'admin.event.label'
             list:
+                title: 'admin.event.label'
                 fields:
                     - { property: 'id', type: 'text' }
                     - { property: 'calendar', type: 'text', label: 'event.calendar.label ' }
