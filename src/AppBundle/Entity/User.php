@@ -35,7 +35,16 @@ use Doctrine\ORM\Mapping\AttributeOverride;
  *             unique=false,
  *             nullable=true
  *         )
- *     )
+ *     ),
+ *     @AttributeOverride(name="password",
+ *         column=@ORM\Column(
+ *             name="password",
+ *             type="string",
+ *             length=255,
+ *             unique=true,
+ *             nullable=true
+ *         )
+ *     ),
  * })
  */
 class User extends BaseUser
