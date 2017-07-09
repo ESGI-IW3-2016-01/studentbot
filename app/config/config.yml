@@ -240,7 +240,7 @@ easy_admin:
                     - { property: 'name', type: 'text', label: 'calendar.name.label'}
                     - { property: 'filename', type: 'text', label: 'calendar.filename.label'}
                     - { property: 'updatedAt', type: 'date', label: 'calendar.updatedAt.label'}
-                    - { property: 'processed', type: 'bool', label: 'calendar.processed.label'}
+                    - { property: 'processed', type: 'boolean', label: 'calendar.processed.label'}
             form:
                 fields:
                     - { property: 'name', type: 'text', label: 'calendar.name.label'}
@@ -292,7 +292,7 @@ easy_admin:
                     - { property: 'username', type: 'text', label: 'user.username.label' }
                     - { property: 'facebookId', type: 'text', label: 'user.idFacebook.label' }
                     - { property: 'email', type: 'email', label: 'user.email.label'}
-                    - { property: 'last_login', label: 'user.last_login.label' }
+                    - { property: 'last_login', type: 'date', label: 'user.last_login.label' }
                     - { property: 'school', label: 'user.school.label' }
                     - { property: 'studentGroup', label: 'user.student_group.label' }
                 title: 'user.admin.title.list'
