@@ -25,7 +25,6 @@ class DefaultController extends Controller
     use TraitYesOrNo;
     use TraitNews;
     use TraitCalendar;
-    use TraitSummaryFeature;
 
     private $image;
     private $textAndImage;
@@ -81,7 +80,7 @@ class DefaultController extends Controller
                     break;
                 case strstr($message->getPayload(), 'SCHOOL'):
                     $em = $this->getDoctrine()->getManager();
-                    $user = $this->getUser($message);
+                    $user = $em->getRepository('AppBundle:User')->findOneBy(['facebookId' => $message->getSender()]);
                     $schoolId = (int) str_replace("SCHOOL_", "", $message->getPayload());
                     $school = $em->getRepository('AppBundle:School')->findOneBy(['id' => $schoolId]);
                     $user->setSchool($school);
@@ -91,7 +90,7 @@ class DefaultController extends Controller
                     break;
                 case strstr($message->getPayload(), 'STUDENT_GROUP'):
                     $em = $this->getDoctrine()->getManager();
-                    $user = $this->getUser($message);
+                    $user = $em->getRepository('AppBundle:User')->findOneBy(['facebookId' => $message->getSender()]);
                     $groupId = (int) str_replace("STUDENT_GROUP_", "", $message->getPayload());
                     $group = $em->getRepository('AppBundle:StudentGroup')->findOneBy(["id" => $groupId]);
                     $user->setGroup($group);
@@ -254,12 +253,8 @@ class DefaultController extends Controller
                 }
                 $this->textAndImage = true;
                 break;
-            case "summary" :
-                $res = $this->summaryFeature();
-
-                break;
             default :
-                $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95 \x0D\x0A\"";
+                $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
                 break;
         }
         return $res;
@@ -289,16 +284,5 @@ class DefaultController extends Controller
         }
 
         return $this->redirect($url);
-    }
-
-    /**
-     * @param $message
-     * @return User
-     */
-    public function getUser($message)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('AppBundle:User')->findOneBy(['facebookId' => $message->getSender()]);
-        return $user;
     }
 }
