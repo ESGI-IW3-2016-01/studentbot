@@ -80,7 +80,9 @@ class DefaultController extends Controller
                 case strstr($message->getPayload(), 'SCHOOL'):
                     $em = $this->getDoctrine()->getManager();
                     $user = $this->getUser();
-                    $user->setSchool((int) str_replace("SCHOOL_", "", $message->getPayload()));
+                    $schoolId = (int) str_replace("SCHOOL_", "", $message->getPayload());
+                    $school = $em->getRepository('AppBundle:School')->findOneBy(['id' => $schoolId]);
+                    $user->setSchool($school);
                     $em->persist($user);
                     $em->flush();
                     $messageSenderService->sendShortText("Ton école est enregistré", $message->getSender());
@@ -88,7 +90,9 @@ class DefaultController extends Controller
                 case strstr($message->getPayload(), 'STUDENT_GROUP'):
                     $em = $this->getDoctrine()->getManager();
                     $user = $this->getUser();
-                    $user->setGroup((int) str_replace("STUDENT_GROUP_", "", $message->getPayload()));
+                    $groupId = (int) str_replace("STUDENT_GROUP_", "", $message->getPayload());
+                    $group = $em->getRepository('AppBundle:StudentGroup')->findOneBy(["id" => $groupId]);
+                    $user->setGroup($group);
                     $em->persist($user);
                     $em->flush();
                     $messageSenderService->sendShortText("Ta classe est enregistré", $message->getSender());
