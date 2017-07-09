@@ -10,6 +10,7 @@ use AppBundle\Service\ApiService;
 use AppBundle\Service\MessageSender;
 use AppBundle\Service\SchoolService;
 use AppBundle\Service\StudentGroupService;
+use AppBundle\Service\UserService;
 use AppBundle\Service\WitService;
 use Doctrine\ORM\EntityManager;
 use FOS\UserBundle\Model\Group;
@@ -56,6 +57,11 @@ class DefaultController extends Controller
     private $logger;
 
     /**
+     * @var UserService $userService
+     */
+    private $userService;
+
+    /**
      * @Route("/", name="homepage")
      * @return Response
      */
@@ -81,6 +87,7 @@ class DefaultController extends Controller
 
         $this->apiService = $this->container->get('app.api_service');
         $this->messageSenderService = $this->container->get('app.message_sender');
+        $this->userService = $this->container->get('app.user_service');
 
         $this->logger = $this->get('logger');
         $this->logger->error($request->getContent(), ['sender_faceboo_id' => null]);
@@ -103,7 +110,7 @@ class DefaultController extends Controller
                 case strstr($message->getPayload(), 'SCHOOL'):
 
                     /** @var User $user */
-                    $user = $this->getFacebookUser($message->getSender());
+                    $user = $this->userService->handleUser($message->getSender());
 
                     $schoolId = (int)str_replace('SCHOOL_', '', $message->getPayload());
                     /** @var School $school */
@@ -123,7 +130,7 @@ class DefaultController extends Controller
                 case strstr($message->getPayload(), 'STUDENT_GROUP'):
 
                     /** @var User $user */
-                    $user = $this->getFacebookUser($message->getSender());
+                    $user = $this->userService->handleUser($message->getSender());
 
                     $groupId = (int)str_replace('STUDENT_GROUP_', '', $message->getPayload());
                     /** @var Group $group */
@@ -131,7 +138,7 @@ class DefaultController extends Controller
                         ->getRepository('AppBundle:StudentGroup')
                         ->findOneBy(['id' => $groupId]);
 
-                    $user->setGroupId($group);
+                    $user->setGroup($group);
                     $this->em->persist($user);
                     $this->em->flush();
 
@@ -168,9 +175,9 @@ class DefaultController extends Controller
                 );
             } elseif ($res == 'class') {
                 /** @var User $user */
-                $user = $this->getFacebookUser($message->getSender());
+                $user = $this->userService->handleUser($message->getSender());
                 $this->messageSenderService->sendQuickReply(
-                    $studentGroupService->getQuickRepliesForGroups($user->getGroupId()->getId()),
+                    $studentGroupService->getQuickRepliesForGroups($user->getGroup()->getId()),
                     'Choisi ta classe',
                     $message->getSender()
                 );
@@ -216,7 +223,7 @@ class DefaultController extends Controller
                 $message['messaging'][0]['sender']['id'],
                 $message['messaging'][0]['recipient']['id'],
                 null,
-                $message['timestamp'],
+                $message['time'],
                 null,
                 null
             );
@@ -228,7 +235,7 @@ class DefaultController extends Controller
                 $message['messaging'][0]['sender']['id'],
                 $message['messaging'][0]['recipient']['id'],
                 null,
-                $message['timestamp'],
+                $message['time'],
                 $message['messaging'][0]['message']['mid'],
                 $message['messaging'][0]['message']['seq'],
                 new Attachment($message['messaging'][0]['message']['attachments'][0]['type'],
@@ -241,7 +248,7 @@ class DefaultController extends Controller
                 $message['messaging'][0]['sender']['id'],
                 $message['messaging'][0]['recipient']['id'],
                 $message['messaging'][0]['message']['text'],
-                $message['timestamp'],
+                $message['time'],
                 $message['messaging'][0]['message']['mid'],
                 $message['messaging'][0]['message']['seq']
             );
@@ -339,13 +346,5 @@ class DefaultController extends Controller
         }
 
         return $this->redirect($url);
-    }
-
-    private function getFacebookUser($facebookId)
-    {
-        return $this->getDoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:User')
-            ->findOneBy(['facebookId' => $facebookId]);
     }
 }

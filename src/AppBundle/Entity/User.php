@@ -48,12 +48,19 @@ class User extends BaseUser
     protected $facebookId;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="sender_id", type="string", nullable=true)
+     */
+    protected $senderId;
+
+    /**
      * @var StudentGroup
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\School\StudentGroup", inversedBy="user")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
-    private $groupId;
+    private $group;
 
     /**
      * @var string
@@ -189,6 +196,22 @@ class User extends BaseUser
     }
 
     /**
+     * @return string
+     */
+    public function getSenderId(): string
+    {
+        return $this->senderId;
+    }
+
+    /**
+     * @param string $senderId
+     */
+    public function setSenderId(string $senderId)
+    {
+        $this->senderId = $senderId;
+    }
+
+    /**
      * Set photoId
      *
      * @param string $photoId
@@ -257,13 +280,13 @@ class User extends BaseUser
         return $this->photoOriginalName;
     }
 
-     /*** GESTION UPLOADS photo de profile ***/
+    /*** GESTION UPLOADS photo de profile ***/
 
     public function getAbsolutePath()
     {
         return null === $this->photoId
-             ? null
-             : $this->getUploadRootDir().'/'.$this->photoId;
+            ? null
+            : $this->getUploadRootDir() . '/' . $this->photoId;
     }
 
     public function getWebPath()
@@ -272,7 +295,7 @@ class User extends BaseUser
             return 'images/inconnu.jpg';
         }
 
-        return $this->getUploadDir().'/'.$this->photoId;
+        return $this->getUploadDir() . '/' . $this->photoId;
     }
 
     protected function getUploadRootDir()
@@ -281,7 +304,8 @@ class User extends BaseUser
         return __DIR__ . '/../../../web/' . $this->getUploadDir();
     }
 
-    protected function getUploadDir() {
+    protected function getUploadDir()
+    {
         // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
         // le document/image dans la vue.
         return 'uploads/profil';
@@ -295,7 +319,7 @@ class User extends BaseUser
     {
         if (null !== $this->getFile()) {
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->photoId = $filename.'.'.$this->getFile()->guessExtension();
+            $this->photoId = $filename . '.' . $this->getFile()->guessExtension();
             $this->photoExtension = $this->file->guessExtension();
             $this->photoOriginalName = $this->file->getClientOriginalName();
         }
@@ -305,10 +329,11 @@ class User extends BaseUser
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
-    public function upload() {
+    public function upload()
+    {
         // la propriété « file » peut être vide comme le champ n'est pas requis
         if (null === $this->file) {
-          return;
+            return;
         }
 
         if (!file_exists($this->getUploadRootDir())) {
@@ -318,11 +343,11 @@ class User extends BaseUser
         // le nom de fichier cible où le fichier doit être déplacé
         $this->file->move($this->getUploadRootDir(), $this->photoId);
 
-         // check if we have an old image
+        // check if we have an old image
         if (isset($this->temp)) {
             // delete the old image
-            if (is_file($this->getUploadRootDir().'/'.$this->temp)) {
-                unlink($this->getUploadRootDir().'/'.$this->temp);
+            if (is_file($this->getUploadRootDir() . '/' . $this->temp)) {
+                unlink($this->getUploadRootDir() . '/' . $this->temp);
                 // clear the temp image path
                 $this->temp = null;
             }
@@ -359,8 +384,7 @@ class User extends BaseUser
                 // store the old name to delete after the update
                 $this->temp = $this->photoId;
                 $this->photoId = null;
-            }
-             else {
+            } else {
                 $this->photoId = 'initial';
             }
         }
@@ -378,14 +402,13 @@ class User extends BaseUser
 
     public function removePhoto()
     {
-        $file_path = $this->getUploadRootDir().'/'.$this->getPhotoId();
+        $file_path = $this->getUploadRootDir() . '/' . $this->getPhotoId();
 
-        if(file_exists($file_path))
-        {
+        if (file_exists($file_path)) {
             unlink($file_path);
         }
     }
-  /**** FIN GESTION UPLOADS ****/
+    /**** FIN GESTION UPLOADS ****/
 
     /**
      * Gets the value of school.
@@ -436,26 +459,18 @@ class User extends BaseUser
     }
 
     /**
-     * Set studentGroup
-     *
-     * @param string $studentGroupId
-     *
-     * @return Integer
+     * @param $studentGroupId
      */
-    public function setGroupId($studentGroupId)
+    public function setGroup($studentGroupId)
     {
-        $this->groupId = $studentGroupId;
-
-        return $this;
+        $this->group = $studentGroupId;
     }
 
     /**
-     * Get studentGroup
-     *
      * @return StudentGroup
      */
-    public function getGroupId()
+    public function getGroup()
     {
-        return $this->groupId;
+        return $this->group;
     }
 }

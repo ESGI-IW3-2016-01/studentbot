@@ -56,6 +56,18 @@ services:
     app.school_service:
         class: AppBundle\Service\SchoolService
         arguments: ['@school_repository']
+    user_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\User
+    app.user_service:
+        class: AppBundle\Service\UserService
+        arguments:
+            - '@user_repository'
+            - %facebook.graph_version%
+            - %facebook.page_access_token%
+            - '@doctrine.orm.default_entity_manager'
     student_group_repository:
         class: Doctrine\ORM\EntityRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
