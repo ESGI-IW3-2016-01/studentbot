@@ -84,7 +84,8 @@ easy_admin:
     site_name: "<div class='home-logo'>StudentBot</div>"
     design:
         menu:
-            - { label: 'Homepage', route: 'homepage' }
+            - { label: 'Homepage', route: 'homepage', label: 'top_nav_home' }
+            - { entity: 'QuestionAnswer' }
             - { entity: 'Api' }
             - { entity: 'ApiLog' }
             - { entity: 'GreetingText' }
@@ -96,7 +97,7 @@ easy_admin:
             - { entity: 'Calendar' }
             - { entity: 'Event' }
             - { entity: 'User'}
-            - { label: 'Log out', route: 'fos_user_security_logout' }
+            - { label: 'Log out', route: 'fos_user_security_logout', label: 'logout'}
         form_theme: 'horizontal'
         assets:
             css:
@@ -105,32 +106,49 @@ easy_admin:
     entities:
         QuestionAnswer:
             class: AppBundle\Entity\QuestionAnswer
-            label: 'Custom Answers'
-        Api:
-            controller: AppBundle\Controller\ApiController
-            class: AppBundle\Entity\Api
-            label: "API's"
+            label: 'admin.questionAnswer.label'
             list:
+                title: 'admin.questionAnswer.label'
+                sort: 'id'
                 fields:
-                    - { property: 'id', type: 'integer' }
-                    - { property: 'name', type: 'text', label: 'api.name.label' }
-                    - { property: 'enabled', label: 'api.enabled.label' }
-                    - { property: 'description', type: 'text', label: 'api.description.label' }
-                title: 'api.admin.title'
+                    - { property: 'id', type: 'integer', label: 'ID' }
+                    - { property: 'question', label: 'question_answer.question.label' }
+                    - { property: 'answer', label: 'question_answer.answer.label' }
                 actions:
                     - { name: 'new', label: 'btn.new' }
                     - { name: 'search', label: 'btn.search' }
                     - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
                     - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-                title: 'Edit Api'
+                title: 'questionAnswer.admin.title.edit'
+                fields:
+                    - { property: 'question', label: 'question_answer.question.label' }
+                    - { property: 'answer', label: 'question_answer.answer.label' }
+        Api:
+            controller: AppBundle\Controller\ApiController
+            class: AppBundle\Entity\Api
+            label: 'admin.api.label'
+            list:
+                fields:
+                    - { property: 'id', type: 'integer' }
+                    - { property: 'name', type: 'text', label: 'api.name.label' }
+                    - { property: 'enabled', label: 'api.enabled.label' }
+                    - { property: 'description', type: 'text', label: 'api.description.label' }
+                title: 'admin.api.label'
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+            form:
+                title: 'api.admin.title.edit'
                 fields:
                     - { property: 'name', type: 'text', label: 'api.name.label' }
                     - { property: 'enabled', label: 'api.enabled.label' }
                     - { property: 'description', type: 'text', label: 'api.description.label' }
         ApiLog:
             class: AppBundle\Entity\ApiLog
-            label: 'API Logs'
+            label: 'admin.apiLogs.label'
             disabled_actions: ['edit', 'view', 'new']
             list:
                 fields:
@@ -138,54 +156,76 @@ easy_admin:
                     - { property: 'api', label: 'Api' }
                     - { property: 'date', label: 'api_log.date.label' }
                     - { property: 'code', type: 'text', label: 'api_log.code.label' }
-                title: 'api.admin.title'
+                title: 'admin.apiLogs.label'
                 actions:
                     - { name: 'new', label: 'btn.new' }
                     - { name: 'search', label: 'btn.search' }
                     - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
                     - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-                title: 'Edit Api log'
                 fields:
                     - { property: 'api', type: 'text', label: 'Api' }
                     - { property: 'date', label: 'api.enabled.label' }
                     - { property: 'code', type: 'text', label: 'api_log.code.label' }
         GreetingText:
             class: AppBundle\Entity\Facebook\GreetingText
-            label: 'Greeting Texts'
+            label: 'admin.greetingText.label'
+            list:
+                fields:
+                    - { property: 'id', label: 'ID' }
+                    - { property: 'text', label: 'greetingText.text.label' }
+                    - { property: 'enabled', label: 'greetingText.enabled.label' }
+                    - { property: 'locale', label: 'greetingText.locale.label' }
+                title: 'admin.greetingText.label'
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+            form:
+                title: 'greetingText.admin.title.edit'
+                fields:
+                    - { property: 'text', label: 'greetingText.text.label' }
+                    - { property: 'enabled', label: 'greetingText.enabled.label' }
+                    - { property: 'locale', label: 'greetingText.locale.label' }
             disabled_actions: ['view']
         MenuItem:
             controller: AppBundle\Controller\MenuItemController
             class: AppBundle\Entity\Facebook\MenuItem
-            label: 'Bot Menu'
+            label: 'admin.menuItem.label'
             disabled_actions: ['view']
             list:
                 title: 'Menu Items'
                 sort: 'id'
                 fields:
-                    - 'id'
-                    - 'title'
-                    - 'type'
-                    - 'url'
-                    - 'payload'
-                    - 'enabled'
+                    - { property: 'id', type: 'integer', label: 'ID' }
+                    - { property: 'title', label: 'menu_item.title.label' }
+                    - { property: 'type', label: 'menu_item.type.label' }
+                    - { property: 'url', label: 'menu_item.url.label' }
+                    - { property: 'payload', label: 'menu_item.payload.label' }
+                    - { property: 'enabled', label: 'menu_item.enabled.label' }
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
                 fields:
-                    - 'title'
-                    - 'type'
-                    - 'url'
+                    - { property: 'title', label: 'menu_item.title.label' }
+                    - { property: 'type', label: 'menu_item.type.label' }
+                    - { property: 'url', label: 'menu_item.url.label' }
         Wit:
             class: AppBundle\Entity\Wit\WitResponse
-            label: 'Messages'
+            label: 'wit.messageAnalysis.label'
             disabled_actions: ['edit', 'view', 'new', 'delete']
             list:
-                title: 'Message Analysis'
+                title: 'wit.messageAnalysis.label'
                 sort: 'createdAt'
                 fields:
-                    - 'createdAt'
+                    - { property: 'createdAt', label: 'calendar.createdAt.label' }
                     - { property: 'msgid', type: 'text', label: 'ID' }
-                    - { property: 'text', type: 'text', label: 'Text' }
-                    - { property: 'entities', label: 'Intents', template: 'tag_entities.html.twig' }
+                    - { property: 'text', type: 'text', label: 'wit.text.label' }
+                    - { property: 'entities', label: 'wit.entities.label', template: 'tag_entities.html.twig' }
         School:
             class: AppBundle\Entity\School\School
             label: 'admin.school.label'
@@ -233,14 +273,15 @@ easy_admin:
             label: 'admin.calendar.label'
             disabled_actions: ['edit', 'view', 'new']
             list:
+                title: 'admin.calendar.label'
                 sort: 'id'
                 fields:
                     - { property: 'id', type: 'text', label: 'calendar.id.label'}
-                    - { property: 'createdAt', type: 'text', label: 'calendar.createdAt.label'}
+                    - { property: 'createdAt', type: 'date', label: 'calendar.createdAt.label'}
                     - { property: 'name', type: 'text', label: 'calendar.name.label'}
                     - { property: 'filename', type: 'text', label: 'calendar.filename.label'}
-                    - { property: 'updatedAt', type: 'text', label: 'calendar.updatedAt.label'}
-                    - { property: 'processed', type: 'text', label: 'calendar.processed.label'}
+                    - { property: 'updatedAt', type: 'date', label: 'calendar.updatedAt.label'}
+                    - { property: 'processed', type: 'boolean', label: 'calendar.processed.label'}
             form:
                 fields:
                     - { property: 'name', type: 'text', label: 'calendar.name.label'}
@@ -249,14 +290,14 @@ easy_admin:
         Event:
             class: AppBundle\Entity\Calendar\Event
             label: 'admin.event.label'
-            disabled_actions: ['edit', 'view', 'new']
             list:
+                title: 'admin.event.label'
                 fields:
                     - { property: 'id', type: 'text' }
-                    - { property: 'calendar', type: 'text', label: 'event.calendar.label ' }
-                    - { property: 'uid', type: 'text', label: 'event.uid.label ' }
-                    - { property: 'startAt', type: 'date', label: 'event.startAt.label ' }
-                    - { property: 'endAt', type: 'date', label: 'event.endAt.label ' }
+                    - { property: 'calendar', type: 'text', label: 'event.calendar.label' }
+                    - { property: 'uid', type: 'text', label: 'event.uid.label' }
+                    - { property: 'startAt', type: 'date', label: 'event.startAt.label' }
+                    - { property: 'endAt', type: 'date', label: 'event.endAt.label' }
                     - { property: 'stringduration', type: 'text', label: 'event.duration.label' }
                     - { property: 'summary', type: 'text', label: 'event.summary.label' }
         StudentGroup:
@@ -270,7 +311,7 @@ easy_admin:
                     - { property: 'schoolYear', type: 'text', label: 'student_group.school_year.label' }
                     - { property: 'promotion', label: 'student_group.promotion.label' }
                     - { property: 'school', label: 'student_group.school.label' }
-                    - { property: 'agenda', label: 'student_group.agenda.label' }
+                    - { property: 'calendar', label: 'student_group.calendar.label' }
                 title: 'student_group.admin.title.list'
                 actions:
                     - { name: 'new', label: 'btn.new' }
@@ -284,7 +325,7 @@ easy_admin:
                     - { property: 'schoolYear', type: 'text', label: 'student_group.school_year.label' }
                     - { property: 'promotion', label: 'student_group.promotion.label', type_options: {'required': 'true'} }
                     - { property: 'school', label: 'student_group.school.label', type_options: {'required': 'true'} }
-                    - { property: 'agenda', label: 'student_group.agenda.label' }
+                    - { property: 'calendar', label: 'student_group.calendar.label' }
         User:
             class: AppBundle\Entity\User
             label: 'admin.user.label'
@@ -293,7 +334,7 @@ easy_admin:
                     - { property: 'username', type: 'text', label: 'user.username.label' }
                     - { property: 'facebookId', type: 'text', label: 'user.idFacebook.label' }
                     - { property: 'email', type: 'email', label: 'user.email.label'}
-                    - { property: 'last_login', label: 'user.last_login.label' }
+                    - { property: 'last_login', type: 'date', label: 'user.last_login.label' }
                     - { property: 'school', label: 'user.school.label' }
                     - { property: 'studentGroup', label: 'user.student_group.label' }
                 title: 'user.admin.title.list'

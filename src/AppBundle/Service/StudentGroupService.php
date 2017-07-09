@@ -7,12 +7,11 @@ namespace AppBundle\Service;
 
 
 use AppBundle\Entity\Facebook\QuickReply;
-use AppBundle\Repository\SchoolRepository;
+use AppBundle\Repository\StudentGroupRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityRepository;
 
 /**
- * Class SchoolService
+ * Class StudentGroupService
  *
  * @author Antoine Cusset <a.cusset@gmail.com>
  * @link https://github.com/acusset
@@ -20,34 +19,35 @@ use Doctrine\ORM\EntityRepository;
  * @license
  * @package AppBundle\Service
  */
-class SchoolService
+class StudentGroupService
 {
     /**
-     * @var SchoolRepository $repository
+     * @var StudentGroupRepository $repository
      */
     private $repository;
 
     /**
      * SchoolService constructor.
-     * @param SchoolRepository $schoolRepository
+     * @param StudentGroupRepository $schoolRepository
      */
-    public function __construct(SchoolRepository $schoolRepository)
+    public function __construct(StudentGroupRepository $schoolRepository)
     {
         $this->repository = $schoolRepository;
     }
 
     /**
+     * @param $schoolId
      * @return ArrayCollection
      */
-    public function getQuickRepliesForSchools(): ArrayCollection
+    public function getQuickRepliesForGroups($schoolId): ArrayCollection
     {
-        $schools = $this->repository->findAll();
+        $groups = $this->repository->findBy(['$school' => $schoolId]);
         $replies = new ArrayCollection();
 
-        if ($schools && count($schools) > 0) {
+        if ($groups && count($groups) > 0) {
 
-            foreach ($schools as $school) {
-                $replies->add(QuickReply::createFromSchool($school));
+            foreach ($groups as $group) {
+                $replies->add(QuickReply::createFromStudentGroup($group));
             }
 
             return $replies;

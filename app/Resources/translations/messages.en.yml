@@ -3,6 +3,13 @@ admin.school.label: School
 admin.promotion.label: Promotion
 admin.studentGroup.label: Student Group
 admin.user.label: User
+admin.calendar.label: Calendar
+api.admin.title.edit: Edit API
+admin.questionAnswer.label: Question / Answer
+admin.api.label: List API
+admin.apiLogs.label: History API
+admin.greetingText.label: Home message
+admin.menuItem.label: Bot menu
 api.name.label: Nom de l'api
 api.enabled.label: Activé
 api.description.label: Description
@@ -26,7 +33,7 @@ student_group.name.label: Name
 student_group.school_year.label: School year
 student_group.promotion.label: Promotion
 student_group.school.label: School
-student_group.agenda.label: Planning
+student_group.calendar.label: Planning
 student_group.admin.title.list: Liste of classes
 student_group.admin.title.edit: Edit class
 user.username.label: Username
@@ -95,7 +102,6 @@ event.startAt.label: Start At
 event.endAt.label: End At
 event.duration.label: Duration
 event.summary.label: Summary
-admin.calendar.label: Calendar
 calendar.id.label: ID
 calendar.createdAt.label: Created At
 calendar.name.label: Name
@@ -104,3 +110,17 @@ calendar.updatedAt.label: Updated At
 calendar.processed.label: Processed
 calendar.group.label: Student Group
 calendar.file.label: File
+menu_item.title.label: Title
+menu_item.type.label: Type
+menu_item.url.label: Url
+menu_item.payload.label: Payload
+menu_item.enabled.label: Enable
+wit.text.label: Text
+wit.entities.label: Entitie
+question_answer.question.label: Question
+question_answer.answer.label: Answer
+greetingText.text.label: Text
+greetingText.enabled.label: Enable
+greetingText.locale.label: Locale
+greetingText.admin.title.edit: Edit home message
+wit.messageAnalysis.label: Analysis message
