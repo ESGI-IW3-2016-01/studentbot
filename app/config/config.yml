@@ -294,10 +294,10 @@ easy_admin:
                 title: 'admin.event.label'
                 fields:
                     - { property: 'id', type: 'text' }
-                    - { property: 'calendar', type: 'text', label: 'event.calendar.label ' }
-                    - { property: 'uid', type: 'text', label: 'event.uid.label ' }
-                    - { property: 'startAt', type: 'date', label: 'event.startAt.label ' }
-                    - { property: 'endAt', type: 'date', label: 'event.endAt.label ' }
+                    - { property: 'calendar', type: 'text', label: 'event.calendar.label' }
+                    - { property: 'uid', type: 'text', label: 'event.uid.label' }
+                    - { property: 'startAt', type: 'date', label: 'event.startAt.label' }
+                    - { property: 'endAt', type: 'date', label: 'event.endAt.label' }
                     - { property: 'stringduration', type: 'text', label: 'event.duration.label' }
                     - { property: 'summary', type: 'text', label: 'event.summary.label' }
         StudentGroup:
