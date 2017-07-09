@@ -80,6 +80,7 @@ class DefaultController extends Controller
         $this->apiService = $this->container->get('app.api_service');
         $this->messageSenderService = $this->container->get('app.message_sender');
 
+        $this->logger = $this->get('logger');
         $this->logger->error($request->getContent(), ['sender_faceboo_id' => null]);
 
         /** @var Message $message */
