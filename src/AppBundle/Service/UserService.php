@@ -72,7 +72,7 @@ class UserService
             $username = $userData['first_name'] . ' ' . $userData['last_name'];
 
             $user = $this->repository
-                ->findOneBy(['username_canonical' => $senderId]);
+                ->findOneBy(['usernameCanonical' => $senderId]);
 
             if (!$user) {
                 $user = new User();
