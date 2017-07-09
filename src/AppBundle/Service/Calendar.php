@@ -34,7 +34,7 @@ class Calendar
         $student_group = $studentGroupRepository->find($user->getGroupId());
         $calendar = $calendarRepository->find($student_group->getCalendar());
 
-        $next_class = $eventRepository->findNextClass($calendar->getId());
+        $next_class = $eventRepository->findNextClass($calendar->getId())[0];
 
         return $next_class;
         

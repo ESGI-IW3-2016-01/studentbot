@@ -12,24 +12,44 @@ class EventRepository extends EntityRepository
      */
     public function findNextClass($calendarId)
     {
-        return $this->getEntityManager()->getRepository('AppBundle\Entity\Calendar\Event')->findOneBy(
-            array('calendar' => $calendarId, 'startAt' => new \DateTime('-5 second'))
-        );
+        $qb = $this->createQueryBuilder('e');
+        $qb->where('e.calendar = :calendarId')
+            ->andWhere('e.startAt > :startAt')
+            ->setParameter('calendarId', $calendarId)
+            ->setParameter('startAt', new \DateTime('-5 second'));
+
+        return $qb->getQuery()->getResult();
     }
 
     public function findDayClass($calendarId)
     {
-        $timestamp = strtotime('today midnight');
-        return $this->getEntityManager()->getRepository('AppBundle\Entity\Calendar\Event')->findBy(
-            array('calendar' => $calendarId, 'startAt' => new \DateTime('-5 second'), 'endAt' <= date("Y-m-d H:i:s", time() + $timestamp))
-        );
+        $today_startdatetime = \DateTime::createFromFormat( "Y-m-d H:i:s", date("Y-m-d 00:00:01") );
+        $today_enddatetime = \DateTime::createFromFormat( "Y-m-d H:i:s", date("Y-m-d 23:59:59") );
+
+        $qb = $this->createQueryBuilder('e');
+        $qb->where('e.calendar = :calendarId')
+            ->andWhere('e.startAt > :startAt')
+            ->andWhere('e.endAt < :endAt')
+            ->setParameter('calendarId', $calendarId)
+            ->setParameter('startAt', $today_startdatetime)
+            ->setParameter('endAt', $today_enddatetime);
+
+        return $qb->getQuery()->getResult();
     }
 
     public function findWeekClass($calendarId)
     {
-        $timestamp = strtotime('today sunday');
-        return $this->getEntityManager()->getRepository('AppBundle\Entity\Calendar\Event')->findBy(
-            array('calendar' => $calendarId, 'startAt' => new \DateTime('-5 second'), 'endAt' <= date("Y-m-d H:i:s", time() + $timestamp))
-        );
+        $today_startdatetime = \DateTime::createFromFormat( "Y-m-d H:i:s", date("Y-m-d 00:00:01") );
+        $today_enddatetime = strtotime('next sunday');
+
+        $qb = $this->createQueryBuilder('e');
+        $qb->where('e.calendar = :calendarId')
+            ->andWhere('e.startAt > :startAt')
+            ->andWhere('e.endAt < :endAt')
+            ->setParameter('calendarId', $calendarId)
+            ->setParameter('startAt', $today_startdatetime)
+            ->setParameter('endAt', date("Y-m-d H:i:s", $today_enddatetime));
+
+        return $qb->getQuery()->getResult();
     }
 }
