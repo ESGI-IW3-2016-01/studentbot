@@ -3,13 +3,11 @@
 namespace AppBundle\Repository\Calendar;
 
 use Doctrine\ORM\EntityRepository;
+use DateTime, DateInterval;
 
 class EventRepository extends EntityRepository
 {
 
-    /**
-     *
-     */
     public function findNextClass($calendarId)
     {
         $qb = $this->createQueryBuilder('e');
@@ -23,16 +21,16 @@ class EventRepository extends EntityRepository
 
     public function findDayClass($calendarId)
     {
-        $today_startdatetime = \DateTime::createFromFormat( "Y-m-d H:i:s", date("Y-m-d 00:00:01") );
-        $today_enddatetime = \DateTime::createFromFormat( "Y-m-d H:i:s", date("Y-m-d 23:59:59") );
+        $date = DateTime::createFromFormat('Y-m-d H:i:s','2016-11-30 00:00:00');
 
         $qb = $this->createQueryBuilder('e');
         $qb->where('e.calendar = :calendarId')
-            ->andWhere('e.startAt > :startAt')
+            ->andWhere('e.startAt >= :startAt')
             ->andWhere('e.endAt < :endAt')
+            ->orderBy('e.startAt', 'ASC')
             ->setParameter('calendarId', $calendarId)
-            ->setParameter('startAt', $today_startdatetime)
-            ->setParameter('endAt', $today_enddatetime);
+            ->setParameter('startAt', $date->format('Y-m-d'))
+            ->setParameter('endAt', $date->add(new DateInterval('P1D'))->format('Y-m-d'));
 
         return $qb->getQuery()->getResult();
     }
