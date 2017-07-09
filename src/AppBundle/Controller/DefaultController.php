@@ -4,9 +4,15 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Facebook\Attachment;
 use AppBundle\Entity\Facebook\SendMessage;
+use AppBundle\Entity\School\School;
+use AppBundle\Entity\User;
 use AppBundle\Service\ApiService;
 use AppBundle\Service\MessageSender;
+use AppBundle\Service\SchoolService;
+use AppBundle\Service\StudentGroupService;
 use AppBundle\Service\WitService;
+use Doctrine\ORM\EntityManager;
+use FOS\UserBundle\Model\Group;
 use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,13 +41,26 @@ class DefaultController extends Controller
     private $apiService;
 
     /**
+     * @var MessageSender $messageSenderService
+     */
+    private $messageSenderService;
+
+    /**
+     * @var EntityManager $this ->em
+     */
+    private $em;
+
+    /**
+     * @var Logger $logger
+     */
+    private $logger;
+
+    /**
      * @Route("/", name="homepage")
-     * @param Request $request
      * @return Response
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        // replace this example code with whatever you need
         return $this->render('index/index.html.twig', [
             'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
         ]);
@@ -54,52 +73,76 @@ class DefaultController extends Controller
      */
     public function webhookAction(Request $request)
     {
-        $this->apiService = $this->container->get('app.api_service');
         if ($request->query->has('hub_challenge')) {
             return new Response($request->query->get('hub_challenge'));
         }
 
-        /** @var Logger $logger */
-        $logger = $this->get('logger');
-        $logger->error($request->getContent(), ['sender_faceboo_id' => null]);
+        $this->apiService = $this->container->get('app.api_service');
+        $this->messageSenderService = $this->container->get('app.message_sender');
+
+        $this->logger->error($request->getContent(), ['sender_faceboo_id' => null]);
 
         /** @var Message $message */
         $message = $this->createMessageRecievedFromBody($request->getContent());
 
-        /** @var MessageSender $messageSenderService */
-        $messageSenderService = $this->container->get('app.message_sender');
-        $messageSenderService->sendTypingOn($message->getSender());
+        $this->messageSenderService->sendTypingOn($message->getSender());
 
         if ($message->hasPayload()) {
             switch ($message->getPayload()) {
-                case "BUTTON_HELP":
-                    $messageSenderService->sendShortText("Tu as besoin d'aide ?", $message->getSender());
+                case 'BUTTON_HELP':
+                    $this->messageSenderService
+                        ->sendShortText("Tu as besoin d'aide ?", $message->getSender());
                     break;
-                case "BUTTON_RESET":
-                    $messageSenderService->sendShortText("Tu veux tout reset ?", $message->getSender());
+                case 'BUTTON_RESET':
+                    $this->messageSenderService
+                        ->sendShortText('Tu veux tout reset ?', $message->getSender());
                     break;
                 case strstr($message->getPayload(), 'SCHOOL'):
-                    $em = $this->getDoctrine()->getManager();
-                    $user = $em->getRepository('AppBundle:User')->findOneBy(['facebookId' => $message->getSender()]);
-                    $schoolId = (int) str_replace("SCHOOL_", "", $message->getPayload());
-                    $school = $em->getRepository('AppBundle:School')->findOneBy(['id' => $schoolId]);
+
+                    /** @var User $user */
+                    $user = $this->getFacebookUser($message->getSender());
+
+                    $schoolId = (int)str_replace('SCHOOL_', '', $message->getPayload());
+                    /** @var School $school */
+                    $school = $this->em
+                        ->getRepository('AppBundle:School')
+                        ->findOneBy(['id' => $schoolId]);
+
                     $user->setSchool($school);
-                    $em->persist($user);
-                    $em->flush();
-                    $messageSenderService->sendShortText("Ton école est enregistré", $message->getSender());
+                    $this->em->persist($user);
+                    $this->em->flush();
+
+                    $this->messageSenderService->sendShortText(
+                        'Ton école est enregistrée',
+                        $message->getSender()
+                    );
                     break;
                 case strstr($message->getPayload(), 'STUDENT_GROUP'):
-                    $em = $this->getDoctrine()->getManager();
-                    $user = $em->getRepository('AppBundle:User')->findOneBy(['facebookId' => $message->getSender()]);
-                    $groupId = (int) str_replace("STUDENT_GROUP_", "", $message->getPayload());
-                    $group = $em->getRepository('AppBundle:StudentGroup')->findOneBy(["id" => $groupId]);
-                    $user->setGroup($group);
-                    $em->persist($user);
-                    $em->flush();
-                    $messageSenderService->sendShortText("Ta classe est enregistré", $message->getSender());
+
+                    /** @var User $user */
+                    $user = $this->getFacebookUser($message->getSender());
+
+                    $groupId = (int)str_replace('STUDENT_GROUP_', '', $message->getPayload());
+                    /** @var Group $group */
+                    $group = $this->em
+                        ->getRepository('AppBundle:StudentGroup')
+                        ->findOneBy(['id' => $groupId]);
+
+                    $user->setGroupId($group);
+                    $this->em->persist($user);
+                    $this->em->flush();
+
+                    $this->messageSenderService->sendShortText(
+                        'Ta classe est enregistré',
+                        $message->getSender());
                     break;
             }
-        } elseif($message->hasText()) {
+        } elseif ($message->hasText()) {
+
+            /** @var SchoolService $schoolService */
+            $schoolService = $this->container->get('app.school_service');
+            /** @var StudentGroupService $studentGroupService */
+            $studentGroupService = $this->container->get('app.student_group_service');
 
             $question = $message->getText();
 
@@ -113,33 +156,41 @@ class DefaultController extends Controller
             if (!$res) {
                 $res = $this->choiceAPI($question, $message->getSender());
             }
-            
-            if ($res=="school") {
-                $schoolService = $this->container->get('app.school_service');
-                $messageSenderService->sendQuickReply($schoolService->getQuickRepliesForSchools(), "Choisi ton école", $message->getSender());
-            } elseif ($res=="class") {
-                $studentGroupService = $this->container->get('app.student_group_service');
-                $messageSenderService->sendQuickReply($studentGroupService->getQuickRepliesForGroups(), "Choisi ta classe", $message->getSender());
+
+            if ($res == 'school') {
+                $this->messageSenderService->sendQuickReply(
+                    $schoolService->getQuickRepliesForSchools(),
+                    'Choisi ton école',
+                    $message->getSender()
+                );
+            } elseif ($res == 'class') {
+                /** @var User $user */
+                $user = $this->getFacebookUser($message->getSender());
+                $this->messageSenderService->sendQuickReply(
+                    $studentGroupService->getQuickRepliesForGroups($user->getGroupId()->getId()),
+                    'Choisi ta classe',
+                    $message->getSender()
+                );
             }
 
             if (!is_array($res)) {
                 $res = [$res];
             }
             foreach ($res as $resMessage) {
-                $isMessageWithImage = explode("\xF0\x9F\x93\xB7",$resMessage);
+                $isMessageWithImage = explode('\xF0\x9F\x93\xB7', $resMessage);
                 if (count($isMessageWithImage) != 1) {
                     $responseMessage = new SendMessage($message->getSender(), $isMessageWithImage[0]);
-                    $messageSenderService->sendMessage($responseMessage);
+                    $this->messageSenderService->sendMessage($responseMessage);
 
                     $responseMessageWithImage = new SendMessage($message->getSender(), null, null, $isMessageWithImage[1]);
-                    $messageSenderService->sendMessage($responseMessageWithImage);
+                    $this->messageSenderService->sendMessage($responseMessageWithImage);
                 } else {
                     if ($this->image) {
                         $responseMessage = new SendMessage($message->getSender(), null, null, $resMessage);
                     } else {
                         $responseMessage = new SendMessage($message->getSender(), $resMessage);
                     }
-                    $messageSenderService->sendMessage($responseMessage);
+                    $this->messageSenderService->sendMessage($responseMessage);
                 }
             }
         }
@@ -204,14 +255,14 @@ class DefaultController extends Controller
         $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
 
         switch ($chaine) {
-            case "résultat football" :
+            case 'résultat football' :
             case strcmp("\xe2\x9a\xbd", $chaine) == 0 :
                 if ($this->apiService->getApi('FOOTBALL')) {
                     $res = $this->football();
                 }
                 break;
-            case "résultat basket" :
-            case "résultat nba" :
+            case 'résultat basket' :
+            case 'résultat nba' :
             case strcmp("\xf0\x9f\x8f\x80", $chaine) == 0 :
                 if ($this->apiService->getApi('BASKET')) {
                     $res = $this->basket();
@@ -232,24 +283,24 @@ class DefaultController extends Controller
                     $res = $this->youtube($chaine);
                 }
                 break;
-            case "yes or no ?" :
+            case 'yes or no ?':
                 if ($this->apiService->getApi('YESORNO')) {
                     $res = $this->yesOrNo();
                 }
                 $this->image = true;
                 break;
-            case "agenda":
-            case "calendar":
-            case "planning":
+            case 'agenda':
+            case 'calendar':
+            case 'planning':
                 $res = $this->calendar(null, $current_user);
                 break;
             case strstr($chaine, 'planning') :
             case strstr($chaine, 'agenda') :
                 $res = $this->calendar($chaine, $current_user);
                 break;
-            case strcmp("\xF0\x9F\x93\xB0",$chaine) == 0 :
+            case strcmp("\xF0\x9F\x93\xB0", $chaine) == 0 :
                 if ($this->apiService->getApi('NEWS')) {
-                    $res = $this->news($chaine);
+                    $res = $this->news();
                 }
                 $this->textAndImage = true;
                 break;
@@ -263,6 +314,7 @@ class DefaultController extends Controller
     /**
      * @Route("/public/choisir-locale/{locale}", name="choose_language")
      * @param Request $request
+     * @param null $locale
      * @return Response
      */
     public function chooseLanguageAction(Request $request, $locale = null)
@@ -284,5 +336,12 @@ class DefaultController extends Controller
         }
 
         return $this->redirect($url);
+    }
+
+    private function getFacebookUser($facebookId)
+    {
+        return $this->em
+            ->getRepository('AppBundle:User')
+            ->findOneBy(['facebookId' => $facebookId]);
     }
 }

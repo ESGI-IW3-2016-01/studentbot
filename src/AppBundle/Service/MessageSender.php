@@ -4,6 +4,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Facebook\QuickReply;
 use AppBundle\Entity\Facebook\QuickReplyResponse;
+use Doctrine\Common\Collections\ArrayCollection;
 use GuzzleHttp\Client;
 use AppBundle\Entity\Facebook\SendMessage;
 
@@ -100,7 +101,7 @@ class MessageSender
     }
 
     /**
-     * @param $quickReplies array of QuickReply
+     * @param $quickReplies ArrayCollection of QuickReply
      * @param $text
      * @param $recipient
      */
