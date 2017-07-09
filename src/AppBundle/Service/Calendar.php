@@ -31,7 +31,10 @@ class Calendar
         $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
 
         $user = $userRepository->findOneBy(['facebookId' => $current_user]);
-        $student_group = $studentGroupRepository->find($user->getGroupId());
+        if (is_null($user)) {
+            return "Vous n'êtes dans aucune classe";
+        }
+        $student_group = $studentGroupRepository->find($user->getGroupId()->getId());
         if (is_null($student_group)){
             return "Vous n'êtes dans aucune classe";
         }
@@ -55,7 +58,10 @@ class Calendar
         $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
 
         $user = $userRepository->findOneBy(['facebookId' => $current_user]);
-        $student_group = $studentGroupRepository->find($user->getGroupId());
+        if (is_null($user)) {
+            return "Vous n'êtes dans aucune classe";
+        }
+        $student_group = $studentGroupRepository->find($user->getGroupId()->getId());
         if (is_null($student_group)){
             return "Vous n'êtes dans aucune classe";
         }
