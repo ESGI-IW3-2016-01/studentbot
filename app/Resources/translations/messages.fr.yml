@@ -30,7 +30,7 @@ student_group.agenda.label: Agenda
 student_group.admin.title.list: Liste des classes
 student_group.admin.title.edit: Éditer une classe
 user.username.label: "Nom d'utilisateur"
-user.idFacebook.label: IdFacebook
+user.idFacebook.label: ID Facebook
 user.email.label: Email
 user.last_login.label: Dernière connexion
 user.locked.label: Bloqué
@@ -88,3 +88,19 @@ flash_msg_edit_profil_error: Une erreur est survenue lors de l'enregistrement
 flash_msg_sign_in_success: Vous êtes bien authentifié
 flash_msg_sign_in_error: Un problème est survenue lors de la connexion
 not_specified: Non renseigné
+admin.event.label: Cours
+event.calendar.label: Planning
+event.uid.label: ID
+event.startAt.label: Début
+event.endAt.label: Fin
+event.duration.label: Durée
+event.summary.label: Résumé
+admin.calendar.label: Planning
+calendar.id.label: ID
+calendar.createdAt.label: Date création
+calendar.name.label: Nom
+calendar.filename.label: Fichier
+calendar.updatedAt.label: Date MàJ
+calendar.processed.label: Importé
+calendar.group.label: Groupe
+calendar.file.label: Fichier

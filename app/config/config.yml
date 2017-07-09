@@ -93,6 +93,8 @@ easy_admin:
             - { entity: 'School' }
             - { entity: 'Promotion' }
             - { entity: 'StudentGroup' }
+            - { entity: 'Calendar' }
+            - { entity: 'Event' }
             - { entity: 'User'}
             - { label: 'Log out', route: 'fos_user_security_logout' }
         form_theme: 'horizontal'
@@ -228,21 +230,35 @@ easy_admin:
         Calendar:
             controller: AppBundle\Controller\CalendarController
             class: AppBundle\Entity\Calendar\Calendar
-            lavel: 'Calendar'
+            label: 'admin.calendar.label'
+            disabled_actions: ['edit', 'view', 'new']
             list:
-                sort: 'createdAt'
+                sort: 'id'
                 fields:
-                    - 'id'
-                    - 'name'
-                    - 'filename'
-                    - 'createdAt'
-                    - 'updatedAt'
-                    - { property: 'processed', type: 'boolean' }
+                    - { property: 'id', type: 'text', label: 'calendar.id.label'}
+                    - { property: 'createdAt', type: 'text', label: 'calendar.createdAt.label'}
+                    - { property: 'name', type: 'text', label: 'calendar.name.label'}
+                    - { property: 'filename', type: 'text', label: 'calendar.filename.label'}
+                    - { property: 'updatedAt', type: 'text', label: 'calendar.updatedAt.label'}
+                    - { property: 'processed', type: 'text', label: 'calendar.processed.label'}
             form:
                 fields:
-                    - 'name'
-                    - 'group'
-                    - { property: 'file', type: 'file' }
+                    - { property: 'name', type: 'text', label: 'calendar.name.label'}
+                    - { property: 'group', type: 'text', label: 'calendar.group.label' }
+                    - { property: 'file', type: 'file', label: 'calendar.file.label' }
+        Event:
+            class: AppBundle\Entity\Calendar\Event
+            label: 'admin.event.label'
+            disabled_actions: ['edit', 'view', 'new']
+            list:
+                fields:
+                    - { property: 'id', type: 'text' }
+                    - { property: 'calendar', type: 'text', label: 'event.calendar.label ' }
+                    - { property: 'uid', type: 'text', label: 'event.uid.label ' }
+                    - { property: 'startAt', type: 'date', label: 'event.startAt.label ' }
+                    - { property: 'endAt', type: 'date', label: 'event.endAt.label ' }
+                    - { property: 'stringduration', type: 'text', label: 'event.duration.label' }
+                    - { property: 'summary', type: 'text', label: 'event.summary.label' }
         StudentGroup:
             class: AppBundle\Entity\School\StudentGroup
             label: 'admin.studentGroup.label'

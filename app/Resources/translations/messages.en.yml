@@ -88,3 +88,19 @@ flash_msg_edit_profil_error: An error occurred while recording
 flash_msg_sign_in_success: You are well authenticated
 flash_msg_sign_in_error: A problem occurred during the connection
 not_specified: Not specified
+admin.event.label: Courses
+event.calendar.label: Calendar
+event.uid.label: ID
+event.startAt.label: Start At
+event.endAt.label: End At
+event.duration.label: Duration
+event.summary.label: Summary
+admin.calendar.label: Calendar
+calendar.id.label: ID
+calendar.createdAt.label: Created At
+calendar.name.label: Name
+calendar.filename.label: Filename
+calendar.updatedAt.label: Updated At
+calendar.processed.label: Processed
+calendar.group.label: Student Group
+calendar.file.label: File
