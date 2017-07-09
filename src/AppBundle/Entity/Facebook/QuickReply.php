@@ -144,7 +144,7 @@ class QuickReply
      */
     public static function createFromSchool(School $school)
     {
-        $payload = 'SCHOOL_' . strtoupper($school->getName());
+        $payload = 'SCHOOL_' . $school->getId();
         return new static($school->getName(), 'text', $payload);
     }
 
