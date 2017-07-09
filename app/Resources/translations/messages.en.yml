@@ -104,3 +104,15 @@ calendar.updatedAt.label: Updated At
 calendar.processed.label: Processed
 calendar.group.label: Student Group
 calendar.file.label: File
+admin.questionAnswer.label: Question / Answer
+admin.api.label: List API
+admin.apiLogs.label: History API
+admin.greetingText.label: Home message
+admin.menuItem.label: Bot menu
+menu_item.title.label: Title
+menu_item.type.label: Type
+menu_item.url.label: Url
+menu_item.payload.label: Payload
+menu_item.enabled.label: Enable
+wit.text.label: Text
+wit.entities.label: Entitie

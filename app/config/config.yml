@@ -84,7 +84,8 @@ easy_admin:
     site_name: "<div class='home-logo'>StudentBot</div>"
     design:
         menu:
-            - { label: 'Homepage', route: 'homepage' }
+            - { label: 'Homepage', route: 'homepage', label: 'top_nav_home' }
+            - { entity: 'QuestionAnswer' }
             - { entity: 'Api' }
             - { entity: 'ApiLog' }
             - { entity: 'GreetingText' }
@@ -96,7 +97,7 @@ easy_admin:
             - { entity: 'Calendar' }
             - { entity: 'Event' }
             - { entity: 'User'}
-            - { label: 'Log out', route: 'fos_user_security_logout' }
+            - { label: 'Log out', route: 'fos_user_security_logout', label: 'logout'}
         form_theme: 'horizontal'
         assets:
             css:
@@ -105,11 +106,11 @@ easy_admin:
     entities:
         QuestionAnswer:
             class: AppBundle\Entity\QuestionAnswer
-            label: 'Custom Answers'
+            label: 'admin.questionAnswer.label'
         Api:
             controller: AppBundle\Controller\ApiController
             class: AppBundle\Entity\Api
-            label: "API's"
+            label: 'admin.api.label'
             list:
                 fields:
                     - { property: 'id', type: 'integer' }
@@ -130,7 +131,7 @@ easy_admin:
                     - { property: 'description', type: 'text', label: 'api.description.label' }
         ApiLog:
             class: AppBundle\Entity\ApiLog
-            label: 'API Logs'
+            label: 'admin.apiLogs.label'
             disabled_actions: ['edit', 'view', 'new']
             list:
                 fields:
@@ -152,40 +153,40 @@ easy_admin:
                     - { property: 'code', type: 'text', label: 'api_log.code.label' }
         GreetingText:
             class: AppBundle\Entity\Facebook\GreetingText
-            label: 'Greeting Texts'
+            label: 'admin.greetingText.label'
             disabled_actions: ['view']
         MenuItem:
             controller: AppBundle\Controller\MenuItemController
             class: AppBundle\Entity\Facebook\MenuItem
-            label: 'Bot Menu'
+            label: 'admin.menuItem.label'
             disabled_actions: ['view']
             list:
                 title: 'Menu Items'
                 sort: 'id'
                 fields:
-                    - 'id'
-                    - 'title'
-                    - 'type'
-                    - 'url'
-                    - 'payload'
-                    - 'enabled'
+                    - { property: 'id', type: 'integer', label: 'ID' }
+                    - { property: 'title', label: 'menu_item.title.label' }
+                    - { property: 'type', label: 'menu_item.type.label' }
+                    - { property: 'url', label: 'menu_item.url.label' }
+                    - { property: 'payload', label: 'menu_item.payload.label' }
+                    - { property: 'enabled', label: 'menu_item.enabled.label' }
             form:
                 fields:
-                    - 'title'
-                    - 'type'
-                    - 'url'
+                    - { property: 'title', label: 'menu_item.title.label' }
+                    - { property: 'type', label: 'menu_item.type.label' }
+                    - { property: 'url', label: 'menu_item.url.label' }
         Wit:
             class: AppBundle\Entity\Wit\WitResponse
-            label: 'Messages'
+            label: 'Messages WIT'
             disabled_actions: ['edit', 'view', 'new', 'delete']
             list:
                 title: 'Message Analysis'
                 sort: 'createdAt'
                 fields:
-                    - 'createdAt'
+                    - { property: 'createdAt', label: 'calendar.createdAt.label' }
                     - { property: 'msgid', type: 'text', label: 'ID' }
-                    - { property: 'text', type: 'text', label: 'Text' }
-                    - { property: 'entities', label: 'Intents', template: 'tag_entities.html.twig' }
+                    - { property: 'text', type: 'text', label: 'wit.text.label' }
+                    - { property: 'entities', label: 'wit.entities.label', template: 'tag_entities.html.twig' }
         School:
             class: AppBundle\Entity\School\School
             label: 'admin.school.label'
