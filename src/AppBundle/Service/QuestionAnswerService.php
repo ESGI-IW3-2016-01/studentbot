@@ -23,4 +23,13 @@ class QuestionAnswerService
 
         return $questionAnswer;
     }
+
+    public function getAll() {
+        $questionAnswerRepository = $this->manager->getRepository('AppBundle:QuestionAnswer');
+        $questionAnswer = $questionAnswerRepository->findAll();
+
+        $this->manager->flush();
+
+        return $questionAnswer;
+    }
 }

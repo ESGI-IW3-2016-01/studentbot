@@ -25,6 +25,7 @@ class DefaultController extends Controller
     use TraitYesOrNo;
     use TraitNews;
     use TraitCalendar;
+    use TraitSummaryFeature;
 
     private $image;
     private $textAndImage;
@@ -253,8 +254,12 @@ class DefaultController extends Controller
                 }
                 $this->textAndImage = true;
                 break;
+            case "summary" :
+                $res = $this->summaryFeature();
+
+                break;
             default :
-                $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
+                $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95 \x0D\x0A\"";
                 break;
         }
         return $res;
