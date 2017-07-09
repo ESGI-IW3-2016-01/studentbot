@@ -16,6 +16,10 @@ trait TraitCalendar
                 $res = $calendar->getDayClass($current_user);
             } elseif (strpos($chaine, 'semaine')) {
                 $res = $calendar->getWeekClass($current_user);
+            } elseif (strpos($chaine, 'école')) {
+                $res = 'school';
+            } elseif (strpos($chaine, 'classe')) {
+                $res = 'class';
             } else {
                 $str = 'Désolé je n\'ai pas compris votre demande. 
                         Ecrivez "planning" pour plus d\'aide ';
@@ -25,8 +29,8 @@ trait TraitCalendar
         } else {
             $str = 'Utilisation de l\'agenda:
                     Ajouté un planning : importer directement un fichier sous format ical.
-                    Renseigner son école :
-                    Renseigner sa classe : 
+                    Renseigner son école : écrivez "Agenda école"
+                    Renseigner sa classe : écrivez "Agenda classe"
                     
                     Pour connaitre son agenda :
                      - le prochain cours : écrivez "Agenda prochain"
