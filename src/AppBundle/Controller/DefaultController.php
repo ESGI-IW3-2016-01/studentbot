@@ -115,7 +115,7 @@ class DefaultController extends Controller
                     $schoolId = (int)str_replace('SCHOOL_', '', $message->getPayload());
                     /** @var School $school */
                     $school = $this->em
-                        ->getRepository('AppBundle:School')
+                        ->getRepository('AppBundle:School\School')
                         ->findOneBy(['id' => $schoolId]);
 
                     $user->setSchool($school);
@@ -135,7 +135,7 @@ class DefaultController extends Controller
                     $groupId = (int)str_replace('STUDENT_GROUP_', '', $message->getPayload());
                     /** @var Group $group */
                     $group = $this->em
-                        ->getRepository('AppBundle:StudentGroup')
+                        ->getRepository('AppBundle:School\StudentGroup')
                         ->findOneBy(['id' => $groupId]);
 
                     $user->setGroup($group);
@@ -234,6 +234,18 @@ class DefaultController extends Controller
                 null
             );
             $messageObject->setPayload($message['messaging'][0]['postback']['payload']);
+        } elseif (isset($message['messaging'][0]['message']['quick_reply'])) {
+            // Quick Reply Payload
+            $messageObject = new Message(
+                $message['id'],
+                $message['messaging'][0]['sender']['id'],
+                $message['messaging'][0]['recipient']['id'],
+                null,
+                $message['time'],
+                $message['messaging'][0]['message']['mid'],
+                $message['messaging'][0]['message']['seq']
+            );
+            $messageObject->setPayload($message['messaging'][0]['message']['quick_reply']['payload']);
         } elseif (isset($message['messaging'][0]['message']['attachments'])) {
             // Image Message
             $messageObject = new Message(
