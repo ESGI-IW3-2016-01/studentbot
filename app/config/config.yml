@@ -236,11 +236,11 @@ easy_admin:
                 sort: 'id'
                 fields:
                     - { property: 'id', type: 'text', label: 'calendar.id.label'}
-                    - { property: 'createdAt', type: 'text', label: 'calendar.createdAt.label'}
+                    - { property: 'createdAt', type: 'date', label: 'calendar.createdAt.label'}
                     - { property: 'name', type: 'text', label: 'calendar.name.label'}
                     - { property: 'filename', type: 'text', label: 'calendar.filename.label'}
-                    - { property: 'updatedAt', type: 'text', label: 'calendar.updatedAt.label'}
-                    - { property: 'processed', type: 'text', label: 'calendar.processed.label'}
+                    - { property: 'updatedAt', type: 'date', label: 'calendar.updatedAt.label'}
+                    - { property: 'processed', type: 'bool', label: 'calendar.processed.label'}
             form:
                 fields:
                     - { property: 'name', type: 'text', label: 'calendar.name.label'}
@@ -249,7 +249,6 @@ easy_admin:
         Event:
             class: AppBundle\Entity\Calendar\Event
             label: 'admin.event.label'
-            disabled_actions: ['edit', 'view', 'new']
             list:
                 fields:
                     - { property: 'id', type: 'text' }
@@ -270,7 +269,7 @@ easy_admin:
                     - { property: 'schoolYear', type: 'text', label: 'student_group.school_year.label' }
                     - { property: 'promotion', label: 'student_group.promotion.label' }
                     - { property: 'school', label: 'student_group.school.label' }
-                    - { property: 'agenda', label: 'student_group.agenda.label' }
+                    - { property: 'calendar', label: 'student_group.calendar.label' }
                 title: 'student_group.admin.title.list'
                 actions:
                     - { name: 'new', label: 'btn.new' }
@@ -284,7 +283,7 @@ easy_admin:
                     - { property: 'schoolYear', type: 'text', label: 'student_group.school_year.label' }
                     - { property: 'promotion', label: 'student_group.promotion.label', type_options: {'required': 'true'} }
                     - { property: 'school', label: 'student_group.school.label', type_options: {'required': 'true'} }
-                    - { property: 'agenda', label: 'student_group.agenda.label' }
+                    - { property: 'calendar', label: 'student_group.calendar.label' }
         User:
             class: AppBundle\Entity\User
             label: 'admin.user.label'
