@@ -2,7 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: "@OAuthBundle/Resources/config/services.yml" }
+    - { resource: '@OAuthBundle/Resources/config/services.yml' }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -15,10 +15,10 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["%locale%"] }
-    secret:          "%secret%"
+    translator:      { fallbacks: ['%locale%'] }
+    secret:          '%secret%'
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: '%kernel.root_dir%/config/routing.yml'
         strict_requirements: ~
     form:            ~
     csrf_protection: ~
@@ -26,45 +26,45 @@ framework:
     #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
-    default_locale:  "%locale%"
+    default_locale:  '%locale%'
     trusted_hosts:   ~
     trusted_proxies: ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  ~
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        save_path:   '%kernel.root_dir%/../var/sessions/%kernel.environment%'
     fragments:       ~
     http_method_override: true
     assets: ~
 
 # Twig Configuration
 twig:
-    debug:            "%kernel.debug%"
-    strict_variables: "%kernel.debug%"
+    debug:            '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
 
 # Doctrine Configuration
 doctrine:
     dbal:
         driver:   pdo_pgsql
-        url:      "%env(DATABASE_URL)%"
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
+        url:      '%env(DATABASE_URL)%'
+        host:     '%database_host%'
+        port:     '%database_port%'
+        dbname:   '%database_name%'
+        user:     '%database_user%'
+        password: '%database_password%'
         charset:  UTF8
 
     orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    transport: '%mailer_transport%'
+    host:      '%mailer_host%'
+    username:  '%mailer_user%'
+    password:  '%mailer_password%'
     spool:     { type: memory }
     
 fos_user:
@@ -81,13 +81,15 @@ easy_admin:
         date:     'd/m/Y'
         time:     'H:i'
         datetime: 'd/m/Y H:i:s'
-    site_name: '<div class="home-logo">StudentBot</div>'
+    site_name: "<div class='home-logo'>StudentBot</div>"
     design:
         menu:
             - { label: 'Homepage', route: 'homepage' }
             - { entity: 'Api' }
             - { entity: 'ApiLog' }
-            - { entity: 'Emoji' }
+            - { entity: 'GreetingText' }
+            - { entity: 'MenuItem' }
+            - { entity: 'Wit' }
             - { entity: 'School' }
             - { entity: 'Promotion' }
             - { entity: 'StudentGroup' }
@@ -107,49 +109,45 @@ easy_admin:
             class: AppBundle\Entity\Api
             label: "API's"
             list:
-              fields:
-                  - { property: 'id', type: 'integer' }
-                  - { property: 'name', type: 'text', label: "api.name.label" }
-                  - { property: 'enabled', label: "api.enabled.label" }
-                  - { property: 'description', type: 'text', label: "api.description.label" }
-                  - { property: 'baseUrl', type: 'text', label: "api.baseUrl.label" }
-                  - { property: 'token', type: 'text', label: "api.token.label" }
-              title: "api.admin.title"
-              actions:
-                  - { name: 'new', label: 'btn.new' }
-                  - { name: 'search', label: 'btn.search' }
-                  - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
-                  - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+                fields:
+                    - { property: 'id', type: 'integer' }
+                    - { property: 'name', type: 'text', label: 'api.name.label' }
+                    - { property: 'enabled', label: 'api.enabled.label' }
+                    - { property: 'description', type: 'text', label: 'api.description.label' }
+                title: 'api.admin.title'
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-              title: 'Edit Api'
-              fields:
-                  - { property: 'name', type: 'text', label: "api.name.label" }
-                  - { property: 'enabled', label: "api.enabled.label" }
-                  - { property: 'description', type: 'text', label: "api.description.label" }
-                  - { property: 'baseUrl', type: 'text', label: "api.baseUrl.label" }
-                  - { property: 'token', type: 'text', label: "api.token.label" }
+                title: 'Edit Api'
+                fields:
+                    - { property: 'name', type: 'text', label: 'api.name.label' }
+                    - { property: 'enabled', label: 'api.enabled.label' }
+                    - { property: 'description', type: 'text', label: 'api.description.label' }
         ApiLog:
             class: AppBundle\Entity\ApiLog
             label: 'API Logs'
             disabled_actions: ['edit', 'view', 'new']
             list:
-              fields:
-                  - { property: 'id', type: 'integer' }
-                  - { property: 'api', label: "Api" }
-                  - { property: 'date', label: "api_log.date.label" }
-                  - { property: 'code', type: 'text', label: "api_log.code.label" }
-              title: "api.admin.title"
-              actions:
-                  - { name: 'new', label: 'btn.new' }
-                  - { name: 'search', label: 'btn.search' }
-                  - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
-                  - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+                fields:
+                    - { property: 'id', type: 'integer' }
+                    - { property: 'api', label: 'Api' }
+                    - { property: 'date', label: 'api_log.date.label' }
+                    - { property: 'code', type: 'text', label: 'api_log.code.label' }
+                title: 'api.admin.title'
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-              title: 'Edit Api log'
-              fields:
-                  - { property: 'api', type: 'text', label: "Api" }
-                  - { property: 'date', label: "api.enabled.label" }
-                  - { property: 'code', type: 'text', label: "api_log.code.label" }
+                title: 'Edit Api log'
+                fields:
+                    - { property: 'api', type: 'text', label: 'Api' }
+                    - { property: 'date', label: 'api.enabled.label' }
+                    - { property: 'code', type: 'text', label: 'api_log.code.label' }
         GreetingText:
             class: AppBundle\Entity\Facebook\GreetingText
             label: 'Greeting Texts'
@@ -182,59 +180,51 @@ easy_admin:
                 title: 'Message Analysis'
                 sort: 'createdAt'
                 fields:
-                    - { property: 'msgid', type: 'text', label: 'ID' }
                     - 'createdAt'
+                    - { property: 'msgid', type: 'text', label: 'ID' }
                     - { property: 'text', type: 'text', label: 'Text' }
                     - { property: 'entities', label: 'Intents', template: 'tag_entities.html.twig' }
         School:
-            class: AppBundle\Entity\School
+            class: AppBundle\Entity\School\School
             label: 'admin.school.label'
             list:
-              fields:
-                  - { property: 'id', type: 'integer' }
-                  - { property: 'name', type: 'text', label: "school.name.label" }
-                  - { property: 'street', type: 'text', label: "school.street.label" }
-                  - { property: 'city', type: 'text', label: "school.city.label" }
-                  - { property: 'postalCode', type: 'text', label: "school.postal_code.label" }
-              title: "school.admin.title.list"
-              actions:
-                  - { name: 'new', label: 'btn.new' }
-                  - { name: 'search', label: 'btn.search' }
-                  - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
-                  - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+                fields:
+                    - { property: 'id', type: 'integer' }
+                    - { property: 'name', type: 'text', label: 'school.name.label' }
+                    - { property: 'street', type: 'text', label: 'school.street.label' }
+                    - { property: 'city', type: 'text', label: 'school.city.label' }
+                    - { property: 'postalCode', type: 'text', label: 'school.postal_code.label' }
+                title: 'school.admin.title.list'
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-              title: 'school.admin.title.edit'
-              fields:
-                  - { property: 'name', type: 'text', label: "school.name.label" }
-                  - { property: 'street', type: 'text', label: "school.street.label" }
-                  - { property: 'city', type: 'text', label: "school.city.label" }
-                  - { property: 'postalCode', type: 'text', label: "school.postal_code.label" }
-
+                title: 'school.admin.title.edit'
+                fields:
+                    - { property: 'name', type: 'text', label: 'school.name.label' }
+                    - { property: 'street', type: 'text', label: 'school.street.label' }
+                    - { property: 'city', type: 'text', label: 'school.city.label' }
+                    - { property: 'postalCode', type: 'text', label: 'school.postal_code.label' }
         Promotion:
-            class: AppBundle\Entity\Promotion
+            class: AppBundle\Entity\School\Promotion
             label: 'admin.promotion.label'
             list:
-              title: 'promotion.admin.title.list'
-              fields:
-                  - { property: 'startDate', type: 'date', label: "promotion.start_date.label" }
-                  - { property: 'endDate', type: 'date', label: "promotion.end_date.label" }
-              actions:
-                  - { name: 'new', label: 'btn.new' }
-                  - { name: 'search', label: 'btn.search' }
-                  - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
-                  - { name: 'delete', icon: 'remove', label: 'btn.delete'}
-            form:
-              title: 'promotion.admin.title.edit'
-              fields:
-                  - { property: 'startDate', type: 'date', label: 'promotion.start_date.label', type_options: {'format': 'dd/MM/yyyy', 'attr': {'class': 'datepicker'} } }
-                  - { property: 'endDate', type: 'date', label: 'promotion.end_date.label', type_options: {'format': 'dd/MM/yyyy', 'attr': {'class': 'datepicker'} } }
-                title: 'New School'
+                title: 'promotion.admin.title.list'
                 fields:
-                    - { property: 'name', type: 'text', label: "Name" }
-                    - { property: 'street', type: 'text', label: 'Address' }
-                    - { property: 'city', type: 'text', label: 'City' }
-                    - { property: 'postalCode', type: 'text', label: 'Postal Code' }
-                    - { property: 'description', type: 'textarea', label: 'Description', type_options: {'required': 'false'} }
+                    - { property: 'startDate', type: 'date', label: 'promotion.start_date.label' }
+                    - { property: 'endDate', type: 'date', label: 'promotion.end_date.label' }
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+            form:
+                title: 'promotion.admin.title.edit'
+                fields:
+                    - { property: 'startDate', type: 'date', label: 'promotion.start_date.label', type_options: {'format': 'dd/MM/yyyy', 'attr': { 'class': 'datepicker' } } }
+                    - { property: 'endDate', type: 'date', label: 'promotion.end_date.label', type_options: {'format': 'dd/MM/yyyy', 'attr': { 'class': 'datepicker' } } }
         Calendar:
             controller: AppBundle\Controller\CalendarController
             class: AppBundle\Entity\Calendar\Calendar
@@ -257,66 +247,63 @@ easy_admin:
             class: AppBundle\Entity\School\StudentGroup
             label: 'admin.studentGroup.label'
             list:
-              sort: 'promotion'
-              fields:
-                  - { property: 'id', type: 'text', label: "Id" }
-                  - { property: 'name', type: 'text', label: "student_group.name.label" }
-                  - { property: 'schoolYear', type: 'text', label: "student_group.school_year.label" }
-                  - { property: 'promotion', label: "student_group.promotion.label" }
-                  - { property: 'school', label: "student_group.school.label" }
-                  - { property: 'agenda', label: "student_group.agenda.label" }
-              title: "student_group.admin.title.list"
-              actions:
-                  - { name: 'new', label: 'btn.new' }
-                  - { name: 'search', label: 'btn.search' }
-                  - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
-                  - { name: 'delete', icon: 'remove', label: 'btn.delete'}
+                sort: 'promotion'
+                fields:
+                    - { property: 'id', type: 'text', label: 'Id' }
+                    - { property: 'name', type: 'text', label: 'student_group.name.label' }
+                    - { property: 'schoolYear', type: 'text', label: 'student_group.school_year.label' }
+                    - { property: 'promotion', label: 'student_group.promotion.label' }
+                    - { property: 'school', label: 'student_group.school.label' }
+                    - { property: 'agenda', label: 'student_group.agenda.label' }
+                title: 'student_group.admin.title.list'
+                actions:
+                    - { name: 'new', label: 'btn.new' }
+                    - { name: 'search', label: 'btn.search' }
+                    - { name: 'edit', icon: 'pencil', label: 'btn.edit' }
+                    - { name: 'delete', icon: 'remove', label: 'btn.delete'}
             form:
-              title: 'student_group.admin.title.edit'
-              fields:
-                  - { property: 'name', type: 'text', label: "student_group.name.label" }
-                  - { property: 'schoolYear', type: 'text', label: "student_group.school_year.label" }
-                  - { property: 'promotion', label: "student_group.promotion.label", type_options: {'required': 'true'} }
-                  - { property: 'school', label: "student_group.school.label", type_options: {'required': 'true'} }
-                  - { property: 'agenda', label: "student_group.agenda.label" }
+                title: 'student_group.admin.title.edit'
+                fields:
+                    - { property: 'name', type: 'text', label: 'student_group.name.label' }
+                    - { property: 'schoolYear', type: 'text', label: 'student_group.school_year.label' }
+                    - { property: 'promotion', label: 'student_group.promotion.label', type_options: {'required': 'true'} }
+                    - { property: 'school', label: 'student_group.school.label', type_options: {'required': 'true'} }
+                    - { property: 'agenda', label: 'student_group.agenda.label' }
         User:
-          class: AppBundle\Entity\User
-          label: 'admin.user.label'
-          list:
-              fields:
-                  - { property: 'username', type: 'text', label: "user.username.label" }
-                  - { property: 'facebookId', type: 'text', label: "user.idFacebook.label" }
-                  - { property: 'email', type: 'email', label: "user.email.label"}
-                  - { property: 'last_login', label: "user.last_login.label" }
-                  - { property: 'locked', label: "user.locked.label" }
-                  - { property: 'school', label: "user.school.label" }
-                  - { property: 'studentGroup', label: "user.student_group.label" }
-              title: "user.admin.title.list"
-          form:
-              title: 'user.admin.title.edit'
-              fields:
-                  - { type: 'group', css_class: 'col-sm-6' }
-                  - { type: 'section', label: 'User Profil', icon: 'user'}
-                  - { property: 'username',label: "user.username.label", type: 'text'}
-                  # - { property: 'email', type: 'email', label: "Classe" }
-                  # - { property: 'password', type: 'password', label: "Classe" }
-                  - { type: 'group', css_class: 'col-sm-6'}
-                  - { type: 'section', label: 'Identity', icon: 'info' }
-                  - { property: 'Firstname', type: 'text', label: 'Firstname' }
-                  - { property: 'Lastname', type: 'text', label: 'Lastname' }
-              actions:
-                  delete:
-                      name: delete
-                      type: method
-                      label: btn.delete
-                      css_class: 'btn btn-default action-delete'
-                      icon: trash-o
-                  list:
-                      name: list
-                      type: method
-                      label: btn.list
-                      css_class: 'btn btn-secondary action-list'
-                      icon: caret-square-o-left
+            class: AppBundle\Entity\User
+            label: 'admin.user.label'
+            list:
+                fields:
+                    - { property: 'username', type: 'text', label: 'user.username.label' }
+                    - { property: 'facebookId', type: 'text', label: 'user.idFacebook.label' }
+                    - { property: 'email', type: 'email', label: 'user.email.label'}
+                    - { property: 'last_login', label: 'user.last_login.label' }
+                    - { property: 'school', label: 'user.school.label' }
+                    - { property: 'studentGroup', label: 'user.student_group.label' }
+                title: 'user.admin.title.list'
+            form:
+                title: 'user.admin.title.edit'
+                fields:
+                    - { type: 'group', css_class: 'col-sm-6' }
+                    - { type: 'section', label: 'User Profil', icon: 'user'}
+                    - { property: 'username',label: 'user.username.label', type: 'text'}
+                    - { type: 'group', css_class: 'col-sm-6'}
+                    - { type: 'section', label: 'Identity', icon: 'info' }
+                    - { property: 'firstname', type: 'text', label: 'Firstname' }
+                    - { property: 'lastname', type: 'text', label: 'Lastname' }
+                actions:
+                    delete:
+                        name: delete
+                        type: method
+                        label: btn.delete
+                        css_class: 'btn btn-default action-delete'
+                        icon: trash-o
+                    list:
+                        name: list
+                        type: method
+                        label: btn.list
+                        css_class: 'btn btn-secondary action-list'
+                        icon: caret-square-o-left
 
 hwi_oauth:
     http_client:
@@ -328,10 +315,10 @@ hwi_oauth:
     resource_owners:
         facebook:
             type:                facebook
-            client_id:           "%facebook.app_id%"
-            client_secret:       "%facebook.app_secret%"
-            scope:               "email"
-            infos_url:     "https://graph.facebook.com/me?fields=name,email,picture,birthday,gender,first_name,last_name"
+            client_id:           '%facebook.app_id%'
+            client_secret:       '%facebook.app_secret%'
+            scope:               'email'
+            infos_url:     'https://graph.facebook.com/me?fields=name,email,picture,birthday,gender,first_name,last_name'
             paths:
                 email: email
             options:

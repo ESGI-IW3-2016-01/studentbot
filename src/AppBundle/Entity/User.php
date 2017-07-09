@@ -68,13 +68,13 @@ class User extends BaseUser
     private $photoOriginalName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="School")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\School\School")
      * @ORM\JoinColumn(name="school", referencedColumnName="id")
      */
     private $school;
 
     /**
-     * @ORM\ManyToOne(targetEntity="StudentGroup")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\School\StudentGroup")
      * @ORM\JoinColumn(name="student_group", referencedColumnName="id")
      */
     private $studentGroup;

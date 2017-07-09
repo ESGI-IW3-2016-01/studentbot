@@ -69,7 +69,7 @@ class ProfileController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $idSchool = $request->query->get('idSchool');
             
-            $school = $em->getRepository('AppBundle:School')->find($idSchool);
+            $school = $em->getRepository('AppBundle:School\School')->find($idSchool);
 
             if($school == null)
             {

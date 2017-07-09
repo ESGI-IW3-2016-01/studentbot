@@ -23,7 +23,7 @@ class EditProfileFormType extends AbstractType
             ->add('file', FileType::class, array('required' => false, 'label' => 'label_photo', 'attr' => array()))
             ->add('lastName', TextType::class, array('label' => 'label_lastname', 'attr' => array('class' =>'form-control', 'placeholder' => 'label_lastname')))
             ->add('firstName', TextType::class, array('label' => 'label_firstname', 'attr' => array('class' =>'form-control', 'placeholder' => 'label_firstname')))
-            ->add('school', null, array('class' => 'AppBundle:School',
+            ->add('school', null, array('class' => 'AppBundle:School\School',
                 'expanded' => false,
                 'required' => true,
                 'attr' => array('class' =>'form-control'),
@@ -37,7 +37,7 @@ class EditProfileFormType extends AbstractType
             ));
 
         if (!empty($school)) {
-            $builder->add('studentGroup', EntityType::class, array('class' => 'AppBundle:StudentGroup',
+            $builder->add('studentGroup', EntityType::class, array('class' => 'AppBundle:School\StudentGroup',
                 'expanded' => false,
                 'required' => true,
                 'attr' => array('class' =>'form-control'),
@@ -53,7 +53,7 @@ class EditProfileFormType extends AbstractType
         }
         else // student 
         {
-            $builder->add('studentGroup', EntityType::class, array('class' => 'AppBundle:StudentGroup',
+            $builder->add('studentGroup', EntityType::class, array('class' => 'AppBundle:School\StudentGroup',
                 'expanded' => false,
                 'required' => true,
                 'attr' => array('class' =>'form-control'),
