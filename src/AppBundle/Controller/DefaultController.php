@@ -90,8 +90,6 @@ class DefaultController extends Controller
                 } else {
                     $responseMessage = new SendMessage($message->getSender(), $resMessage);
                 }
-                $logger->error('#################################');
-                $logger->error($resMessage);
                 $messageSenderService->sendMessage($responseMessage);
             }
         }
@@ -187,9 +185,9 @@ class DefaultController extends Controller
                 break;
         }
 
-        $logger = $this->get('logger');
-        $logger->error('###############feeferfrsfsfsef##################');
-        $logger->error($res);
+//        $logger = $this->get('logger');
+//        $logger->error('###############feeferfrsfsfsef##################');
+//        $logger->error($res[0]);
         if (!$res) {
             $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
         }
