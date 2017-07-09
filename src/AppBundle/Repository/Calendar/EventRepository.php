@@ -21,7 +21,7 @@ class EventRepository extends EntityRepository
 
     public function findDayClass($calendarId)
     {
-        $date = DateTime::createFromFormat('Y-m-d H:i:s','2016-11-30 00:00:00');
+        $date = DateTime::createFromFormat('Y-m-d H:i:s',date("Y-m-d H:i:s"));
 
         $qb = $this->createQueryBuilder('e');
         $qb->where('e.calendar = :calendarId')
@@ -37,15 +37,16 @@ class EventRepository extends EntityRepository
 
     public function findWeekClass($calendarId)
     {
-        $today_startdatetime = \DateTime::createFromFormat( "Y-m-d H:i:s", date("Y-m-d 00:00:01") );
+        $date = DateTime::createFromFormat('Y-m-d H:i:s',date("Y-m-d H:i:s"));
         $today_enddatetime = strtotime('next sunday');
 
         $qb = $this->createQueryBuilder('e');
         $qb->where('e.calendar = :calendarId')
-            ->andWhere('e.startAt > :startAt')
+            ->andWhere('e.startAt >= :startAt')
             ->andWhere('e.endAt < :endAt')
+            ->orderBy('e.startAt', 'ASC')
             ->setParameter('calendarId', $calendarId)
-            ->setParameter('startAt', $today_startdatetime)
+            ->setParameter('startAt', $date)
             ->setParameter('endAt', date("Y-m-d H:i:s", $today_enddatetime));
 
         return $qb->getQuery()->getResult();
