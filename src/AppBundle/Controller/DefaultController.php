@@ -189,7 +189,7 @@ class DefaultController extends Controller
             case "agenda":
             case "calendar":
             case "planning":
-                $res = $this->calendar();
+                $res = $this->calendar($current_user);
                 break;
             case strstr($chaine, 'planning') :
             case strstr($chaine, 'agenda') :
