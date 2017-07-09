@@ -78,6 +78,26 @@ class DefaultController extends Controller
                 case "BUTTON_RESET":
                     $messageSenderService->sendShortText("Tu veux tout reset ?", $message->getSender());
                     break;
+                case strstr($message->getPayload(), 'SCHOOL'):
+                    $em = $this->getDoctrine()->getManager();
+                    $user = $this->getUser();
+                    $schoolId = (int) str_replace("SCHOOL_", "", $message->getPayload());
+                    $school = $em->getRepository('AppBundle:School')->findOneBy(['id' => $schoolId]);
+                    $user->setSchool($school);
+                    $em->persist($user);
+                    $em->flush();
+                    $messageSenderService->sendShortText("Ton école est enregistré", $message->getSender());
+                    break;
+                case strstr($message->getPayload(), 'STUDENT_GROUP'):
+                    $em = $this->getDoctrine()->getManager();
+                    $user = $this->getUser();
+                    $groupId = (int) str_replace("STUDENT_GROUP_", "", $message->getPayload());
+                    $group = $em->getRepository('AppBundle:StudentGroup')->findOneBy(["id" => $groupId]);
+                    $user->setGroup($group);
+                    $em->persist($user);
+                    $em->flush();
+                    $messageSenderService->sendShortText("Ta classe est enregistré", $message->getSender());
+                    break;
             }
         } elseif($message->hasText()) {
 
@@ -92,6 +112,14 @@ class DefaultController extends Controller
             $res = $this->questionAnswer($question);
             if (!$res) {
                 $res = $this->choiceAPI($question, $message->getSender());
+            }
+            
+            if ($res=="school") {
+                $schoolService = $this->container->get('app.school_service');
+                $messageSenderService->sendQuickReply($schoolService->getQuickRepliesForSchools(), "Choisi ton école", $message->getSender());
+            } elseif ($res=="class") {
+                $studentGroupService = $this->container->get('app.student_group_service');
+                $messageSenderService->sendQuickReply($studentGroupService->getQuickRepliesForPromotions(), "Choisi ta classe", $message->getSender());
             }
 
             if (!is_array($res)) {

@@ -32,8 +32,13 @@ class Calendar
 
         $user = $userRepository->findOneBy(['facebookId' => $current_user]);
         $student_group = $studentGroupRepository->find($user->getGroupId());
+        if (is_null($student_group)){
+            return "Vous n'êtes dans aucune classe";
+        }
         $calendar = $calendarRepository->find($student_group->getCalendar());
-
+        if (is_null($student_group)){
+            return "Votre classe n'a pas d'agenda";
+        }
         $next_class = $eventRepository->findNextClass($calendar->getId())[0];
 
         return $next_class;
@@ -51,8 +56,13 @@ class Calendar
 
         $user = $userRepository->findOneBy(['facebookId' => $current_user]);
         $student_group = $studentGroupRepository->find($user->getGroupId());
+        if (is_null($student_group)){
+            return "Vous n'êtes dans aucune classe";
+        }
         $calendar = $calendarRepository->find($student_group->getCalendar());
-
+        if (is_null($student_group)){
+            return "Votre classe n'a pas d'agenda";
+        }
         $day_class = $eventRepository->findDayClass($calendar->getId());
 
         return $day_class;
@@ -69,8 +79,13 @@ class Calendar
 
         $user = $userRepository->findOneBy(['facebookId' => $current_user]);
         $student_group = $studentGroupRepository->find($user->getGroupId());
+        if (is_null($student_group)){
+            return "Vous n'êtes dans aucune classe";
+        }
         $calendar = $calendarRepository->find($student_group->getCalendar());
-
+        if (is_null($student_group)){
+            return "Votre classe n'a pas d'agenda";
+        }
         $week_class = $eventRepository->findWeekClass($calendar->getId());
 
         return $week_class;
