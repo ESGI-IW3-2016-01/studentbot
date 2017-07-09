@@ -34,7 +34,7 @@ class StudentGroup
      *
      * @ORM\Column(name="scholar_year", type="integer")
      */
-    private $scholarYear;
+    private $schoolYear;
 
     /**
      * @ORM\ManyToOne(targetEntity="Promotion")
@@ -103,13 +103,13 @@ class StudentGroup
     /**
      * Set schoolYear
      *
-     * @param integer $scholarYear
+     * @param integer $schoolYear
      *
      * @return StudentGroup
      */
-    public function setScholarYear($scholarYear)
+    public function setSchoolYear($schoolYear)
     {
-        $this->scholarYear = $scholarYear;
+        $this->schoolYear = $schoolYear;
 
         return $this;
     }
@@ -119,9 +119,9 @@ class StudentGroup
      *
      * @return int
      */
-    public function getScholarYear()
+    public function getSchoolYear()
     {
-        return $this->scholarYear;
+        return $this->schoolYear;
     }
 
 
