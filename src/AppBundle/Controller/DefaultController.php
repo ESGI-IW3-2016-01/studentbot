@@ -343,7 +343,8 @@ class DefaultController extends Controller
 
     private function getFacebookUser($facebookId)
     {
-        return $this->em
+        return $this->getDoctrine()
+            ->getManager()
             ->getRepository('AppBundle:User')
             ->findOneBy(['facebookId' => $facebookId]);
     }
