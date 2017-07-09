@@ -31,7 +31,7 @@ trait TraitCalendar
                     Ajouté un planning : importer directement un fichier sous format ical.
                     Renseigner son école : écrivez "Agenda école"
                     Renseigner sa classe : écrivez "Agenda classe"
-                    Pour connaitre son agenda : \x0D\x0A
+                    Pour connaitre son agenda :
                      - le prochain cours : écrivez "Agenda prochain"
                      - les cours de la journée : écrivez "Agenda cours jours"
                      - les cours de la semaine : écrivez "Agenda cours semaine"
