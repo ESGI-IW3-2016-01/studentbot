@@ -46,7 +46,7 @@ class DefaultController extends Controller
     private $messageSenderService;
 
     /**
-     * @var EntityManager $this ->em
+     * @var EntityManager $em
      */
     private $em;
 
@@ -76,6 +76,8 @@ class DefaultController extends Controller
         if ($request->query->has('hub_challenge')) {
             return new Response($request->query->get('hub_challenge'));
         }
+
+        $this->em = $this->getDoctrine()->getManager();
 
         $this->apiService = $this->container->get('app.api_service');
         $this->messageSenderService = $this->container->get('app.message_sender');
