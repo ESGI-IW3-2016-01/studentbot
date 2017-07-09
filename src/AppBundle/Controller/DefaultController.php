@@ -173,6 +173,7 @@ class DefaultController extends Controller
                     'Choisi ton école',
                     $message->getSender()
                 );
+                return new Response();
             } elseif ($res == 'class') {
                 /** @var User $user */
                 $user = $this->userService->handleUser($message->getSender());
@@ -185,6 +186,7 @@ class DefaultController extends Controller
                 } else {
                     // TODO
                 }
+                return new Response();
             }
 
             if (!is_array($res)) {
