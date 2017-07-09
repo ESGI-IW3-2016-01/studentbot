@@ -80,7 +80,7 @@ class DefaultController extends Controller
                     break;
                 case strstr($message->getPayload(), 'SCHOOL'):
                     $em = $this->getDoctrine()->getManager();
-                    $user = $this->getUser();
+                    $user = $this->getUser($message);
                     $schoolId = (int) str_replace("SCHOOL_", "", $message->getPayload());
                     $school = $em->getRepository('AppBundle:School')->findOneBy(['id' => $schoolId]);
                     $user->setSchool($school);
@@ -90,7 +90,7 @@ class DefaultController extends Controller
                     break;
                 case strstr($message->getPayload(), 'STUDENT_GROUP'):
                     $em = $this->getDoctrine()->getManager();
-                    $user = $this->getUser();
+                    $user = $this->getUser($message);
                     $groupId = (int) str_replace("STUDENT_GROUP_", "", $message->getPayload());
                     $group = $em->getRepository('AppBundle:StudentGroup')->findOneBy(["id" => $groupId]);
                     $user->setGroup($group);
@@ -119,7 +119,7 @@ class DefaultController extends Controller
                 $messageSenderService->sendQuickReply($schoolService->getQuickRepliesForSchools(), "Choisi ton école", $message->getSender());
             } elseif ($res=="class") {
                 $studentGroupService = $this->container->get('app.student_group_service');
-                $messageSenderService->sendQuickReply($studentGroupService->getQuickRepliesForPromotions(), "Choisi ta classe", $message->getSender());
+                $messageSenderService->sendQuickReply($studentGroupService->getQuickRepliesForGroups(), "Choisi ta classe", $message->getSender());
             }
 
             if (!is_array($res)) {
@@ -284,5 +284,16 @@ class DefaultController extends Controller
         }
 
         return $this->redirect($url);
+    }
+
+    /**
+     * @param $message
+     * @return User
+     */
+    public function getUser($message)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->findOneBy(['facebookId' => $message->getSender()]);
+        return $user;
     }
 }
