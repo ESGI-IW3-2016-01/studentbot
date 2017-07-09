@@ -176,11 +176,15 @@ class DefaultController extends Controller
             } elseif ($res == 'class') {
                 /** @var User $user */
                 $user = $this->userService->handleUser($message->getSender());
-                $this->messageSenderService->sendQuickReply(
-                    $studentGroupService->getQuickRepliesForGroups($user->getGroup()->getId()),
-                    'Choisi ta classe',
-                    $message->getSender()
-                );
+                if ($user->getGroup()) {
+                    $this->messageSenderService->sendQuickReply(
+                        $studentGroupService->getQuickRepliesForGroups($user->getGroup()->getId()),
+                        'Choisi ta classe',
+                        $message->getSender()
+                    );
+                } else {
+                    // TODO
+                }
             }
 
             if (!is_array($res)) {
