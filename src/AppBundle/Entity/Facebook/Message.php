@@ -212,4 +212,9 @@ class Message
     {
         return isset($this->payload) && !empty($this->payload);
     }
+
+    public function hasText()
+    {
+        return isset($this->text) && !empty($this->text);
+    }
 }

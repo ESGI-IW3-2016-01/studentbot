@@ -2,7 +2,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Facebook\Attachment;
 use AppBundle\Entity\Facebook\SendMessage;
+use AppBundle\Service\ApiService;
 use AppBundle\Service\MessageSender;
 use AppBundle\Service\WitService;
 use Monolog\Logger;
@@ -26,6 +28,10 @@ class DefaultController extends Controller
 
     private $image;
     private $textAndImage;
+
+    /**
+     * @var ApiService $apiService
+     */
     private $apiService;
 
     /**
@@ -57,13 +63,8 @@ class DefaultController extends Controller
         $logger = $this->get('logger');
         $logger->error($request->getContent(), ['sender_faceboo_id' => null]);
 
+        /** @var Message $message */
         $message = $this->createMessageRecievedFromBody($request->getContent());
-
-        /** @var WitService $witService */
-        if ($this->apiService->getApi('WIT')) {
-            $witService = $this->container->get('app.wit_service');
-            $witService->handleMessage($message->getText());
-        }
 
         /** @var MessageSender $messageSenderService */
         $messageSenderService = $this->container->get('app.message_sender');
@@ -78,8 +79,15 @@ class DefaultController extends Controller
                     $messageSenderService->sendShortText("Tu veux tout reset ?", $message->getSender());
                     break;
             }
-        } else {
+        } elseif($message->hasText()) {
+
             $question = $message->getText();
+
+            /** @var WitService $witService */
+            if ($this->apiService->getApi('WIT')) {
+                $witService = $this->container->get('app.wit_service');
+                $witService->handleMessage($question);
+            }
 
             $res = $this->questionAnswer($question);
             if (!$res) {
@@ -117,26 +125,41 @@ class DefaultController extends Controller
     private function createMessageRecievedFromBody($body)
     {
         $body = json_decode($body, true);
-        $message = $body['entry'][0]; // TODO : not safe enought
+        $message = array_pop($body['entry']); // TODO : not safe enought
 
         if (isset($message['messaging'][0]['postback']['payload'])) {
+            // Payload message
             $messageObject = new Message(
                 $message['id'],
                 $message['messaging'][0]['sender']['id'],
                 $message['messaging'][0]['recipient']['id'],
                 null,
-                $message['time'],
+                $message['timestamp'],
                 null,
                 null
             );
             $messageObject->setPayload($message['messaging'][0]['postback']['payload']);
+        } elseif (isset($message['messaging'][0]['message']['attachments'])) {
+            // Image Message
+            $messageObject = new Message(
+                $message['id'],
+                $message['messaging'][0]['sender']['id'],
+                $message['messaging'][0]['recipient']['id'],
+                null,
+                $message['timestamp'],
+                $message['messaging'][0]['message']['mid'],
+                $message['messaging'][0]['message']['seq'],
+                new Attachment($message['messaging'][0]['message']['attachments'][0]['type'],
+                    ['url' => $message['messaging'][0]['message']['attachments'][0]['payload']['url']])
+            );
         } else {
+            // Text message
             $messageObject = new Message(
                 $message['id'],
                 $message['messaging'][0]['sender']['id'],
                 $message['messaging'][0]['recipient']['id'],
                 $message['messaging'][0]['message']['text'],
-                $message['time'],
+                $message['timestamp'],
                 $message['messaging'][0]['message']['mid'],
                 $message['messaging'][0]['message']['seq']
             );
