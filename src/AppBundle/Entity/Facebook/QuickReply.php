@@ -7,6 +7,7 @@ namespace AppBundle\Entity\Facebook;
 
 
 use AppBundle\Entity\School\School;
+use AppBundle\Entity\School\StudentGroup;
 
 class QuickReply
 {
@@ -137,9 +138,23 @@ class QuickReply
         return $array;
     }
 
+    /**
+     * @param School $school
+     * @return static
+     */
     public static function createFromSchool(School $school)
     {
         $payload = 'SCHOOL_' . strtoupper($school->getName());
         return new static($school->getName(), 'text', $payload);
+    }
+
+    /**
+     * @param StudentGroup $group
+     * @return static
+     */
+    public static function createFromStudentGroup(StudentGroup $group)
+    {
+        $payload = 'STUDENT_GROUP_' . $group->getId();
+        return new static($group->getName(), 'text', $payload);
     }
 }

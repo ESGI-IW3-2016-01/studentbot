@@ -150,6 +150,7 @@ class DefaultController extends Controller
         $apiService = $this->container->get('app.api_service');
         $this->image = false;
         $chaine = strtolower($chaine);
+        $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
 
         switch ($chaine) {
             case "résultat football" :
