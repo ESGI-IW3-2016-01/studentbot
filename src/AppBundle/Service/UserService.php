@@ -74,7 +74,7 @@ class UserService
 
             $user->setSenderId($senderId);
             $user->setFirstName($userData['first_name']);
-            $user->setFirstName($userData['last_name']);
+            $user->setLastName($userData['last_name']);
             $user->setEnabled(true);
             $user->setRoles(['ROLE_USER']);
             $user->setUsername($userData['first_name'] . ' ' . $userData['last_name']);
