@@ -69,18 +69,22 @@ class UserService
         if (!$user) {
 
             $userData = $this->getUserDataFromFacebook($senderId);
+            $username = $userData['first_name'] . ' ' . $userData['last_name'];
 
-            $user = new User();
+            $user = $this->repository
+                ->findOneBy(['username_canonical' => $senderId]);
+
+            if (!$user) {
+                $user = new User();
+                $user->setRoles(['ROLE_USER']);
+                $user->setEnabled(true);
+            }
 
             $user->setSenderId($senderId);
             $user->setFirstName($userData['first_name']);
             $user->setLastName($userData['last_name']);
-            $user->setEnabled(true);
-            $user->setRoles(['ROLE_USER']);
-            $user->setUsername($userData['first_name'] . ' ' . $userData['last_name']);
-            $user->setUsernameCanonical(
-                strtolower($userData['first_name']) . ' ' . strtolower($userData['last_name'])
-            );
+            $user->setUsername($username);
+            $user->setUsernameCanonical(strtolower($username));
 
             $this->em->persist($user);
             $this->em->flush();
