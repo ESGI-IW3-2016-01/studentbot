@@ -51,6 +51,13 @@ class StudentGroup
      */
     private $school;
 
+    /**
+     * @var User
+     *
+     * @ORM\OneToMany(targetEntity="User", mappedBy="StudentGroup")
+     */
+    private $user;
+
 
     /**
      * @var Calendar $calendar
@@ -235,5 +242,21 @@ class StudentGroup
     function __toString(): string
     {
         return $this->schoolYear . $this->name . $this->groupNumber;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
