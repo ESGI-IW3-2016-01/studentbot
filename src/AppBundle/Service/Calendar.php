@@ -136,9 +136,10 @@ class Calendar
             $event = $event[0];
         }
 
-        $res = (string)$event->getSummary()."\x0D\x0A\\";
-        $res .= "De : ".date_format($event->getStartAt(), 'H:i').". A : ".date_format($event->getEndAt(), 'H:i')."."."\x0D\x0A\\";
-        $res .= (string)$event->getDescription()."\x0D\x0A\\";
+        $res = (string)$event->getSummary()."\x0D\x0A";
+        $res .= "Le : ".date_format($event->getStartAt(), 'H:i')."\x0D\x0A";
+        $res .= "De : ".date_format($event->getStartAt(), 'H:i').". A : ".date_format($event->getEndAt(), 'H:i')."."."\x0D\x0A";
+        $res .= (string)$event->getDescription()."\x0D\x0A";
 
         return $res;
     }

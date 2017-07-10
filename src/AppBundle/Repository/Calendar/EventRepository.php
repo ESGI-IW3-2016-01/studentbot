@@ -13,6 +13,7 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('e');
         $qb->where('e.calendar = :calendarId')
             ->andWhere('e.startAt > :startAt')
+            ->orderBy('e.startAt', 'ASC')
             ->setParameter('calendarId', $calendarId)
             ->setParameter('startAt', new \DateTime('-5 second'));
 
