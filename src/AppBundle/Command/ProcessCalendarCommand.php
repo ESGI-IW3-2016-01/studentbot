@@ -6,6 +6,7 @@ namespace AppBundle\Command;
 use AppBundle\Entity\Calendar\Calendar;
 use AppBundle\Entity\Calendar\Event;
 use AppBundle\Repository\Calendar\CalendarRepository;
+use AppBundle\Repository\EventRepository;
 use Aws\Result;
 use Aws\S3\S3Client;
 use Doctrine\ORM\EntityManager;
@@ -13,12 +14,21 @@ use ICal\ICal;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use DateTime, DateTimeZone;
 
 class ProcessCalendarCommand extends ContainerAwareCommand
 {
+    const FS_AWS = 's3';
+    const FS_LOCAL = 'local';
+
+    /**
+     * Allowed file extensions
+     */
+    const FIlE_EXTESIONS = ['ics', 'ical'];
+
     /**
      * @var Filesystem $fs
      */
@@ -45,17 +55,14 @@ class ProcessCalendarCommand extends ContainerAwareCommand
     private $directory;
 
     /**
-     * Allowed file extensions
-     */
-    const FIlE_EXTESIONS = ['ics', 'ical'];
-
-    /**
      * @var string $successDirectory
      */
     private $successDirectory;
 
-    const FS_AWS = 's3';
-    const FS_LOCAL = 'local';
+    /**
+     * @var EventRepository $eventReposity
+     */
+    private $eventReposity;
 
     protected function configure()
     {
@@ -86,11 +93,13 @@ class ProcessCalendarCommand extends ContainerAwareCommand
 
         $this->em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $this->calendarReposity = $this->em->getRepository('AppBundle\Entity\Calendar\Calendar');
+        $this->eventReposity = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
+        $io = new SymfonyStyle($input, $output);
+        /** @var Calendar[] $calendars */
         $calendars = $this->calendarReposity->findBy(['processed' => false]);
 
         if ($calendars) {
@@ -138,6 +147,13 @@ class ProcessCalendarCommand extends ContainerAwareCommand
                     /** @var \Ical\Event $event */
                     foreach ($ical->events() as $event) {
 
+                        $DatabaseEvent = $this->eventReposity->findOneBy(['uid' => $event->uid]);
+                        if ($DatabaseEvent) {
+                            // Event already in database
+                            $io->note("Event with uid \"$event->uid\" already exists. Skipping.");
+                            continue;
+                        }
+
                         if(strlen($event->dtstart) > 8) {
                             $dtstart = new DateTime($event->dtstart ?: 'now');
                         } else {
@@ -149,7 +165,6 @@ class ProcessCalendarCommand extends ContainerAwareCommand
                         } else {
                             $dtend = new DateTime($event->dtend, new DateTimeZone('Europe/Paris'));
                         }
-
 
                         $calendarEvent = new Event(
                             $event->uid,

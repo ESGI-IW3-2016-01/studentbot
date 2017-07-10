@@ -112,6 +112,7 @@ calendar.updatedAt.label: Date MàJ
 calendar.processed.label: Importé
 calendar.group.label: Groupe
 calendar.file.label: Fichier
+calendar.events.label: Nb Cours
 menu_item.title.label: Titre
 menu_item.type.label: Type
 menu_item.url.label: Lien

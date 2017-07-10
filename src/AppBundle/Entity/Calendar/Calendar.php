@@ -98,6 +98,11 @@ class Calendar
     private $group;
 
     /**
+     * @var int $count
+     */
+    private $count;
+
+    /**
      * Calendar constructor.
      */
     public function __construct()
@@ -330,5 +335,12 @@ class Calendar
         $this->location = $location;
     }
 
+    /**
+     * @return int
+     */
+    public function getCount(): int
+    {
+        return count($this->events);
+    }
 }
 

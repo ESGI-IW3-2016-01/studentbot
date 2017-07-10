@@ -112,6 +112,7 @@ calendar.updatedAt.label: Updated At
 calendar.processed.label: Processed
 calendar.group.label: Student Group
 calendar.file.label: File
+calendar.events.label: Events
 menu_item.title.label: Title
 menu_item.type.label: Type
 menu_item.url.label: Url
