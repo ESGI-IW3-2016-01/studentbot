@@ -138,11 +138,6 @@ class ProcessCalendarCommand extends ContainerAwareCommand
                     /** @var \Ical\Event $event */
                     foreach ($ical->events() as $event) {
 
-                        dump($event->created ?: 'now');
-                        dump($event->lastmodified ?: 'now');
-                        dump($event->dtstart);
-                        dump($event->dtend);
-
                         $calendarEvent = new Event(
                             $event->uid,
                             $event->description,
