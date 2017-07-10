@@ -55,8 +55,8 @@ class StudentGroup
     /**
      * @var Calendar $calendar
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Calendar\Calendar")
-     * @ORM\JoinColumn(name="calendar_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Calendar\Calendar", inversedBy="group")
+     * @ORM\JoinColumn(name="calendar_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
      */
     private $calendar;
 
@@ -166,7 +166,7 @@ class StudentGroup
      *
      * @return StudentGroup
      */
-    public function setCalendar(Calendar $calendar)
+    public function setCalendar($calendar)
     {
         $this->calendar = $calendar;
 

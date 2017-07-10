@@ -92,10 +92,15 @@ class Calendar
     /**
      * @var StudentGroup $group
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\School\StudentGroup")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\School\StudentGroup", mappedBy="calendar")
      * @ORM\JoinColumn(name="student_group_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $group;
+
+    /**
+     * @var int $count
+     */
+    private $count;
 
     /**
      * Calendar constructor.
@@ -330,5 +335,12 @@ class Calendar
         $this->location = $location;
     }
 
+    /**
+     * @return int
+     */
+    public function getCount(): int
+    {
+        return count($this->events);
+    }
 }
 

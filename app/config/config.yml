@@ -279,6 +279,7 @@ easy_admin:
                     - { property: 'createdAt', type: 'date', label: 'calendar.createdAt.label'}
                     - { property: 'name', type: 'text', label: 'calendar.name.label'}
                     - { property: 'group', label: 'calendar.group.label' }
+                    - { property: 'count', label: 'calendar.events.label', template: 'tag_count.html.twig' }
                     - { property: 'filename', type: 'text', label: 'calendar.filename.label'}
                     - { property: 'processed', type: 'boolean', label: 'calendar.processed.label'}
             form:
