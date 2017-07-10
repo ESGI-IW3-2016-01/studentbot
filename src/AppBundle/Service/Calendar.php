@@ -2,6 +2,8 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Entity\School\StudentGroup;
+use AppBundle\Entity\User;
 use AppBundle\Event\ApiEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
@@ -30,11 +32,14 @@ class Calendar
         $calendarRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Calendar');
         $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
 
+        /** @var User $user */
         $user = $userRepository->findOneBy(['senderId' => $current_user]);
         if (is_null($user)) {
             return "Vous n'êtes pas un utilisateur ... =)";
         }
-        $student_group = $studentGroupRepository->find($user->getGroup()->getId());
+
+        /** @var StudentGroup $student_group */
+        $student_group = $studentGroupRepository->find($user->getStudentGroup()->getId());
         if (is_null($student_group)){
             return "Vous n'êtes dans aucune classe";
         }
@@ -140,11 +145,12 @@ class Calendar
         $calendarRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Calendar');
         $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
 
+        /** @var User $user */
         $user = $userRepository->findOneBy(['senderId' => $current_user]);
         if (is_null($user)) {
             return "Vous n'êtes pas un utilisateur ... =)";
         }
-        $student_group = $studentGroupRepository->find($user->getGroup()->getId());
+        $student_group = $studentGroupRepository->find($user->getStudentGroup()->getId());
         if (is_null($student_group)){
             return "Vous n'êtes dans aucune classe";
         }

@@ -87,14 +87,6 @@ class User extends BaseUser
     protected $senderId;
 
     /**
-     * @var StudentGroup
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\School\StudentGroup")
-     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
-     */
-    private $group;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="photo_id", type="string", length=255, nullable=true)
@@ -488,21 +480,5 @@ class User extends BaseUser
         $this->studentGroup = $studentGroup;
 
         return $this;
-    }
-
-    /**
-     * @param $studentGroupId
-     */
-    public function setGroup($studentGroupId)
-    {
-        $this->group = $studentGroupId;
-    }
-
-    /**
-     * @return StudentGroup
-     */
-    public function getGroup()
-    {
-        return $this->group;
     }
 }
