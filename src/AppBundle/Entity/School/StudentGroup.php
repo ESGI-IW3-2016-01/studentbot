@@ -68,6 +68,14 @@ class StudentGroup
     private $groupNumber;
 
     /**
+     * StudentGroup constructor.
+     */
+    public function __construct()
+    {
+    }
+
+
+    /**
      * Get id
      *
      * @return int
@@ -200,8 +208,9 @@ class StudentGroup
         return $this;
     }
 
-    public function getFullName() {
-        return $this->schoolYear. " ". $this->name;
+    public function getFullName()
+    {
+        return $this->schoolYear . " " . $this->name;
     }
 
     /**
@@ -225,6 +234,6 @@ class StudentGroup
      */
     function __toString(): string
     {
-        return $this->scholarYear . $this->name . $this->groupNumber;
+        return $this->schoolYear . $this->name . $this->groupNumber;
     }
 }

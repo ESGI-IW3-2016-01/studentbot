@@ -271,7 +271,6 @@ easy_admin:
             controller: AppBundle\Controller\CalendarController
             class: AppBundle\Entity\Calendar\Calendar
             label: 'admin.calendar.label'
-            disabled_actions: ['edit', 'view', 'new']
             list:
                 title: 'admin.calendar.label'
                 sort: 'id'
@@ -279,13 +278,13 @@ easy_admin:
                     - { property: 'id', type: 'text', label: 'calendar.id.label'}
                     - { property: 'createdAt', type: 'date', label: 'calendar.createdAt.label'}
                     - { property: 'name', type: 'text', label: 'calendar.name.label'}
+                    - { property: 'group', label: 'calendar.group.label' }
                     - { property: 'filename', type: 'text', label: 'calendar.filename.label'}
-                    - { property: 'updatedAt', type: 'date', label: 'calendar.updatedAt.label'}
                     - { property: 'processed', type: 'boolean', label: 'calendar.processed.label'}
             form:
                 fields:
                     - { property: 'name', type: 'text', label: 'calendar.name.label'}
-                    - { property: 'group', type: 'text', label: 'calendar.group.label' }
+                    - { property: 'group', label: 'calendar.group.label' }
                     - { property: 'file', type: 'file', label: 'calendar.file.label' }
         Event:
             class: AppBundle\Entity\Calendar\Event
@@ -314,10 +313,11 @@ easy_admin:
             list:
                 sort: 'promotion'
                 fields:
+                    - { property: 'promotion', label: 'student_group.promotion.label' }
                     - { property: 'id', type: 'text', label: 'Id' }
                     - { property: 'name', type: 'text', label: 'student_group.name.label' }
                     - { property: 'schoolYear', type: 'text', label: 'student_group.school_year.label' }
-                    - { property: 'promotion', label: 'student_group.promotion.label' }
+                    - { property: 'groupNumber', type: 'integer', label: 'student_group.group_number.label' }
                     - { property: 'school', label: 'student_group.school.label' }
                     - { property: 'calendar', label: 'student_group.calendar.label' }
                 title: 'student_group.admin.title.list'
@@ -331,6 +331,7 @@ easy_admin:
                 fields:
                     - { property: 'name', type: 'text', label: 'student_group.name.label' }
                     - { property: 'schoolYear', type: 'text', label: 'student_group.school_year.label' }
+                    - { property: 'groupNumber', type: 'integer', label: 'student_group.group_number.label' }
                     - { property: 'promotion', label: 'student_group.promotion.label', type_options: {'required': 'true'} }
                     - { property: 'school', label: 'student_group.school.label', type_options: {'required': 'true'} }
                     - { property: 'calendar', label: 'student_group.calendar.label' }

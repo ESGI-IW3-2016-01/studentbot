@@ -31,6 +31,7 @@ promotion.admin.title.list: Liste des promotions
 promotion.admin.title.edit: Éditer promotion
 student_group.name.label: Nom
 student_group.school_year.label: "Année d'étude"
+student_group.group_number.label: N° Groupe
 student_group.promotion.label: Promotion
 student_group.school.label: École
 student_group.calendar.label: Agenda
