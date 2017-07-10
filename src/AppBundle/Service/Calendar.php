@@ -32,9 +32,9 @@ class Calendar
 
         $user = $userRepository->findOneBy(['facebookId' => $current_user]);
         if (is_null($user)) {
-            return "Vous n'êtes dans aucune classe";
+            return "Vous n'êtes pas un utilisateur ... =)";
         }
-        $student_group = $studentGroupRepository->find($user->getGroupId()->getId());
+        $student_group = $studentGroupRepository->find($user->getGroup()->getId());
         if (is_null($student_group)){
             return "Vous n'êtes dans aucune classe";
         }
@@ -42,8 +42,14 @@ class Calendar
         if (is_null($student_group)){
             return "Votre classe n'a pas d'agenda";
         }
-        $next_class = $eventRepository->findNextClass($calendar->getId())[0];
+        $next_class = $eventRepository->findNextClass($calendar->getId());
 
+        if (empty($next_class)){
+            return "Vous n'avez aucun prochain cours";
+        }
+        if (is_array($next_class)) {
+            return $next_class[0];
+        }
         return $next_class;
         
     }
@@ -59,9 +65,9 @@ class Calendar
 
         $user = $userRepository->findOneBy(['facebookId' => $current_user]);
         if (is_null($user)) {
-            return "Vous n'êtes dans aucune classe";
+            return "Vous n'êtes pas un utilisateur ... =)";
         }
-        $student_group = $studentGroupRepository->find($user->getGroupId()->getId());
+        $student_group = $studentGroupRepository->find($user->getGroup()->getId());
         if (is_null($student_group)){
             return "Vous n'êtes dans aucune classe";
         }
@@ -84,7 +90,10 @@ class Calendar
         $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
 
         $user = $userRepository->findOneBy(['facebookId' => $current_user]);
-        $student_group = $studentGroupRepository->find($user->getGroupId());
+        if (is_null($user)) {
+            return "Vous n'êtes pas un utilisateur ... =)";
+        }
+        $student_group = $studentGroupRepository->find($user->getGroup()->getId());
         if (is_null($student_group)){
             return "Vous n'êtes dans aucune classe";
         }
