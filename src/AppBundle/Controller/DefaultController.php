@@ -225,23 +225,21 @@ class DefaultController extends Controller
     private function createMessageRecievedFromBody($body)
     {
         $body = json_decode($body, true);
-        $type = 'message';
         if(isset($body['entry'])) {
             $message = array_pop($body['entry']); // TODO : not safe enought
-        } elseif (isset($body['postback'])) {
-            $type = 'payload';
         }
 
-        if ($type === 'payload') {
+        if (isset($message['messaging'][0]['postback']['payload'])) {
             // Payload message
+            $messaging = $message['messaging'][0];
             $messageObject = new Message(
-                '',
-                $body['sender']['id'],
-                $body['recipient']['id'],
+                $message['id'],
+                $messaging['sender']['id'],
+                $messaging['recipient']['id'],
                 null,
-                $body['timestamp']
+                $messaging['timestamp']
             );
-            $messageObject->setPayload($body['postback']['payload']);
+            $messageObject->setPayload($message['messaging'][0]['postback']['payload']);
         } elseif (isset($message['messaging'][0]['message']['quick_reply'])) {
             // Quick Reply Payload
             $messageObject = new Message(
