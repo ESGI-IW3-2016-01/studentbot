@@ -140,8 +140,8 @@ class ProcessCalendarCommand extends ContainerAwareCommand
 
                         $calendarEvent = new Event(
                             $event->uid,
-                            $event->description,
-                            $event->summary,
+                            substr($event->description,0,2047),
+                            substr($event->summary,0,2047),
                             new DateTime($event->created ?: 'now'),
                             new DateTime($event->lastmodified ?: 'now'),
                             new DateTime($event->dtstart ?: 'now'),

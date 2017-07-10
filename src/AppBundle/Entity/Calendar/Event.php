@@ -57,13 +57,13 @@ class Event
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=1023)
+     * @ORM\Column(type="string", length=2047)
      */
     private $summary;
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=1023)
+     * @ORM\Column(type="string", length=2047)
      */
     private $description;
 
