@@ -23,13 +23,10 @@
 <body>
 
 <!-- Navigation ================================================== -->
-<div class="hero-background">
-    <div>
-        <img class="strips" src="/images/strips.png">
-    </div>
+<div class="studentBot-background">
     <div class="container">
         <div class="header-container header">
-            <a class="navbar-brand logo" href="#"> <img class="logo" src="/images/logo.svg"/> </a>
+            <a class="navbar-brand logo" href="#"> <img class="logo" src="/images/logo-reseau-ges.png"/> </a>
            {#  <a href="#email-form">
                 <button class="header-btn"> Download FREE!</button>
             </a> #}
@@ -63,6 +60,7 @@
                 </a>
             </div>
         </div>
+
         <!--navigation-->
 
 
@@ -73,7 +71,7 @@
             <div class="hero-right col-sm-6 col-sm-6">
                 <h1 class="header-headline bold"> {{ "index_h1" | trans({}, 'messages') }}<br></h1>
                 <h4 class="header-running-text light"> {{ "simple_answers_speed" | trans({}, 'messages') }}</h4>
-                <a href="#email-form">
+                <a href="https://www.messenger.com/t/1860943057468564" target="_blank">
                     <button class="hero-btn">{{ "talk_me" | trans({}, 'messages') }}</button>
                 </a>
                     {% if app.user is empty %}
@@ -81,17 +79,15 @@
                     {% endif %}
             </div><!--hero-left-->
 
-            <div class="col-sm-6 col-sm-6 ipad">
-                <img class="ipad-screen img-responsive" src="/images/screen.png"/>
-            </div>
-
-            <div><img class="mouse" src="/images/mouse.svg"/></div>
+            <!--<div class="col-sm-6 col-sm-6 ipad">
+                <img class="ipad-screen img-responsive" src="images/screen.png"/>
+            </div>-->
 
         </div><!--hero-->
 
     </div> <!--hero-container-->
-
-</div><!--hero-background-->
+</div>
+<!--hero-background-->
 
 
 <!-- Features
@@ -103,39 +99,76 @@
 
         <h2 class="features-headline light">{{ "title.features" | trans({}, 'messages') }}</h2>
 
-        <div class="col-sm-4 feature">
+        <div class="col-sm-12">
+            <div class="col-sm-3 feature">
 
-            <div class="feature-icon feature-no-display">
-                <img class="feature-img" src="/images/responsive.svg">
+                <div class="feature-icon feature-no-display">
+                    &nbsp;&nbsp;&nbsp;<i class="fa fa-calendar fa-3x">&nbsp;</i>
+                </div>
+                <h5 class="feature-head-text feature-no-display"> {{ "calendar_homepage" | trans({}, 'messages') }} </h5>
             </div>
-            <h5 class="feature-head-text feature-no-display"> {{ "fully_responsive" | trans({}, 'messages') }} </h5>
-            <p class="feature-subtext light feature-no-display"> {{ "features_amazing" | trans({}, 'messages') }}</p>
+
+            <div class="col-sm-3 feature">
+
+                <div class="feature-icon feature-no-display">
+                    &nbsp;&nbsp;&nbsp;<i class="fa fa-futbol-o fa-3x">&nbsp;</i>
+                </div>
+                <h5 class="feature-head-text feature-no-display"> {{ "sport_homepage" | trans({}, 'messages') }} </h5>
+            </div>
+
+            <div class="col-sm-3 feature">
+
+                <div class="feature-icon feature-no-display">
+                    &nbsp;&nbsp;&nbsp;<i class="fa fa-gamepad fa-3x">&nbsp;</i>
+                </div>
+                <h5 class="feature-head-text feature-no-display"> {{ "esport_homepage" | trans({}, 'messages') }} </h5>
+            </div>
+
+            <div class="col-sm-3 feature">
+
+                <div class="feature-icon feature-no-display">
+                    &nbsp;&nbsp;&nbsp;<i class="fa fa-sun-o fa-3x">&nbsp;</i>
+                </div>
+                <h5 class="feature-head-text feature-no-display"> {{ "weather_homepage" | trans({}, 'messages') }} </h5>
+            </div>
         </div>
 
-        <div class="col-sm-4 feature">
-            <div class="feature-icon feature-no-display feature-display-mid">
-                <img class="feature-img" src="/images/customizable.svg">
-            </div>
-            <h5 class="feature-head-text feature-no-display feature-display-mid"> {{ "title.customizable" | trans({}, 'messages') }} </h5>
-            <p class="feature-subtext light feature-no-display feature-display-mid"> {{ "customizable_features" | trans({}, 'messages') }}</p>
-        </div>
 
-        <div class="col-sm-4 feature">
-            <div class="feature-icon feature-no-display feature-display-last">
-                <img class="bullet-img" src="/images/design.svg">
+        <div class="col-sm-12">
+            <div class="col-sm-3 feature">
+
+                <div class="feature-icon feature-no-display">
+                    &nbsp;&nbsp;&nbsp;<i class="fa fa-newspaper-o fa-3x">&nbsp;</i>
+                </div>
+                <h5 class="feature-head-text feature-no-display"> {{ "news_homepage" | trans({}, 'messages') }} </h5>
             </div>
-            <h5 class="feature-head-text feature-no-display feature-display-last"> {{ "title.slick_beautiful" | trans({}, 'messages') }} </h5>
-            <p class="feature-subtext light feature-no-display feature-display-last"> {{ "features_beautiful" | trans({}, 'messages') }}</p>
+
+            <div class="col-sm-3 feature">
+
+                <div class="feature-icon feature-no-display">
+                    &nbsp;&nbsp;&nbsp;<i class="fa fa-image fa-3x">&nbsp;</i>
+                </div>
+                <h5 class="feature-head-text feature-no-display"> {{ "gif_homepage" | trans({}, 'messages') }} </h5>
+            </div>
+
+            <div class="col-sm-3 feature">
+
+                <div class="feature-icon feature-no-display">
+                    &nbsp;&nbsp;&nbsp;<i class="fa fa-youtube fa-3x">&nbsp;</i>
+                </div>
+                <h5 class="feature-head-text feature-no-display"> {{ "youtube_homepage" | trans({}, 'messages') }} </h5>
+            </div>
+
+            <div class="col-sm-3 feature">
+
+                <div class="feature-icon feature-no-display">
+                    &nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle fa-3x">&nbsp;</i>
+                </div>
+                <h5 class="feature-head-text feature-no-display"> {{ "custom_homepage" | trans({}, 'messages') }} </h5>
+            </div>
         </div>
     </div> <!--features-container-->
 </div> <!--features-section-->
-
-<!-- Logos
-  ================================================== -->
-
-<div class="logos-section">
-    <img class="logos" src="/images/logos.png"/>
-</div><!--logos-section-->
 
 <!-- White-Section
   ================================================== -->
@@ -244,58 +277,34 @@
 
 
         <div class="col-sm-3 team-member">
-            <img src="/images/cto.png">
+            <img src="/images/dev_1.png">
             <div class="team-member-text">
-                <h4 class="team-member-position light">CTO</h4>
-                <h5 class="bold">Johnny B Good</h5>
-                <p class="light">The brains behind the whole operation</p>
-                <a href="http://www.twitter.com"><img class="team-social-icon" src="/images/team-twitter.svg"></a>
-                <a href="http://www.facebook.com"><img class="team-social-icon"
-                                                       src="/images/team-facebook.svg"></a>
-                <a href="https://plus.google.com/"><img class="team-social-icon"
-                                                        src="/images/team-google.svg"></a>
+                <h5 class="bold">Antoine Cusset</h5>
+                <a href="https://github.com/acusset" target="_blank" style="text-decoration:none;border:0;">&nbsp;&nbsp;&nbsp;<i class="fa fa-github fa-3x">&nbsp;</i></a>
             </div>
         </div>
 
         <div class="col-sm-3 team-member">
-            <img src="/images/cto.png">
+            <img src="/images/dev_2.png">
             <div class="team-member-text">
-                <h4 class="team-member-position light">CTO</h4>
-                <h5 class="bold">Johnny B Good</h5>
-                <p class="light">The brains behind the whole operation</p>
-                <a href="http://www.twitter.com"><img class="team-social-icon" src="/images/team-twitter.svg"></a>
-                <a href="http://www.facebook.com"><img class="team-social-icon"
-                                                       src="/images/team-facebook.svg"></a>
-                <a href="https://plus.google.com/"><img class="team-social-icon"
-                                                        src="/images/team-google.svg"></a>
+                <h5 class="bold">Jolan Levy</h5>
+                <a href="https://github.com/JolanL" target="_blank" style="text-decoration:none;border:0;">&nbsp;&nbsp;&nbsp;<i class="fa fa-github fa-3x">&nbsp;</i></a>
             </div>
         </div>
 
         <div class="col-sm-3 team-member">
-            <img src="/images/ceo.png">
+            <img src="/images/dev_3.png">
             <div class="team-member-text">
-                <h4 class="team-member-position light">CEO</h4>
-                <h5 class="bold">Roll Over Beethoven</h5>
-                <p class="light">The one that puts it all together </p>
-                <a href="http://www.twitter.com"><img class="team-social-icon" src="/images/team-twitter.svg"></a>
-                <a href="http://www.facebook.com"><img class="team-social-icon"
-                                                       src="/images/team-facebook.svg"></a>
-                <a href="https://plus.google.com/"><img class="team-social-icon"
-                                                        src="/images/team-google.svg"></a>
+                <h5 class="bold">Alexandre Morin</h5>
+                <a href="https://github.com/MorinAlexandre" target="_blank" style="text-decoration:none;border:0;">&nbsp;&nbsp;&nbsp;<i class="fa fa-github fa-3x">&nbsp;</i></a>
             </div>
         </div>
 
         <div class="col-sm-3 team-member">
-            <img src="/images/cfo.png">
+            <img src="/images/dev_4.png">
             <div class="team-member-text">
-                <h4 class="team-member-position light">CFO</h4>
-                <h5 class="bold">Chuck Berry</h5>
-                <p class="light">The guy with his hand on the wallet</p>
-                <a href="http://www.twitter.com"><img class="team-social-icon" src="/images/team-twitter.svg"></a>
-                <a href="http://www.facebook.com"><img class="team-social-icon"
-                                                       src="/images/team-facebook.svg"></a>
-                <a href="https://plus.google.com/"><img class="team-social-icon"
-                                                        src="/images/team-google.svg"></a>
+                <h5 class="bold">Issa Soumare</h5>
+                <a href="https://github.com/iss936" target="_blank" style="text-decoration:none;border:0;">&nbsp;&nbsp;&nbsp;<i class="fa fa-github fa-3x">&nbsp;</i></a>
             </div>
 
         </div>
@@ -339,10 +348,7 @@
 
             <div class="col-sm-2 col-sm-offset-4">
                 <div class="social-links">
-                    <a href="#"> <img class="social-link"
-                                                                    src="/images/twitter.svg"/> </a>
-                    <a href="#"> <img
-                                src="/images/facebook.svg"/> </a>
+                    <a href="https://www.facebook.com/StudentBot-1860943057468564/" target="_blank"> <img src="/images/facebook.svg"/></a>
                 </div>
                 <!--social-links-->
             </div>

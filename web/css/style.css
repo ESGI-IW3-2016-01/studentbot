@@ -18,13 +18,8 @@ body {
     text-decoration: none;
 }
 
-.hero-background {
-    overflow: hidden;
-    position: relative;
-    background: -webkit-linear-gradient(117deg, rgb(96, 87, 246), rgb(216, 71, 99));
-    background: linear-gradient(117deg, rgb(96, 87, 246), rgb(216, 71, 99));
-    background: -webkit-radial-gradient(rgb(194, 74, 126), rgb(105, 86, 235));
-    background: radial-gradient(rgb(194, 74, 126), rgb(105, 86, 235));
+.studentBot-background{
+    background-image:url("../images/office-2480352_1920.jpg");
 }
 
 .bold {
@@ -661,7 +656,7 @@ ul {
 }
 .btn-block {
     display: block;
-    width: 80%;
+    width: 38%;
 }
 .btn {
     -moz-user-select: none;
@@ -674,7 +669,7 @@ ul {
     font-weight: normal;
     line-height: 1.42857;
     margin-bottom: 0;
-    padding: 6px 12px;
+    padding: 15px 12px;
     text-align: center;
     touch-action: manipulation;
     vertical-align: middle;
