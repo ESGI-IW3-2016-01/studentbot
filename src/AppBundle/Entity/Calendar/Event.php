@@ -222,7 +222,7 @@ class Event
      */
     public function setDescription(string $description)
     {
-        $this->description = $this->_parseDescription($description);
+        $this->description = $this->_parseDescription($this->_formatString($description));
     }
 
     /**
