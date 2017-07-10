@@ -23,8 +23,8 @@ trait TraitCalendar
             } elseif (strpos($chaine, 'classe')) {
                 $res = 'class';
             } else {
-                $str = 'Désolé je n\'ai pas compris votre demande.
-                        Ecrivez "planning" pour plus d\'aide ';
+                $str = 'Désolé je n\'ai pas compris ta demande.
+                        Ecris "planning" pour plus d\'aide ';
                 $res = $str;
             }
 

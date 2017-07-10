@@ -176,7 +176,7 @@ class DefaultController extends Controller
             if ($res == 'school') {
                 $this->messageSenderService->sendQuickReply(
                     $schoolService->getQuickRepliesForSchools(),
-                    'Choisi ton école',
+                    'Choisis ton école',
                     $message->getSender()
                 );
                 return new Response();
@@ -186,7 +186,7 @@ class DefaultController extends Controller
                 if ($user->getSchool()) {
                     $this->messageSenderService->sendQuickReply(
                         $studentGroupService->getQuickRepliesForGroups($user->getSchool()->getId()),
-                        'Choisi ta classe',
+                        'Choisis ta classe',
                         $message->getSender()
                     );
                 } else {
@@ -326,10 +326,11 @@ class DefaultController extends Controller
                 break;
             case strcmp("\xF0\x9F\x93\x85", $chaine) == 0 :
             case 'agenda':
-            case 'calendar':
+            case 'calendrier':
             case 'planning':
                 $res = $this->calendar(null, $current_user);
                 break;
+            case strstr($chaine, "\xF0\x9F\x93\x85") :
             case strstr($chaine, 'planning') :
             case strstr($chaine, 'agenda') :
                 $res = $this->calendar($chaine, $current_user);
@@ -341,7 +342,7 @@ class DefaultController extends Controller
                 $this->textAndImage = true;
                 break;
             default :
-                $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
+                $res = "Désolé, je ne comprends pas encore tout... \xF0\x9F\x98\x95";
                 break;
         }
         return $res;

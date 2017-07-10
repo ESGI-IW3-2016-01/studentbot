@@ -11,7 +11,7 @@ trait TraitSummaryFeature
 
         $res = [];
         $res[] = "Voici toutes les fonctionnalités du Robot étudiant : \x0D\x0A";
-        $res[] = "planning ou agenda ou calendar : Agenda de votre école / classe \x0D\x0A";
+        $res[] = "planning ou agenda ou calendrier : Agenda de votre école / classe \x0D\x0A";
         $res[] = "\xe2\x9a\xbd : Résultat football \x0D\x0A";
         $res[] = "\xf0\x9f\x8f\x80 : Résultat NBA \x0D\x0A";
         $res[] = "\xF0\x9F\x8E\xAE csgo : Résultat Jeu CSGO \x0D\x0A";
