@@ -30,7 +30,7 @@ class Calendar
         $calendarRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Calendar');
         $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
 
-        $user = $userRepository->findOneBy(['facebookId' => $current_user]);
+        $user = $userRepository->findOneBy(['senderId' => $current_user]);
         if (is_null($user)) {
             return "Vous n'êtes pas un utilisateur ... =)";
         }
@@ -63,7 +63,7 @@ class Calendar
         $calendarRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Calendar');
         $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
 
-        $user = $userRepository->findOneBy(['facebookId' => $current_user]);
+        $user = $userRepository->findOneBy(['senderId' => $current_user]);
         if (is_null($user)) {
             return "Vous n'êtes pas un utilisateur ... =)";
         }
@@ -92,7 +92,7 @@ class Calendar
         $calendarRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Calendar');
         $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
 
-        $user = $userRepository->findOneBy(['facebookId' => $current_user]);
+        $user = $userRepository->findOneBy(['senderId' => $current_user]);
         if (is_null($user)) {
             return "Vous n'êtes pas un utilisateur ... =)";
         }
