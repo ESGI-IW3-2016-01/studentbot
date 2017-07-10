@@ -92,8 +92,8 @@ class Calendar
     /**
      * @var StudentGroup $group
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\School\StudentGroup", cascade={"persist", "merge", "remove"})
-     * @ORM\JoinColumn(name="student_group_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\School\StudentGroup")
+     * @ORM\JoinColumn(name="student_group_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $group;
 
