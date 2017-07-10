@@ -138,14 +138,15 @@ class ProcessCalendarCommand extends ContainerAwareCommand
                     /** @var \Ical\Event $event */
                     foreach ($ical->events() as $event) {
 
+                        $timezone = new DateTimeZone('Europe/Paris');
                         $calendarEvent = new Event(
                             $event->uid,
                             substr($event->description,0,2047),
                             substr($event->summary,0,2047),
-                            new DateTime($event->created ?: 'now'),
-                            new DateTime($event->lastmodified ?: 'now'),
-                            new DateTime($event->dtstart ?: 'now'),
-                            new DateTime($event->dtend ?: 'now'),
+                            new DateTime($event->created ?: 'now', $timezone),
+                            new DateTime($event->lastmodified ?: 'now', $timezone),
+                            new DateTime($event->dtstart ?: 'now', $timezone),
+                            new DateTime($event->dtend ?: 'now', $timezone),
                             $event->dtstamp
                         );
 

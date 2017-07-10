@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\News;
 
 use DateTime;
+use DateTimeZone;
 
 class Article
 {
@@ -146,6 +147,6 @@ class Article
      */
     public function setPublishedAt(string $publishedAt)
     {
-        $this->_publishedAt = new DateTime($publishedAt);
+        $this->_publishedAt = new DateTime($publishedAt, new DateTimeZone('Europe/Paris'));
     }
 }

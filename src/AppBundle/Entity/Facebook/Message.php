@@ -3,6 +3,7 @@
 namespace AppBundle\Entity\Facebook;
 
 use DateTime;
+use DateTimeZone;
 use Symfony\Component\Validator\Constraints\Date;
 use AppBundle\Entity\Facebook\Attachment;
 
@@ -50,7 +51,7 @@ class Message
         Attachment $attachment = null,
         $quickReply = null)
     {
-        $this->date = new DateTime();
+        $this->date = new DateTime('now', new DateTimeZone('Europe/Paris'));
         $this->id = $id;
         $this->sender = $sender;
         $this->receiver = $receiver;
