@@ -34,9 +34,9 @@ trait TraitCalendar
             $res .= "  Utilisation de l'agenda : \x0D\x0A";
             $res .= "Ajouté un planning : importer directement un fichier sous format ical. \x0D\x0A";
             $res .= "Renseigner son école => \"Agenda école\" \x0D\x0A";
-            $res .= "Renseigner sa classe  => \"Agenda classe\" \x0D\x0A";
+            $res .= "Renseigner sa classe   => \"Agenda classe\" \x0D\x0A";
             $res .= "Pour connaitre son agenda : \x0D\x0A";
-            $res .= "- prochain cours         => \"Agenda prochain\" \x0D\x0A";
+            $res .= "- prochain cours          => \"Agenda prochain\" \x0D\x0A";
             $res .= "- cours de la journée   => \"Agenda jours\" \x0D\x0A";
             $res .= "- cours de demain       => \"Agenda demain\" \x0D\x0A";
             $res .= "- cours de la semaine  => \"Agenda semaine\" \x0D\x0A";
