@@ -16,7 +16,7 @@ trait TraitFootball
             return $res;
         }
 
-        $res = '';
+        $res = [];
         foreach ($data->results as $result) {
             $home_team = $result->sport_event->competitors[0]->name;
             $away_team = $result->sport_event->competitors[1]->name;
@@ -26,8 +26,8 @@ trait TraitFootball
 
             $flag = $this->getTournamentFlag($tournament);
 
-            $str = $tournament." ".$flag." - ".$home_team." ".$home_score." - ".$away_score." ".$away_team. "\x0D\x0A";
-            $res .= $str;
+            $str = $tournament." ".$flag." - ".$home_team." ".$home_score." - ".$away_score." ".$away_team;
+            $res[] = $str;
         }
 
         return $res;
