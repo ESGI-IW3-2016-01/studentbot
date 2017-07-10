@@ -68,8 +68,8 @@ class Event
     private $description;
 
     /**
-     * @var DateTime
-     * @ORM\Column(type="datetime")
+     * @var string
+     * @ORM\Column(type="string")
      */
     private $timestamp;
 
@@ -138,11 +138,11 @@ class Event
     }
 
     /**
-     * @param string $updatedAt
+     * @param DateTime $updatedAt
      */
-    public function setUpdatedAt(string $updatedAt)
+    public function setUpdatedAt(DateTime $updatedAt)
     {
-        $this->updatedAt = new DateTime($updatedAt);
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -154,11 +154,11 @@ class Event
     }
 
     /**
-     * @param string $createdAt
+     * @param DateTime $createdAt
      */
-    public function setCreatedAt(string $createdAt)
+    public function setCreatedAt(DateTime $createdAt)
     {
-        $this->createdAt = new DateTime($createdAt);
+        $this->createdAt = $createdAt;
     }
 
     /**
@@ -234,9 +234,9 @@ class Event
     }
 
     /**
-     * @param DateTime $timestamp
+     * @param string $timestamp
      */
-    public function setTimestamp(DateTime $timestamp)
+    public function setTimestamp(string $timestamp)
     {
         $this->timestamp = $timestamp;
     }

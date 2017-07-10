@@ -31,6 +31,7 @@ promotion.admin.title.list: List of promotions
 promotion.admin.title.edit: Edit promotion
 student_group.name.label: Name
 student_group.school_year.label: School year
+student_group.group_number.label: "Group #"
 student_group.promotion.label: Promotion
 student_group.school.label: School
 student_group.calendar.label: Planning
