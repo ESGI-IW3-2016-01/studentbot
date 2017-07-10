@@ -55,7 +55,7 @@ class StudentGroup
     /**
      * @var Calendar $calendar
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Calendar\Calendar")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Calendar\Calendar", inversedBy="group")
      * @ORM\JoinColumn(name="calendar_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $calendar;

@@ -4,6 +4,7 @@ namespace AppBundle\Entity\Calendar;
 
 use DateTime;
 use DateInterval;
+use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,6 +18,7 @@ class Event
 {
     // TODO : trim and replace special chars in strings
     // TODO : parse description, summary to extract location, teachers and info
+    const TIMEZONE = 'Europe/Paris';
 
     /**
      * @ORM\Column(type="integer")
@@ -142,6 +144,7 @@ class Event
      */
     public function setUpdatedAt(DateTime $updatedAt)
     {
+        $updatedAt->setTimezone(new DateTimeZone(self::TIMEZONE));
         $this->updatedAt = $updatedAt;
     }
 
@@ -158,6 +161,7 @@ class Event
      */
     public function setCreatedAt(DateTime $createdAt)
     {
+        $createdAt->setTimezone(new DateTimeZone(self::TIMEZONE));
         $this->createdAt = $createdAt;
     }
 
@@ -174,6 +178,7 @@ class Event
      */
     public function setStartAt(DateTime $startAt)
     {
+        $startAt->setTimezone(new DateTimeZone(self::TIMEZONE));
         $this->startAt = $startAt;
     }
 
@@ -190,6 +195,7 @@ class Event
      */
     public function setEndAt(DateTime $endAt)
     {
+        $endAt->setTimezone(new DateTimeZone(self::TIMEZONE));
         $this->endAt = $endAt;
     }
 
@@ -228,7 +234,7 @@ class Event
     /**
      * @return DateTime
      */
-    public function getTimestamp(): DateTime
+    public function getTimestamp()
     {
         return $this->timestamp;
     }

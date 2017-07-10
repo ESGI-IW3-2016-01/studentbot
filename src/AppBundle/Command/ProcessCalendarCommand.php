@@ -138,18 +138,29 @@ class ProcessCalendarCommand extends ContainerAwareCommand
                     /** @var \Ical\Event $event */
                     foreach ($ical->events() as $event) {
 
-                        $timezone = new DateTimeZone('Europe/Paris');
+                        if(strlen($event->dtstart) > 8) {
+                            $dtstart = new DateTime($event->dtstart ?: 'now');
+                        } else {
+                            $dtstart = new DateTime($event->dtstart ?: 'now', new DateTimeZone('Europe/Paris'));
+                        }
+
+                        if(strlen($event->dtend) > 8) {
+                            $dtend = new DateTime($event->dtend);
+                        } else {
+                            $dtend = new DateTime($event->dtend, new DateTimeZone('Europe/Paris'));
+                        }
+
+
                         $calendarEvent = new Event(
                             $event->uid,
                             substr($event->description,0,2047),
                             substr($event->summary,0,2047),
-                            new DateTime($event->created ?: 'now', $timezone),
-                            new DateTime($event->lastmodified ?: 'now', $timezone),
-                            new DateTime($event->dtstart ?: 'now', $timezone),
-                            new DateTime($event->dtend ?: 'now', $timezone),
+                            new DateTime($event->created ?: 'now'),
+                            new DateTime($event->lastmodified ?: 'now'),
+                            $dtstart,
+                            $dtend,
                             $event->dtstamp
                         );
-
                         $calendarEvent->setCalendar($calendar);
                         $this->em->persist($calendarEvent);
 
