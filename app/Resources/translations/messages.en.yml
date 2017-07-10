@@ -119,6 +119,7 @@ wit.text.label: Text
 wit.entities.label: Entitie
 question_answer.question.label: Question
 question_answer.answer.label: Answer
+questionAnswer.admin.title.edit: Edit Question / Answer
 greetingText.text.label: Text
 greetingText.enabled.label: Enable
 greetingText.locale.label: Locale
