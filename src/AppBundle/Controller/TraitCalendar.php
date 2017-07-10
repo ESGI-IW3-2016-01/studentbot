@@ -29,17 +29,17 @@ trait TraitCalendar
             }
 
         } else {
-            $str = 'Utilisation de l\'agenda:
-                    Ajouté un planning : importer directement un fichier sous format ical.
-                    Renseigner son école : écrivez "Agenda école"
-                    Renseigner sa classe : écrivez "Agenda classe"
-                    Pour connaitre son agenda :
-                     - le prochain cours : écrivez "Agenda prochain"
-                     - les cours de la journée : écrivez "Agenda jours"
-                     - les cours de demain : écrivez "Agenda demain"
-                     - les cours de la semaine : écrivez "Agenda semaine"
-                    ';
-            $res = $str;
+
+            $res = "";
+            $res .= "  Utilisation de l'agenda : \x0D\x0A";
+            $res .= "Ajouté un planning : importer directement un fichier sous format ical. \x0D\x0A";
+            $res .= "Renseigner son école : écrivez \"Agenda école\" \x0D\x0A";
+            $res .= "Renseigner sa classe : écrivez \"Agenda classe\" \x0D\x0A";
+            $res .= "Pour connaitre son agenda : \x0D\x0A";
+            $res .= "- le prochain cours : écrivez \"Agenda prochain\" \x0D\x0A";
+            $res .= "- les cours de la journée : écrivez \"Agenda jours\" \x0D\x0A";
+            $res .= "- les cours de demain : écrivez \"Agenda demain\" \x0D\x0A";
+            $res .= "- les cours de la semaine : écrivez \"Agenda semaine\" \x0D\x0A";
         }
 
         return $res;
