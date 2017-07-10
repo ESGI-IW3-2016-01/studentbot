@@ -83,7 +83,7 @@ class Calendar
             if (is_array($day_class)){
                 $res = "";
                 foreach ($day_class as $event) {
-                    $res .= $this->eventString($event);
+                    $res .= $this->eventString($event)."\x0D\x0A";
                 }
             } else {
                 $res =  $this->eventString($day_class);
@@ -122,7 +122,7 @@ class Calendar
             if (is_array($week_class)){
                 $res = "";
                 foreach ($week_class as $event) {
-                    $res .= $this->eventString($event);
+                    $res .= $this->eventString($event)."\x0D\x0A";
                 }
             } else {
                 $res =  $this->eventString($week_class);
@@ -137,7 +137,7 @@ class Calendar
         }
 
         $res = (string)$event->getSummary()."\x0D\x0A";
-        $res .= "Le : ".date_format($event->getStartAt(), 'H:i')."\x0D\x0A";
+        $res .= "Le : ".date_format($event->getStartAt(), 'd/m')."\x0D\x0A";
         $res .= "De : ".date_format($event->getStartAt(), 'H:i').". A : ".date_format($event->getEndAt(), 'H:i')."."."\x0D\x0A";
         $res .= (string)$event->getDescription()."\x0D\x0A";
 
