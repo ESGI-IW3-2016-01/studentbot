@@ -55,8 +55,8 @@ class EventRepository extends EntityRepository
 
     public function findTomorrowClass($calendarId)
     {
-        $today_startdatetime = DateTime::createFromFormat('Y-m-d H:i:s',date("Y-m-d 00:01",strtotime('tomorrow')));
-        $today_enddatetime = DateTime::createFromFormat('Y-m-d H:i:s',date("Y-m-d 23:59",strtotime('tomorrow')));
+        $today_startdatetime = date("Y-m-d 00:01",strtotime('tomorrow'));
+        $today_enddatetime = date("Y-m-d 23:59",strtotime('tomorrow'));
 
         $qb = $this->createQueryBuilder('e');
         $qb->where('e.calendar = :calendarId')
