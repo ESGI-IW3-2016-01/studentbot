@@ -100,17 +100,18 @@ class DefaultController extends Controller
 
         if ($message->hasPayload()) {
             switch ($message->getPayload()) {
-                case 'BUTTON_HELP':
-                    $this->messageSenderService
-                        ->sendShortText("Tu as besoin d'aide ?", $message->getSender());
-                    break;
-                case 'BUTTON_RESET':
+                case 'MENU_ITEM_RESET_PAYLOAD':
                     $this->messageSenderService
                         ->sendShortText('Tu veux tout reset ?', $message->getSender());
                     break;
+                case 'MENU_ITEM_HELP_PAYLOAD':
                 case 'MENU_ITEM_FONCTIONNALITS_PAYLOAD':
-                    $this->messageSenderService
-                        ->sendShortText($this->summaryFeature(), $message->getSender());
+                case 'MENU_ITEM_FONCTIONNALITES_PAYLOAD':
+                    $responses = $this->summaryFeature();
+                    foreach ($responses as $response) {
+                        $this->messageSenderService
+                            ->sendShortText($response, $message->getSender());
+                    }
                     break;
                 case strstr($message->getPayload(), 'SCHOOL'):
 
