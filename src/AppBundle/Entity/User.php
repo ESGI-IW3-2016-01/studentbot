@@ -89,7 +89,7 @@ class User extends BaseUser
     /**
      * @var StudentGroup
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\School\StudentGroup", inversedBy="user")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\School\StudentGroup")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      */
     private $group;

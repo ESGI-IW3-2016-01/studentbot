@@ -102,6 +102,7 @@ event.startAt.label: Start At
 event.endAt.label: End At
 event.duration.label: Duration
 event.summary.label: Summary
+event.description.label: Description
 calendar.id.label: ID
 calendar.createdAt.label: Created At
 calendar.name.label: Name

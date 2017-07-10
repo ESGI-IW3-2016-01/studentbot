@@ -97,8 +97,8 @@ class Event
         $this->setUid($uid);
         $this->setDescription($description ?? '');
         $this->setSummary($summary);
-        $this->setCreatedAt($createdAt ?? 'now');
-        $this->setUpdatedAt($updatedAt ?? 'now');
+        $this->setCreatedAt($createdAt);
+        $this->setUpdatedAt($updatedAt);
         $this->setStartAt($startAt);
         $this->setEndAt($endAt);
         $this->duration = $this->endAt->diff($this->startAt);
@@ -170,11 +170,11 @@ class Event
     }
 
     /**
-     * @param string $startAt
+     * @param DateTime $startAt
      */
-    public function setStartAt(string $startAt)
+    public function setStartAt(DateTime $startAt)
     {
-        $this->startAt = new DateTime($startAt);
+        $this->startAt = $startAt;
     }
 
     /**
@@ -186,11 +186,11 @@ class Event
     }
 
     /**
-     * @param string $endAt
+     * @param DateTime $endAt
      */
-    public function setEndAt(string $endAt)
+    public function setEndAt(DateTime $endAt)
     {
-        $this->endAt = new DateTime($endAt);
+        $this->endAt = $endAt;
     }
 
     /**
@@ -234,11 +234,11 @@ class Event
     }
 
     /**
-     * @param string $timestamp
+     * @param DateTime $timestamp
      */
-    public function setTimestamp(string $timestamp)
+    public function setTimestamp(DateTime $timestamp)
     {
-        $this->timestamp = new DateTime($timestamp);
+        $this->timestamp = $timestamp;
     }
 
     /**
