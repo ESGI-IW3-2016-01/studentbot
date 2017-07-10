@@ -41,7 +41,7 @@ class StudentGroupService
      */
     public function getQuickRepliesForGroups($schoolId): ArrayCollection
     {
-        $groups = $this->repository->findBy(['$school' => $schoolId]);
+        $groups = $this->repository->findBy(['school' => $schoolId]);
         $replies = new ArrayCollection();
 
         if ($groups && count($groups) > 0) {
@@ -49,7 +49,6 @@ class StudentGroupService
             foreach ($groups as $group) {
                 $replies->add(QuickReply::createFromStudentGroup($group));
             }
-
             return $replies;
         } else {
             return new ArrayCollection();

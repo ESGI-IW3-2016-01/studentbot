@@ -32,6 +32,7 @@ class DefaultController extends Controller
     use TraitYesOrNo;
     use TraitNews;
     use TraitCalendar;
+    use TraitSummaryFeature;
 
     private $image;
     private $textAndImage;
@@ -90,7 +91,7 @@ class DefaultController extends Controller
         $this->userService = $this->container->get('app.user_service');
 
         $this->logger = $this->get('logger');
-        $this->logger->error($request->getContent(), ['sender_faceboo_id' => null]);
+        $this->logger->error($request->getContent(), ['sender_facebook_id' => null]);
 
         /** @var Message $message */
         $message = $this->createMessageRecievedFromBody($request->getContent());
@@ -106,6 +107,10 @@ class DefaultController extends Controller
                 case 'BUTTON_RESET':
                     $this->messageSenderService
                         ->sendShortText('Tu veux tout reset ?', $message->getSender());
+                    break;
+                case 'MENU_ITEM_FONCTIONNALITS_PAYLOAD':
+                    $this->messageSenderService
+                        ->sendShortText($this->summaryFeature(), $message->getSender());
                     break;
                 case strstr($message->getPayload(), 'SCHOOL'):
 
@@ -177,9 +182,9 @@ class DefaultController extends Controller
             } elseif ($res == 'class') {
                 /** @var User $user */
                 $user = $this->userService->handleUser($message->getSender());
-                if ($user->getGroup()) {
+                if ($user->getSchool()) {
                     $this->messageSenderService->sendQuickReply(
-                        $studentGroupService->getQuickRepliesForGroups($user->getGroup()->getId()),
+                        $studentGroupService->getQuickRepliesForGroups($user->getSchool()->getId()),
                         'Choisi ta classe',
                         $message->getSender()
                     );
@@ -220,20 +225,23 @@ class DefaultController extends Controller
     private function createMessageRecievedFromBody($body)
     {
         $body = json_decode($body, true);
-        $message = array_pop($body['entry']); // TODO : not safe enought
+        $type = 'message';
+        if(isset($body['entry'])) {
+            $message = array_pop($body['entry']); // TODO : not safe enought
+        } elseif (isset($body['postback'])) {
+            $type = 'payload';
+        }
 
-        if (isset($message['messaging'][0]['postback']['payload'])) {
+        if ($type === 'payload') {
             // Payload message
             $messageObject = new Message(
-                $message['id'],
-                $message['messaging'][0]['sender']['id'],
-                $message['messaging'][0]['recipient']['id'],
+                '',
+                $body['sender']['id'],
+                $body['recipient']['id'],
                 null,
-                $message['time'],
-                null,
-                null
+                $body['timestamp']
             );
-            $messageObject->setPayload($message['messaging'][0]['postback']['payload']);
+            $messageObject->setPayload($body['postback']['payload']);
         } elseif (isset($message['messaging'][0]['message']['quick_reply'])) {
             // Quick Reply Payload
             $messageObject = new Message(
