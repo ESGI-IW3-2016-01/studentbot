@@ -92,6 +92,45 @@ class Calendar
         }
     }
 
+    public function getTomorrowClass($current_user)
+    {
+        $this->logger->info('Cherche cours demain');
+
+        $studentGroupRepository = $this->em->getRepository('AppBundle\Entity\School\StudentGroup');
+        $userRepository = $this->em->getRepository('AppBundle\Entity\User');
+        $calendarRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Calendar');
+        $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
+
+        $user = $userRepository->findOneBy(['senderId' => $current_user]);
+        if (is_null($user)) {
+            return "Vous n'êtes pas un utilisateur ... =)";
+        }
+        $student_group = $studentGroupRepository->find($user->getGroup()->getId());
+        if (is_null($student_group)){
+            return "Vous n'êtes dans aucune classe";
+        }
+        $calendar = $calendarRepository->find($student_group->getCalendar());
+        if (is_null($student_group)){
+            return "Votre classe n'a pas d'agenda";
+        }
+        $day_class = $eventRepository->findTomorrowClass($calendar->getId());
+
+
+        if (empty($day_class)){
+            return "Vous n'avez pas de cours demain";
+        } else {
+            if (is_array($day_class)){
+                $res = "";
+                foreach ($day_class as $event) {
+                    $res .= $this->eventString($event)."\x0D\x0A";
+                }
+            } else {
+                $res =  $this->eventString($day_class);
+            }
+            return $res;
+        }
+    }
+
     public function getWeekClass($current_user)
     {
         $this->logger->info('Cherche cours de la semaine');

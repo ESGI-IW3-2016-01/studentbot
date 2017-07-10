@@ -14,6 +14,8 @@ trait TraitCalendar
                 $res = $calendar->getNextClass($current_user);
             } elseif (strpos($chaine, 'jours')) {
                 $res = $calendar->getDayClass($current_user);
+            } elseif (strpos($chaine, 'demain')) {
+                $res = $calendar->getTomorrowClass($current_user);
             } elseif (strpos($chaine, 'semaine')) {
                 $res = $calendar->getWeekClass($current_user);
             } elseif (strpos($chaine, 'école')) {
@@ -33,8 +35,9 @@ trait TraitCalendar
                     Renseigner sa classe : écrivez "Agenda classe"
                     Pour connaitre son agenda :
                      - le prochain cours : écrivez "Agenda prochain"
-                     - les cours de la journée : écrivez "Agenda cours jours"
-                     - les cours de la semaine : écrivez "Agenda cours semaine"
+                     - les cours de la journée : écrivez "Agenda jours"
+                     - les cours de demain : écrivez "Agenda demain"
+                     - les cours de la semaine : écrivez "Agenda semaine"
                     ';
             $res = $str;
         }
