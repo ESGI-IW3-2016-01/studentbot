@@ -77,6 +77,9 @@ class Calendar
         }
         $day_class = $eventRepository->findDayClass($calendar->getId());
 
+        if (empty($day_class)){
+            return "Vous n'avez aucun prochain cours";
+        }
         return $day_class;
     }
 
@@ -103,6 +106,9 @@ class Calendar
         }
         $week_class = $eventRepository->findWeekClass($calendar->getId());
 
+        if (empty($week_class)){
+            return "Vous n'avez aucun prochain cours";
+        }
         return $week_class;
     }
 }
