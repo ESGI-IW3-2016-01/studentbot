@@ -6,6 +6,7 @@ use AppBundle\Entity\Facebook\Attachment;
 use AppBundle\Entity\Facebook\SendMessage;
 use AppBundle\Entity\School\School;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Wit\WitResponse;
 use AppBundle\Service\ApiService;
 use AppBundle\Service\MessageSender;
 use AppBundle\Service\SchoolService;
@@ -165,7 +166,30 @@ class DefaultController extends Controller
             /** @var WitService $witService */
             if ($this->apiService->getApi('WIT')) {
                 $witService = $this->container->get('app.wit_service');
-                $witService->handleMessage($question);
+                /** @var WitResponse $witResponse */
+                $witResponse = $witService->handleMessage($question);
+
+                if ($witResponse->hasIntent('hello')) {
+                    $this->messageSenderService->sendShortText(
+                        "Bonjour \xF0\x9F\x98\x83",
+                        $message->getSender()
+                    );
+                    return new Response();
+                } elseif ($witResponse->hasIntent('meteo')) {
+                    if ($this->apiService->getApi('WEATHER')) {
+                        if ($witResponse->hasEntity('location')) {
+                            $locations = $witResponse->getEntity('location');
+                            foreach ($locations as $location) {
+                                $text = $this->weather($location['value']);
+                                $this->messageSenderService->sendShortText($text, $message->getSender());
+                            }
+                        } else {
+                            $text = $this->weather('Paris');
+                            $this->messageSenderService->sendShortText($text, $message->getSender());
+                        }
+                    }
+                    return new Response();
+                }
             }
 
             $res = $this->questionAnswer($question);
@@ -226,7 +250,7 @@ class DefaultController extends Controller
     private function createMessageRecievedFromBody($body)
     {
         $body = json_decode($body, true);
-        if(isset($body['entry'])) {
+        if (isset($body['entry'])) {
             $message = array_pop($body['entry']); // TODO : not safe enought
         }
 
@@ -287,7 +311,8 @@ class DefaultController extends Controller
         $apiService = $this->container->get('app.api_service');
         $this->image = false;
         $chaine = strtolower($chaine);
-        $res = "Désolé, je ne comprends pas encore tout... \xF0\x9F\x98\x95";
+        $res = "Désolé, je ne comprends pas encore tout... \xF0\x9F\x98\x95" . PHP_EOL;
+        $res .= "Mais j'apprends vite !";
 
         switch ($chaine) {
             case 'résultat football' :
@@ -345,7 +370,8 @@ class DefaultController extends Controller
                 $this->textAndImage = true;
                 break;
             default :
-                $res = "Désolé, je ne comprends pas encore tout... \xF0\x9F\x98\x95";
+                $res = "Désolé, je ne comprends pas encore tout... \xF0\x9F\x98\x95" . PHP_EOL;
+                $res .= "Mais j'apprends vite !";
                 break;
         }
         return $res;

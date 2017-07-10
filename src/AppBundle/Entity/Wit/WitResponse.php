@@ -5,6 +5,7 @@ namespace AppBundle\Entity\Wit;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Class WitResponse
  * Store responses from wit.ai
@@ -46,6 +47,13 @@ class WitResponse
     private $createdAt;
 
     /**
+     * @var array $intents
+     */
+    private $intents;
+
+    /**
+     *
+     * /**
      * WitResponse constructor.
      * @param array $response
      */
@@ -54,11 +62,19 @@ class WitResponse
         $this->createdAt = new DateTime('now', new DateTimeZone('Europe/Paris'));
         if ($response) {
             foreach ($response as $key => $value) {
-                $method = 'set' . ucfirst(str_replace('_','',$key));
+                $method = 'set' . ucfirst(str_replace('_', '', $key));
                 if (method_exists($this, $method)) {
                     $this->$method($value);
                 }
             }
+        }
+
+        if (count($this->getEntities()) > 0 && isset($this->entities['intent'])) {
+            $intents = $this->getEntities()['intent'];
+            foreach ($intents as $intent) {
+                $this->intents[] = $intent['value'];
+            }
+            unset($this->entities['intent']);
         }
     }
 
@@ -124,5 +140,44 @@ class WitResponse
     public function setCreatedAt(DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return array
+     */
+    public function getIntents(): array
+    {
+        return $this->intents;
+    }
+
+    /**
+     * @param array $intents
+     */
+    public function setIntents(array $intents)
+    {
+        $this->intents = $intents;
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    public function hasIntent($key)
+    {
+        if (isset($this->intents)) {
+            return in_array($key, $this->intents);
+        } else {
+            return false;
+        }
+    }
+
+    public function hasEntity($key)
+    {
+        return isset($this->entities[$key]);
+    }
+
+    public function getEntity($key)
+    {
+        return isset($this->entities[$key]) ? $this->entities[$key] : [];
     }
 }

@@ -41,6 +41,7 @@ class WitService
         $witResponse = $this->getWitAnalysis($message);
         $this->em->persist($witResponse);
         $this->em->flush();
+        return $witResponse;
     }
 
     /**
