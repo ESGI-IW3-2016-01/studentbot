@@ -144,7 +144,7 @@ class DefaultController extends Controller
                         ->getRepository('AppBundle:School\StudentGroup')
                         ->findOneBy(['id' => $groupId]);
 
-                    $user->setGroup($group);
+                    $user->setStudentGroup($group);
                     $this->em->persist($user);
                     $this->em->flush();
 
