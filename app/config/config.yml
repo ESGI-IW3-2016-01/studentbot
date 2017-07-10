@@ -169,6 +169,7 @@ easy_admin:
                     - { property: 'code', type: 'text', label: 'api_log.code.label' }
         GreetingText:
             class: AppBundle\Entity\Facebook\GreetingText
+            controller: AppBundle\Controller\GreetingTextController
             label: 'admin.greetingText.label'
             list:
                 fields:
