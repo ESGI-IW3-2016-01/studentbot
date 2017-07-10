@@ -292,7 +292,7 @@ class DefaultController extends Controller
             case 'résultat basket' :
             case 'résultat nba' :
             case strcmp("\xf0\x9f\x8f\x80", $chaine) == 0 :
-                if ($this->apiService->getApi('BASKET')) {
+                if ($this->apiService->getApi('BASKETBALL')) {
                     $res = $this->basket();
                 }
                 break;
@@ -317,6 +317,7 @@ class DefaultController extends Controller
                 }
                 $this->image = true;
                 break;
+            case strcmp("\xF0\x9F\x93\x85", $chaine) == 0 :
             case 'agenda':
             case 'calendar':
             case 'planning':
