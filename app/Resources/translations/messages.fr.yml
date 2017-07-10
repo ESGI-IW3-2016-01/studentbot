@@ -24,7 +24,7 @@ school.street.label: Rue
 school.city.label: Ville
 school.postal_code.label: Code postal
 school.admin.title.list: Liste des établissements scolaire
-school.admin.title.edit: Edit école
+school.admin.title.edit: Editer école
 promotion.start_date.label: Date de début
 promotion.end_date.label: Date de fin
 promotion.admin.title.list: Liste des promotions
@@ -119,9 +119,9 @@ wit.text.label: Texte
 wit.entities.label: Entités
 question_answer.question.label: Question
 question_answer.answer.label: Réponse
-questionAnswer.admin.title.edit: Edition Question / Réponse
+questionAnswer.admin.title.edit: Editer Question / Réponse
 greetingText.text.label: Texte
 greetingText.enabled.label: Activé
 greetingText.locale.label: Langue
-greetingText.admin.title.edit: Edition message d'accueil
+greetingText.admin.title.edit: Editer message d'accueil
 wit.messageAnalysis.label: Message analysé
