@@ -5,6 +5,8 @@ namespace AppBundle\Service;
 use AppBundle\Entity\School\StudentGroup;
 use AppBundle\Entity\User;
 use AppBundle\Event\ApiEvent;
+use AppBundle\Repository\EventRepository;
+use AppBundle\Repository\UserRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Doctrine\ORM\EntityManager;
@@ -24,12 +26,9 @@ class Calendar
     
     public function getNextClass($current_user)
     {
-        $this->logger->info('Cherche prochain cours');
-        $this->logger->info('##############---------------------------------#####################');
-        $this->logger->info($current_user);
-        $studentGroupRepository = $this->em->getRepository('AppBundle\Entity\School\StudentGroup');
+        /** @var UserRepository $userRepository */
         $userRepository = $this->em->getRepository('AppBundle\Entity\User');
-        $calendarRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Calendar');
+        /** @var EventRepository $eventRepository */
         $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
 
         /** @var User $user */
@@ -39,12 +38,13 @@ class Calendar
         }
 
         /** @var StudentGroup $student_group */
-        $student_group = $studentGroupRepository->find($user->getStudentGroup()->getId());
+        $student_group = $user->getStudentGroup();
         if (is_null($student_group)){
             return "Vous n'êtes dans aucune classe";
         }
-        $calendar = $calendarRepository->find($student_group->getCalendar());
-        if (is_null($student_group)){
+        /** @var \AppBundle\Entity\Calendar\Calendar $calendar */
+        $calendar = $student_group->getCalendar();
+        if (is_null($calendar)){
             return "Votre classe n'a pas d'agenda";
         }
         $next_class = $eventRepository->findNextClass($calendar->getId());

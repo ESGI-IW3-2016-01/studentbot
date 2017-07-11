@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Service\Calendar;
+
 trait TraitCalendar
 {
     private function calendar($chaine = null, $current_user)
