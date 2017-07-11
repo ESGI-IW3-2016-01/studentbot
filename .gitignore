@@ -23,3 +23,5 @@ docker/mariadb/db-datas/
 
 src/AppBundle/Monolog
 /web/uploads/*
+
+messages/

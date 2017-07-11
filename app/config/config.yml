@@ -287,10 +287,11 @@ easy_admin:
                 fields:
                     - { property: 'name', type: 'text', label: 'calendar.name.label'}
                     - { property: 'group', label: 'calendar.group.label' }
-                    - { property: 'file', type: 'file', label: 'calendar.file.label' }
+                    - { property: 'file', type: 'file', label: 'calendar.file.label', type_options: {'required': 'true'} }
         Event:
             class: AppBundle\Entity\Calendar\Event
             label: 'admin.event.label'
+            disabled_actions: ['view', 'new']
             list:
                 title: 'admin.event.label'
                 fields:
