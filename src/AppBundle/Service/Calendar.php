@@ -78,8 +78,8 @@ class Calendar
 
         $events = $this->eventRepository->$method($calendar->getId());
 
-        if (empty($week_class)) {
-            return 'Vous n\'avez plus de cours cette semaine';
+        if (empty($events)) {
+            return 'Pas de cours pour cette date.';
         } else {
             $res = '';
             /** @var Event $event */
