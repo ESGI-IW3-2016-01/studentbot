@@ -44,8 +44,10 @@ class CalendarController extends AdminBaseController
             );
         }
 
-        $savedFileName = $this->writeCalendarFile($calendar);
-        $calendar->setFilename($savedFileName);
+        if(!empty($calendar->getFile())) {
+            $savedFileName = $this->writeCalendarFile($calendar);
+            $calendar->setFilename($savedFileName);
+        }
         $calendar->setProcessed(false);
     }
 
