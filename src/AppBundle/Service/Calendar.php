@@ -72,7 +72,7 @@ class Calendar
 
         /** @var \AppBundle\Entity\Calendar\Calendar $calendar */
         $calendar = $student_group->getCalendar();
-        if (is_null($student_group)) {
+        if (is_null($calendar)) {
             return 'Votre classe n\'a pas d\'agenda';
         }
 
