@@ -318,7 +318,10 @@ class DefaultController extends Controller
                     $res = $this->youtube($chaine);
                 }
                 break;
+            case 'oui ou non' :
+            case 'oui ou non ?' :
             case 'yes or no ?':
+            case 'yes or no' :
                 if ($this->apiService->getApi('YESORNO')) {
                     $res = $this->yesOrNo();
                 }
