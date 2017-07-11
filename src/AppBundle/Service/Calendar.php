@@ -5,7 +5,6 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Calendar\Event;
 use AppBundle\Entity\School\StudentGroup;
 use AppBundle\Entity\User;
-use AppBundle\Repository\Calendar\CalendarRepository;
 use AppBundle\Repository\Calendar\EventRepository;
 use AppBundle\Repository\StudentGroupRepository;
 use AppBundle\Repository\UserRepository;
@@ -15,193 +14,97 @@ use Doctrine\ORM\EntityManager;
 
 class Calendar
 {
+    /**
+     * @var UserRepository $userRepository
+     */
+    private $userRepository;
 
-    private $logger;
-    private $calendarId;
+    /**
+     * @var EventRepository $eventRepository
+     */
+    private $eventRepository;
 
-    public function __construct(LoggerInterface $logger, EntityManager $em)
+    /**
+     * Calendar constructor.
+     * @param UserRepository $userRepository
+     * @param EventRepository $eventRepository
+     */
+    public function __construct(UserRepository $userRepository, EventRepository $eventRepository)
     {
-        $this->logger = $logger;
-        $this->em = $em;
+        $this->userRepository = $userRepository;
+        $this->eventRepository = $eventRepository;
     }
-    
+
     public function getNextClass($current_user)
     {
-        /** @var UserRepository $userRepository */
-        $userRepository = $this->em->getRepository('AppBundle\Entity\User');
-        /** @var EventRepository $eventRepository */
-        $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
-
-        /** @var User $user */
-        $user = $userRepository->findOneBy(['senderId' => $current_user]);
-        if (is_null($user)) {
-            return "Vous n'êtes pas un utilisateur ... =)";
-        }
-
-        /** @var StudentGroup $student_group */
-        $student_group = $user->getStudentGroup();
-        if (is_null($student_group)){
-            return "Vous n'êtes dans aucune classe";
-        }
-        /** @var \AppBundle\Entity\Calendar\Calendar $calendar */
-        $calendar = $student_group->getCalendar();
-        if (is_null($calendar)){
-            return "Votre classe n'a pas d'agenda";
-        }
-
-        $next_class = $eventRepository->findNextClass($calendar->getId());
-
-        if (empty($next_class)){
-            return "Vous n'avez aucun prochain cours aujourd'hui";
-        } else {
-            $res =  $this->eventString($next_class);
-            return $res;
-        }
-        
+        return $this->getEvents('findNextClass', $current_user);
     }
 
     public function getDayClass($current_user)
     {
-        /** @var UserRepository $userRepository */
-        $userRepository = $this->em->getRepository('AppBundle\Entity\User');
-        /** @var EventRepository $eventRepository */
-        $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
-
-        /** @var User $user */
-        $user = $userRepository->findOneBy(['senderId' => $current_user]);
-        if (is_null($user)) {
-            return "Vous n'êtes pas un utilisateur ... =)";
-        }
-
-        /** @var StudentGroup $student_group */
-        $student_group = $user->getStudentGroup();
-        if (is_null($student_group)){
-            return "Vous n'êtes dans aucune classe";
-        }
-
-        /** @var \AppBundle\Entity\Calendar\Calendar $calendar */
-        $calendar = $student_group->getCalendar();
-        if (is_null($student_group)){
-            return "Votre classe n'a pas d'agenda";
-        }
-
-        $day_class = $eventRepository->findDayClass($calendar->getId());
-
-        if (empty($day_class)){
-            return "Vous n'avez plus de cours aujourd'hui";
-        } else {
-            if (is_array($day_class)){
-                $res = "";
-                /** @var Event $event */
-                foreach ($day_class as $event) {
-                    $res .= $this->eventString($event)."\x0D\x0A";
-                }
-            } else {
-                $res =  $this->eventString($day_class);
-            }
-            return $res;
-        }
+        return $this->getEvents('findDayClass', $current_user);
     }
 
     public function getTomorrowClass($current_user)
     {
-        /** @var UserRepository $userRepository */
-        $userRepository = $this->em->getRepository('AppBundle\Entity\User');
-        /** @var CalendarRepository $eventRepository */
-        $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
-
-        /** @var User $user */
-        $user = $userRepository->findOneBy(['senderId' => $current_user]);
-        if (is_null($user)) {
-            return "Vous n'êtes pas un utilisateur ... =)";
-        }
-
-        /** @var StudentGroup $student_group */
-        $student_group = $user->getStudentGroup();
-        if (is_null($student_group)){
-            return "Vous n'êtes dans aucune classe";
-        }
-
-        /** @var \AppBundle\Entity\Calendar\Calendar $calendar */
-        $calendar = $student_group->getCalendar();
-        if (is_null($student_group)){
-            return "Votre classe n'a pas d'agenda";
-        }
-
-        $day_class = $eventRepository->findTomorrowClass($calendar->getId());
-
-        if (empty($day_class)){
-            return "Vous n'avez pas de cours demain";
-        } else {
-            if (is_array($day_class)){
-                $res = "";
-                /** @var Event $event */
-                foreach ($day_class as $event) {
-                    $res .= $this->eventString($event)."\x0D\x0A";
-                }
-            } else {
-                $res =  $this->eventString($day_class);
-            }
-            return $res;
-        }
+        return $this->getEvents('findTomorrowClass', $current_user);
     }
 
     public function getWeekClass($current_user)
     {
-        /** @var StudentGroupRepository $userRepository */
-        $userRepository = $this->em->getRepository('AppBundle\Entity\User');
-        /** @var EventRepository $eventRepository */
-        $eventRepository = $this->em->getRepository('AppBundle\Entity\Calendar\Event');
+        return $this->getEvents('findWeekClass', $current_user);
+    }
 
+
+    public function getEvents($method, $userId)
+    {
         /** @var User $user */
-        $user = $userRepository->findOneBy(['senderId' => $current_user]);
+        $user = $this->userRepository->findOneBy(['senderId' => $userId]);
         if (is_null($user)) {
-            return "Vous n'êtes pas un utilisateur ... =)";
+            return 'Vous n\'êtes pas un utilisateur ... =)';
         }
 
         /** @var StudentGroup $student_group */
         $student_group = $user->getStudentGroup();
-        if (is_null($student_group)){
-            return "Vous n'êtes dans aucune classe";
+        if (is_null($student_group)) {
+            return 'Vous n\'êtes dans aucune classe';
         }
 
         /** @var \AppBundle\Entity\Calendar\Calendar $calendar */
         $calendar = $student_group->getCalendar();
-        if (is_null($student_group)){
-            return "Votre classe n'a pas d'agenda";
+        if (is_null($student_group)) {
+            return 'Votre classe n\'a pas d\'agenda';
         }
 
-        $week_class = $eventRepository->findWeekClass($calendar->getId());
+        $events = $this->eventRepository->$method($calendar->getId());
 
-        if (empty($week_class)){
-            return "Vous n'avez plus de cours cette semaine";
+        if (empty($week_class)) {
+            return 'Vous n\'avez plus de cours cette semaine';
         } else {
-            if (is_array($week_class)){
-                $res = "";
-                /** @var Event $event */
-                foreach ($week_class as $event) {
-                    $res .= $this->eventString($event)."\x0D\x0A";
-                }
-            } else {
-                $res =  $this->eventString($week_class);
+            $res = '';
+            /** @var Event $event */
+            foreach ($events as $event) {
+                $res .= $this->eventString($event) . "\x0D\x0A";
             }
-            return $res;
         }
+
+        return $res;
     }
 
     /**
      * @param Event $event
      * @return string
      */
-    private function eventString(Event $event){
+    private function eventString(Event $event)
+    {
         if (is_array($event)) {
-            $event = $event[0];
+            $event = array_pop($event);
         }
 
-        $res = (string)$event->getSummary()."\x0D\x0A";
-        $res .= "Le : ".date_format($event->getStartAt(), 'd/m')."\x0D\x0A";
-        $res .= "De : ".date_format($event->getStartAt(), 'H:i').". A : ".date_format($event->getEndAt(), 'H:i')."."."\x0D\x0A";
-        $res .= (string)$event->getDescription()."\x0D\x0A";
+        $res = (string)$event->getSummary() . "\x0D\x0A";
+        $res .= 'Le : ' . date_format($event->getStartAt(), 'd/m') . "\x0D\x0A";
+        $res .= 'De : ' . date_format($event->getStartAt(), 'H:i') . '. A : ' . date_format($event->getEndAt(), 'H:i') . ".\x0D\x0A";
+        $res .= (string)$event->getDescription() . "\x0D\x0A";
 
         return $res;
     }
