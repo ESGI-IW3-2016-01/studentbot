@@ -22,7 +22,7 @@ class Football
     public function getResultFootball()
     {
         //$date = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') - 1, date('Y')));
-        $date = "2017-05-20";
+        $date = "2017-04-18";
         $uri = "schedules/" . $date . "/results.json?api_key=" . $this->football_key;
          error_log($uri);
          
