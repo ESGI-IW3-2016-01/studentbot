@@ -15,7 +15,8 @@ class EventRepository extends EntityRepository
             ->andWhere('e.startAt > :startAt')
             ->orderBy('e.startAt', 'ASC')
             ->setParameter('calendarId', $calendarId)
-            ->setParameter('startAt', new \DateTime('-5 second'));
+            ->setParameter('startAt', new \DateTime('-5 second'))
+            ->setMaxResults(1) ;
 
         return $qb->getQuery()->getResult();
     }
