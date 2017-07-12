@@ -39,9 +39,6 @@ class GreetingText
 
     /**
      * GreetingText constructor.
-     * @internal param $text
-     * @internal param $locale
-     * @internal param $enabled
      */
     public function __construct()
     {

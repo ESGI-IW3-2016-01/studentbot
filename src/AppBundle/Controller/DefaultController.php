@@ -149,7 +149,7 @@ class DefaultController extends Controller
                     $this->em->flush();
 
                     $this->messageSenderService->sendShortText(
-                        'Ta classe est enregistré',
+                        'Ta classe est enregistrée',
                         $message->getSender());
                     break;
             }
@@ -287,7 +287,7 @@ class DefaultController extends Controller
         $apiService = $this->container->get('app.api_service');
         $this->image = false;
         $chaine = strtolower($chaine);
-        $res = "Désolé, je ne comprend pas encore tout... \xF0\x9F\x98\x95";
+        $res = "Désolé, je ne comprends pas encore tout... \xF0\x9F\x98\x95";
 
         switch ($chaine) {
             case 'résultat football' :
@@ -318,7 +318,10 @@ class DefaultController extends Controller
                     $res = $this->youtube($chaine);
                 }
                 break;
+            case 'oui ou non' :
+            case 'oui ou non ?' :
             case 'yes or no ?':
+            case 'yes or no' :
                 if ($this->apiService->getApi('YESORNO')) {
                     $res = $this->yesOrNo();
                 }
